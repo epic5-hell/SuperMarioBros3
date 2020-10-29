@@ -3,8 +3,8 @@
   Brick.cpp
   Koopas.cpp
   Portal.cpp
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\Portal.cpp(9,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\Portal.cpp(10,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\Portal.cpp(9,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\Portal.cpp(10,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Utils.cpp
   Game.cpp
   GameObject.cpp
@@ -12,16 +12,16 @@ C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\P
   main.cpp
   Mario.cpp
   PlayScence.cpp
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(89,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(111,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(134,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(135,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(161,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(162,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(261,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\SuperMarioBros3\PlayScence.cpp(270,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(89,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(111,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(134,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(135,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(161,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(162,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(261,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\SuperMarioBros3\PlayScence.cpp(270,20): warning C4018: '<': signed/unsigned mismatch
   Scence.cpp
   Sprites.cpp
   Textures.cpp
   Generating Code...
-  SuperMarioBros3.vcxproj -> C:\Users\LenovoT470Ab\Downloads\gamedev-intro-tutorials-master\Debug\SuperMarioBros3.exe
+  SuperMarioBros3.vcxproj -> C:\Users\LenovoT470Ab\Downloads\SuperMarioBros3\Debug\SuperMarioBros3.exe
