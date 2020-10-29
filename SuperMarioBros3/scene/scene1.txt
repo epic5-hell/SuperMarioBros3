@@ -5,9 +5,9 @@
 10	textures\enemies.png	3	26	110
 30	map\map1-1_bank.png	255	255	255
 
-#id	tileWidth	tileHeight	trileRTileSet	tileCTileSet	tileRMap	tileCMap	totalTiles	file_path
+#id	tileRTileSet	tileCTileSet	tileRMap	tileCMap	totalTiles	file_path
 [MAP]
-30	16	16	9	11	27	176	91	map\map1\1-1.txt
+30	9	11	27	176	91	map\map1\1-1.txt
 
 # id	left	top	right	bottom	texture_id
 [SPRITES]
