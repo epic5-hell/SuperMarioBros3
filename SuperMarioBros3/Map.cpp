@@ -9,9 +9,9 @@ Map::Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _t
 	this->TileSet = CTextures::GetInstance()->Get(_idTileSet);
 	this->TotalRowsOfTileSet = _totalRowsTileSet;
 	this->TotalColumnsOfTileSet = _totalColumnsTileSet;
-	this->TotalTiles = _totalTiles;
 	this->TotalRowsOfMap = _totalRowsMap;
 	this->TotalColumnsOfMap = _totalColumnsMap;
+	this->TotalTiles = _totalTiles;
 	this->MapWidth = this->MapHeight = 0;
 }
 
@@ -41,8 +41,8 @@ void Map::ExtractTileFromTileSet()
 {
 	for (int TileNumber = 0; TileNumber < TotalTiles; TileNumber++)
 	{
-		int left = TileNumber / TotalColumnsOfTileSet * TILE_WIDTH;
-		int top = TileNumber % TotalRowsOfTileSet * TILE_HEIGHT;
+		int left = TileNumber % TotalColumnsOfTileSet * TILE_WIDTH;
+		int top = TileNumber / TotalColumnsOfTileSet * TILE_HEIGHT;
 		int right = left + TILE_WIDTH;
 		int bottom = top + TILE_HEIGHT;
 		LPSPRITE newTile = new CSprite(TileNumber, left, top, right, bottom, TileSet);
@@ -52,20 +52,24 @@ void Map::ExtractTileFromTileSet()
 
 void Map::LoadMap(LPCWSTR path)
 {
-	ifstream ifs;
+	ifstream f;
 
-	ifs.open(path); //
+	f.open(path);
 	
+	// init tilemap
 	this->TileMap = new int* [TotalRowsOfMap];
 	for (int i = 0; i < TotalRowsOfMap; i++)
 	{
 		TileMap[i] = new int[TotalColumnsOfMap];
 		for (int j = 0; j < TotalColumnsOfMap; j++)
 		{
-			ifs >> TileMap[i][j];
+			
+			f >> TileMap[i][j];
 		}
 	}
-	ifs.close();
+	f.close();
+	this->GetMapHeight();
+	this->GetMapWidth();
 }
 
 int Map::GetMapWidth()
@@ -78,4 +82,12 @@ int Map::GetMapHeight()
 	return TotalRowsOfMap * TILE_HEIGHT;
 }
 
+int Map::GetTotalColumnsMap() 
+{ 
+	return this->TotalColumnsOfMap; 
+}
 
+int Map::GetTotalRowsMap() 
+{
+	return this->TotalRowsOfMap; 
+}

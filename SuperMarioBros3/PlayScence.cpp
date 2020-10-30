@@ -69,9 +69,10 @@ void CPlayScene::_ParseSection_MAP(string line)
 
 	this->map = new Map(idTileSet, totalRowsTileSet, totalColumnsTileSet, totalRowsMap, totalColumnsMap, totalTiles);
 	map->LoadMap(file_path.c_str());
-	map->ExtractTileFromTileSet();	
+	map->ExtractTileFromTileSet();
 }
 
+// [SPRITES]
 void CPlayScene::_ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
@@ -94,7 +95,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
-
+// [ANIMATIONS]
 void CPlayScene::_ParseSection_ANIMATIONS(string line)
 {
 	vector<string> tokens = split(line);
@@ -115,7 +116,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 
 	CAnimations::GetInstance()->Add(ani_id, ani);
 }
-
+// [ANIMATION_SETS]
 void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 {
 	vector<string> tokens = split(line);
@@ -173,17 +174,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
-	case OBJECT_TYPE_PORTAL:
+	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;*/
+	/*case OBJECT_TYPE_BRICK: obj = new CBrick(); break;*/
+	/*case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;*/
+	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
 			float b = atof(tokens[5].c_str());
 			int scene_id = atoi(tokens[6].c_str());
 			obj = new CPortal(x, y, r, b, scene_id);
 		}
-		break;
+		break;*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -203,6 +204,7 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
 	ifstream f;
+	/*if (sceneFilePath == nullptr) return;*/
 	f.open(sceneFilePath);
 
 	// current resource section flag
@@ -268,18 +270,28 @@ void CPlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	CGame *game = CGame::GetInstance();
-	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	if (map != nullptr && (cx > map->GetMapWidth() - game->GetScreenWidth() / 2))
+		cx = map->GetMapWidth() - game->GetScreenWidth();
+	else if (cx < game->GetScreenWidth() / 2)
+		cx = 0;
+	else
+		cx -= game->GetScreenWidth() / 2;
+
+	if (map != nullptr && (cy > map->GetMapHeight() - game->GetScreenHeight() / 2))
+		cy = map->GetMapHeight() - game->GetScreenHeight();
+	else if (cy < game->GetScreenHeight() / 2)
+		cy = 0;
+	else
+		cy -= game->GetScreenHeight() / 2;
+
+	CGame::GetInstance()->SetCamPos(round(cx), round(cy));
 }
 
 void CPlayScene::Render()
 {
 	if (map)
-	{
 		this->map->Render();
-	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();
@@ -305,7 +317,7 @@ void CPlayScene::Unload()
 
 void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	CMario *mario = ((CPlayScene*)scence)->GetPlayer();
 	switch (KeyCode)
