@@ -22,7 +22,7 @@ private:
 	int MapHeight;
 
 public:
-	Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles, int _map_file_map);
+	Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles);
 	~Map();
 	void Draw(float x, float y);
 	void Render();

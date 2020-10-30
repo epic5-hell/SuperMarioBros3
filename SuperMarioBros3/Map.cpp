@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "Textures.h"
 
-Map::Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles, int _map_file_map)
+Map::Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles)
 {
 	this->TileSet = CTextures::GetInstance()->Get(_idTileSet);
 	this->TotalRowsOfTileSet = _totalRowsTileSet;
