@@ -9,8 +9,7 @@
 
 using namespace std;
 
-CPlayScene::CPlayScene(int id, LPCWSTR filePath):
-	CScene(id, filePath)
+CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 {
 	key_handler = new CPlayScenceKeyHandler(this);
 }
@@ -96,7 +95,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
 // [ANIMATIONS]
-void CPlayScene::_ParseSection_ANIMATIONS(string line)
+void CPlayScene::_ParseSection_ANIMATIONS(string line)	
 {
 	vector<string> tokens = split(line);
 
@@ -174,8 +173,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
+	/*case OBJECT_TYPE_BRICK: 
+	{
+		int type = atoi(tokens[4].c_str());
+		obj = new CBrick(type);
+		break;
+	}*/
 	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;*/
-	/*case OBJECT_TYPE_BRICK: obj = new CBrick(); break;*/
 	/*case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;*/
 	/*case OBJECT_TYPE_PORTAL:
 		{	
@@ -270,20 +274,25 @@ void CPlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	CGame *game = CGame::GetInstance();
+	float ScreenWidth = game->GetScreenWidth();
+	float ScreenHeight = game->GetScreenHeight();
+	float MapWidth = map->GetMapWidth();
+	float MapHeight = map->GetMapHeight();
 
-	if (map != nullptr && (cx > map->GetMapWidth() - game->GetScreenWidth() / 2))
-		cx = map->GetMapWidth() - game->GetScreenWidth();
-	else if (cx < game->GetScreenWidth() / 2)
+	// update camera following to mario
+	if (map != nullptr && (cx > MapWidth - ScreenWidth / 2))
+		cx = MapWidth - ScreenWidth;
+	else if (cx < ScreenWidth / 2)
 		cx = 0;
 	else
-		cx -= game->GetScreenWidth() / 2;
+		cx -= ScreenWidth / 2;
 
-	if (map != nullptr && (cy > map->GetMapHeight() - game->GetScreenHeight() / 2))
-		cy = map->GetMapHeight() - game->GetScreenHeight();
-	else if (cy < game->GetScreenHeight() / 2)
+	if (map != nullptr && (cy > MapHeight - ScreenHeight / 2))
+		cy = MapHeight - ScreenHeight;
+	else if (cy < ScreenHeight / 2)
 		cy = 0;
 	else
-		cy -= game->GetScreenHeight() / 2;
+		cy -= ScreenHeight / 2;	
 
 	CGame::GetInstance()->SetCamPos(round(cx), round(cy));
 }
