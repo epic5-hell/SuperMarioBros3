@@ -4,8 +4,10 @@
 #define BRICK_BBOX_WIDTH  16
 #define BRICK_BBOX_HEIGHT 16
 
-#define BRICK_NORMAL	0
-#define BRICK_BIG		1
+#define BRICK_TYPE_NORMAL		 0
+#define BRICK_TYPE_BIG			 1
+#define BRICK_TYPE_QUESTION_MARK 2
+
 
 
 class CBrick : public CGameObject

@@ -12,7 +12,11 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEX
 	this->texture = tex;
 }
 
-CSprite::~CSprite() {}
+CSprite::~CSprite() 
+{
+	/*delete this->texture;
+	this->texture = nullptr;*/
+}
 
 
 CSprites * CSprites::__instance = NULL;

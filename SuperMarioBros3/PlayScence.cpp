@@ -173,12 +173,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	/*case OBJECT_TYPE_BRICK: 
+	case OBJECT_TYPE_BRICK: 
 	{
 		int type = atoi(tokens[4].c_str());
 		obj = new CBrick(type);
 		break;
-	}*/
+	}
 	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;*/
 	/*case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;*/
 	/*case OBJECT_TYPE_PORTAL:
@@ -300,7 +300,10 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	if (map)
+	{
 		this->map->Render();
+	}
+		
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();
