@@ -66,12 +66,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += min_tx*dx + nx*0.4f;
 		y += min_ty*dy + ny*0.4f;
 
-		//if (nx != 0)
-		//{
-		//	vx = 0;
-		//}
-
-		if (ny!=0) vy = 0;
+		if (ny != 0) vy = 0;
 
 		if (ny < 0) // mario is jumping
 		{
@@ -134,30 +129,6 @@ void CMario::Render()
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
 
-	/*else if (level == MARIO_LEVEL_BIG)
-	{
-		if (vx == 0)
-		{
-			if (nx > 0) ani = MARIO_ANI_BIG_IDLE_RIGHT;
-			else ani = MARIO_ANI_BIG_IDLE_LEFT;
-		}
-		else if (vx > 0)
-			ani = MARIO_ANI_BIG_WALKING_RIGHT;
-		else ani = MARIO_ANI_BIG_WALKING_LEFT;
-	}
-	else if (level == MARIO_LEVEL_SMALL)
-	{
-		if (vx == 0)
-		{
-			if (nx > 0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
-			else ani = MARIO_ANI_SMALL_IDLE_LEFT;
-		}
-		else if (vx > 0)
-			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-		else ani = MARIO_ANI_SMALL_WALKING_LEFT;
-	}*/
-
-
 	// state = IDLE
 	else if (state == MARIO_STATE_IDLE)
 	{
@@ -168,8 +139,8 @@ void CMario::Render()
 		}
 		else if (level == MARIO_LEVEL_SMALL)
 		{
-			if (nx > 0) ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-			else ani = MARIO_ANI_SMALL_WALKING_LEFT;
+			if (nx > 0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
+			else ani = MARIO_ANI_SMALL_IDLE_LEFT;
 		}
 	}
 
@@ -185,14 +156,12 @@ void CMario::Render()
 			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
 		}
 	}
-
 	else if (vx < 0) // mario is walking left
 	{
 		if (level == MARIO_LEVEL_BIG)
 		{
 			ani = MARIO_ANI_BIG_WALKING_LEFT;
 		}
-
 		else if (level == MARIO_LEVEL_SMALL)
 		{
 			ani = MARIO_ANI_SMALL_WALKING_LEFT;
@@ -208,11 +177,11 @@ void CMario::Render()
 			if (nx > 0) ani = MARIO_ANI_BIG_JUMPING_RIGHT;
 			else ani = MARIO_ANI_BIG_JUMPING_LEFT;
 		}
-		//else if(level == MARIO_LEVEL_SMALL)
-		//{
-		//	if (nx > 0) ani = MARIO_ANI_SMALL_JUMPING_RIGHT;
-		//	else ani = MARIO_ANI_SMALL_JUMPING_LEFT;
-		//}
+		else if(level == MARIO_LEVEL_SMALL)
+		{
+			if (nx > 0) ani = MARIO_ANI_SMALL_JUMPING_RIGHT;
+			else ani = MARIO_ANI_SMALL_JUMPING_LEFT;
+		}
 	}
 
 	//// state = BRAKE
@@ -236,7 +205,7 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
