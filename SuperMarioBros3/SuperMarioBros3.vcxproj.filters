@@ -4,34 +4,16 @@
     <ClCompile Include="Animations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scence.cpp">
@@ -44,29 +26,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Block.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
@@ -91,7 +77,25 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +104,12 @@
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{b8260085-b273-4f86-a486-780582f389cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{85496d28-617e-4b8a-857f-16c78ec64ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{fef99781-b591-45dd-85d6-d5ac394b29f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

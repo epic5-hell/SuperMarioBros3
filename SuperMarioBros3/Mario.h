@@ -31,23 +31,20 @@
 #define MARIO_ANI_BIG_WALKING_LEFT		3
 #define MARIO_ANI_BIG_JUMPING_RIGHT		4
 #define MARIO_ANI_BIG_JUMPING_LEFT		5
-#define MARIO_ANI_BIG_BRAKING_RIGHT		8	
-#define MARIO_ANI_BIG_BRAKING_LEFT		9
+//#define MARIO_ANI_BIG_BRAKING_RIGHT		8	
+//#define MARIO_ANI_BIG_BRAKING_LEFT		9
 
 
-#define MARIO_ANI_SMALL_IDLE_RIGHT		20
-#define MARIO_ANI_SMALL_IDLE_LEFT		21
-#define MARIO_ANI_SMALL_WALKING_RIGHT	22
-#define MARIO_ANI_SMALL_WALKING_LEFT	23
-#define MARIO_ANI_SMALL_JUMPING_RIGHT	24
-#define MARIO_ANI_SMALL_JUMPING_LEFT	25
-#define MARIO_ANI_SMALL_BRAKING_RIGHT	28	
-#define MARIO_ANI_SMALL_BRAKING_LEFT	29
+#define MARIO_ANI_SMALL_IDLE_RIGHT		6 //20
+#define MARIO_ANI_SMALL_IDLE_LEFT		7 //21
+#define MARIO_ANI_SMALL_WALKING_RIGHT	8 //22
+#define MARIO_ANI_SMALL_WALKING_LEFT	9 //23
+//#define MARIO_ANI_SMALL_JUMPING_RIGHT	24
+//#define MARIO_ANI_SMALL_JUMPING_LEFT	25
+//#define MARIO_ANI_SMALL_BRAKING_RIGHT	28	
+//#define MARIO_ANI_SMALL_BRAKING_LEFT	29
 
-#define MARIO_ANI_SMALL_WALKING_RIGHT	6
-#define MARIO_ANI_SMALL_WALKING_LEFT	7
-
-#define MARIO_ANI_DIE					8
+#define MARIO_ANI_DIE					10
 
 
 #define	MARIO_LEVEL_SMALL				1
@@ -61,6 +58,8 @@
 
 #define MARIO_UNTOUCHABLE_TIME			5000
 
+#define MARIO_DIFFERENCE_HEIGHT			12
+
 
 class CMario : public CGameObject
 {
@@ -71,7 +70,7 @@ class CMario : public CGameObject
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
-	bool IsJumping = false;
+	bool jump = false;
 	bool brake;
 
 public: 
@@ -81,11 +80,65 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void Reset();
-	void SetState(int state);
-	void SetLevel(int l) { level = l; }
+	void SetState(int _state);
+	void SetLevel(int _level)
+	{
+		int oldLevel = this->level;
+		this->level = _level;
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			y += MARIO_DIFFERENCE_HEIGHT;
+		}
+		else if (oldLevel == MARIO_LEVEL_SMALL)
+		{
+			y -= MARIO_DIFFERENCE_HEIGHT;
+		}
+	}
+	//int GetLevel() { return level; }
+
+	bool GetJump()
+	{
+		return jump;
+	}
+	void SetJump(bool _jump)
+	{
+		this->jump = _jump;
+	}
+	/*
+	bool GetBrake()
+	{
+		return brake;
+	}
+	void SetBrake(bool _brake)
+	{
+		brake = _brake;
+		return;
+	}*/
+
 	void CalculatePotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
 
+	//bool BrakeCalculation()
+	//{
+	//	if (nx * vx < 0)
+	//	{
+	//		if (nx > 0)
+	//		{
+	//			vx += MARIO_WALKING_SPEED / 30;
+	//		}
+	//		else
+	//		{
+	//			vx -= MARIO_WALKING_SPEED / 30;
+	//		}
+	//		brake = true;
+	//		return true;
+	//	}
+	//	else
+	//	{
+	//		brake = false;
+	//	}
 
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	
+	//	return false;
+	//}
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -6,6 +6,9 @@
 #include "Textures.h"
 #include "Sprites.h"
 #include "Portal.h"
+#include "Map.h"
+#include "Block.h"
+#include "Brick.h"
 
 using namespace std;
 
@@ -31,6 +34,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_GOOMBA				2
 #define OBJECT_TYPE_KOOPAS				3
+// #define OBJECT_TYPE_BLOCK				4
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -173,15 +177,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	case OBJECT_TYPE_BRICK: 
+	case OBJECT_TYPE_BRICK:
 	{
 		int type = atoi(tokens[4].c_str());
 		obj = new CBrick(type);
 		break;
 	}
-	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;*/
-	/*case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;*/
-	/*case OBJECT_TYPE_PORTAL:
+	/*case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
+	case OBJECT_TYPE_BLOCK: obj = new CBlock(); break;
+	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
+	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
 			float b = atof(tokens[5].c_str());
@@ -335,7 +341,12 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
+		if (mario->GetJump() == false)
+		{
+			mario->SetState(MARIO_STATE_JUMP);
+			mario->SetJump(true);
+			
+		}
 		break;
 	case DIK_A: 
 		mario->Reset();

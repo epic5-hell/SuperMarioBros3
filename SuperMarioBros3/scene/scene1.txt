@@ -16,7 +16,7 @@
 10001	246	154	260	181	0
 
 # walk right
-10002	275	154	290	181	0		
+10002	275	154	290	181	0
 10003	305	155	321	181	0
 
 # idle left
@@ -26,8 +26,16 @@
 10012	155	154	170	181	0
 10013	125	154	140	181	0
 
+# jump right
+10014	395	275	411	301	0
+
+# jump left
+10015	35	275	51	301	0
+
+
+
 # die
-10099	215	120	231	135	0
+10099	215	120	231	136	0
 
 # SMALL MARIO
 # idle right
@@ -92,26 +100,85 @@
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
-
+1	400	401	500	501	506	
 # ==== MARIO =========
-#idle BIG right
+# idle BIG right
 400	10001	100
-#idle BIG left
+# idle BIG left
 401	10011	100
-#idle small right
-402	10021	100
-#idle small left
-403	10031	100
-#walk right big
+# walk right big
 500	10001	100	10002	100	10003	100
-#walk left big
+# walk left big
 501	10011	100	10012	100	10013	100
-#walk right small
-502	10021	100	10022	100	10023	100
-#walk left small
-503	10031	100	10032	100	10033	100
+# jump right big
+506	10014	100
+# jump left big
+507	10015	100
+
+#fly right big
+#504		100		100		100		100		100		100
+#fly left big
+#505		100		100		100		100		100		100
+#brake right big
+#508		50
+#brake right big
+#509		50
+#hold right big
+#510		100		100
+#hold left big
+#511		100		100
+#kick right big
+#512		100
+#kick right big
+#513		100
+#running right big
+#514		50		50		50
+#running left big
+#515		50		50		50
+#sitdown right big
+#528		100
+#sitdown left big
+#529		100
 #die
 599	10099	100
+
+# idle small right
+402	10021	100
+# idle small left
+403	10031	100
+# walk right small
+502	10021	100	10022	100	10023	100
+# walk left small
+503	10031	100	10032	100	10033	100
+
+#jump right small
+# 516		100
+#jump left small
+# 517		100
+#fly right small
+# 518		100		100		100		100		100
+#fly left small
+# 519		100		100		100		100		100
+#brake right small
+# 520		50
+#brake right small
+# 521		50
+#hold right small
+# 522		100		100
+#hold left small
+# 523		100		100
+#kick right small
+# 524		100
+#kick right small
+# 525		100
+#running right small
+# 526		50		50		50
+#running left small
+# 527		50		50		50
+
+
+
+
 
 
 # ==== WOODEN BRICK =========
@@ -162,7 +229,7 @@
 #
 [ANIMATION_SETS]
 # MARIO
-1	400	401	402	403	500	501	502	503	599
+1	400	401	500	501	506	507	599	599	599	402	403	502	503	599
 
 # WOODEN BRICK 
 40	601
