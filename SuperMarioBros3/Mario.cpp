@@ -7,6 +7,7 @@
 
 #include "Goomba.h"
 #include "Portal.h"
+#include "Brick.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -26,7 +27,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	vy += MARIO_GRAVITY*dt;
+	vy += MARIO_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -38,7 +39,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -47,13 +48,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
 	{
-		x += dx; 
+		x += dx;
 		y += dy;
 	}
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0; 
+		float rdx = 0;
 		float rdy = 0;
 
 		// TODO: This is a very ugly designed function!!!!
@@ -62,15 +63,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
-		
+
 		// block every object first!
 		x += min_tx*dx + nx*0.4f;
 		y += min_ty*dy + ny*0.4f;
 
 		if (nx!=0) vx = 0;
+
 		if (ny!=0) vy = 0;
 
-
+		if (ny < 0)
+		{
+			IsJumping = false;
+		}
 		//
 		// Collision logic with other objects
 		//
@@ -100,7 +105,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							if (level > MARIO_LEVEL_SMALL)
 							{
 								level = MARIO_LEVEL_SMALL;
-								StartUntouchable();
+								//StartUntouchable();
 							}
 							else 
 								SetState(MARIO_STATE_DIE);
@@ -125,8 +130,7 @@ void CMario::Render()
 	int ani = -1;
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
-	else
-	if (level == MARIO_LEVEL_BIG)
+	else if (level == MARIO_LEVEL_BIG)
 	{
 		if (vx == 0)
 		{
@@ -154,7 +158,7 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	RenderBoundingBox();
+	/*RenderBoundingBox();*/
 }
 
 void CMario::SetState(int state)
@@ -174,7 +178,7 @@ void CMario::SetState(int state)
 	case MARIO_STATE_JUMP:
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		vy = -MARIO_JUMP_SPEED_Y;
-		break; 
+		break;
 	case MARIO_STATE_IDLE: 
 		vx = 0;
 		break;

@@ -63,8 +63,7 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	coObjects: the list of colliable objects
 	coEvents: list of potential collisions
 */
-void CGameObject::CalcPotentialCollisions(
-	vector<LPGAMEOBJECT> *coObjects, 
+void CGameObject::CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, 
 	vector<LPCOLLISIONEVENT> &coEvents)
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
@@ -80,11 +79,8 @@ void CGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
-void CGameObject::FilterCollision(
-	vector<LPCOLLISIONEVENT> &coEvents,
-	vector<LPCOLLISIONEVENT> &coEventsResult,
-	float &min_tx, float &min_ty, 
-	float &nx, float &ny, float &rdx, float &rdy)
+void CGameObject::FilterCollision(vector<LPCOLLISIONEVENT> &coEvents, vector<LPCOLLISIONEVENT> &coEventsResult,
+	float &min_tx, float &min_ty, float &nx, float &ny, float &rdx, float &rdy)
 {
 	min_tx = 1.0f;
 	min_ty = 1.0f;
