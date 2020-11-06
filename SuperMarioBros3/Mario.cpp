@@ -27,6 +27,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
 
+	CGame* game = CGame::GetInstance();
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -46,8 +47,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
-		x += dx;
-		y += dy;
+		if (vx < 0 && x < 0) 
+			x = 0;
+		if (vy < 0 && y < 0) 
+			y = 0;
 	}
 	else
 	{
@@ -184,20 +187,20 @@ void CMario::Render()
 		}
 	}
 
-	//// state = BRAKE
-	//else if (brake)
-	//{
-	//	if (level == MARIO_LEVEL_BIG)
-	//	{
-	//		if (nx > 0) ani = MARIO_ANI_BIG_BRAKING_RIGHT;
-	//		else ani = MARIO_ANI_BIG_BRAKING_LEFT;
-	//	}
-	//	else if (level == MARIO_LEVEL_SMALL)
-	//	{
-	//		if (nx > 0) ani = MARIO_ANI_SMALL_BRAKING_RIGHT;
-	//		else ani = MARIO_ANI_SMALL_BRAKING_LEFT;
-	//	}
-	//}
+	// state = BRAKE
+	else if (brake)
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			if (nx > 0) ani = MARIO_ANI_BIG_BRAKING_RIGHT;
+			else ani = MARIO_ANI_BIG_BRAKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_SMALL)
+		{
+			if (nx > 0) ani = MARIO_ANI_SMALL_BRAKING_RIGHT;
+			else ani = MARIO_ANI_SMALL_BRAKING_LEFT;
+		}
+	}
 
 
 	int alpha = 255;
@@ -215,20 +218,18 @@ void CMario::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
-		vx = MARIO_WALKING_SPEED;
 		nx = 1;
-		/*if (BrakeCalculation() == false)
+		if (BrakeCalculation() == false)
 		{
-			
-		}*/
+			vx = MARIO_WALKING_SPEED / 2;
+		}
 		break;
 	case MARIO_STATE_WALKING_LEFT:
-		vx = -MARIO_WALKING_SPEED;
 		nx = -1;
-		/*if (BrakeCalculation() == false)
+		if (BrakeCalculation() == false)
 		{
-			
-		}*/
+			vx = -MARIO_WALKING_SPEED / 2;
+		}
 		break;
 	//case MARIO_STATE_RUNNING_RIGHT:
 	//	nx = 1;

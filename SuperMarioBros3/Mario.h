@@ -31,20 +31,20 @@
 #define MARIO_ANI_BIG_WALKING_LEFT		3
 #define MARIO_ANI_BIG_JUMPING_RIGHT		4
 #define MARIO_ANI_BIG_JUMPING_LEFT		5
-//#define MARIO_ANI_BIG_BRAKING_RIGHT		8	
-//#define MARIO_ANI_BIG_BRAKING_LEFT		9
+#define MARIO_ANI_BIG_BRAKING_RIGHT		6
+#define MARIO_ANI_BIG_BRAKING_LEFT		7
 
 
-#define MARIO_ANI_SMALL_IDLE_RIGHT		6 //20
-#define MARIO_ANI_SMALL_IDLE_LEFT		7 //21
-#define MARIO_ANI_SMALL_WALKING_RIGHT	8 //22
-#define MARIO_ANI_SMALL_WALKING_LEFT	9 //23
-#define MARIO_ANI_SMALL_JUMPING_RIGHT	10
-#define MARIO_ANI_SMALL_JUMPING_LEFT	11
-//#define MARIO_ANI_SMALL_BRAKING_RIGHT	28	
-//#define MARIO_ANI_SMALL_BRAKING_LEFT	29
+#define MARIO_ANI_SMALL_IDLE_RIGHT		8
+#define MARIO_ANI_SMALL_IDLE_LEFT		9
+#define MARIO_ANI_SMALL_WALKING_RIGHT	10
+#define MARIO_ANI_SMALL_WALKING_LEFT	11
+#define MARIO_ANI_SMALL_JUMPING_RIGHT	12
+#define MARIO_ANI_SMALL_JUMPING_LEFT	13
+#define MARIO_ANI_SMALL_BRAKING_RIGHT	14
+#define MARIO_ANI_SMALL_BRAKING_LEFT	15
 
-#define MARIO_ANI_DIE					12
+#define MARIO_ANI_DIE					16
 
 
 #define	MARIO_LEVEL_SMALL				1
@@ -104,7 +104,7 @@ public:
 	{
 		this->jump = _jump;
 	}
-	/*
+	
 	bool GetBrake()
 	{
 		return brake;
@@ -113,32 +113,32 @@ public:
 	{
 		brake = _brake;
 		return;
-	}*/
+	}
 
 	void CalculatePotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
 
-	//bool BrakeCalculation()
-	//{
-	//	if (nx * vx < 0)
-	//	{
-	//		if (nx > 0)
-	//		{
-	//			vx += MARIO_WALKING_SPEED / 30;
-	//		}
-	//		else
-	//		{
-	//			vx -= MARIO_WALKING_SPEED / 30;
-	//		}
-	//		brake = true;
-	//		return true;
-	//	}
-	//	else
-	//	{
-	//		brake = false;
-	//	}
+	bool BrakeCalculation()
+	{
+		if (nx * vx < 0)
+		{
+			if (nx > 0)
+			{
+				vx += MARIO_WALKING_SPEED / 30;
+			}
+			else
+			{
+				vx -= MARIO_WALKING_SPEED / 30;
+			}
+			brake = true;
+			return true;
+		}
+		else
+		{
+			brake = false;
+		}
 
-	//	return false;
-	//}
+		return false;
+	}
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

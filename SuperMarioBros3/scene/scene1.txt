@@ -28,11 +28,13 @@
 
 # jump right
 10014	395	275	411	301	0
-
 # jump left
 10015	35	275	51	301	0
 
-
+# brake right
+10016	5	154	21	182	0
+# brake left
+10017	5	154	21	182	0
 
 # die
 10099	215	120	231	136	0
@@ -54,9 +56,13 @@
 
 # jump right
 10034	395	80	411	96	0
-
 # jump left
 10035	35	80	51	96	0
+
+# brake right
+10036	6	0	20	16	0
+# brake left
+10037	426	0	440	16	0
 
 #BRICK
 #wooden brick
@@ -124,9 +130,9 @@
 #fly left big
 #505		100		100		100		100		100		100
 #brake right big
-#508		50
-#brake right big
-#509		50
+508	10016	50
+#brake left big
+509	10017	50
 #hold right big
 #510		100		100
 #hold left big
@@ -163,9 +169,9 @@
 #fly left small
 # 519		100		100		100		100		100
 #brake right small
-# 520		50
+520	10036	50
 #brake right small
-# 521		50
+521	10037	50
 #hold right small
 # 522		100		100
 #hold left small
@@ -231,7 +237,7 @@
 #
 [ANIMATION_SETS]
 # MARIO
-1	400	401	500	501	506	507	402	403	502	503	516	517	599
+1	400	401	500	501	506	507	508	509	402	403	502	503	516	517	520	521	599
 
 # WOODEN BRICK 
 40	601
