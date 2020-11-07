@@ -47,10 +47,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
-		if (vx < 0 && x < 0) 
-			x = 0;
-		if (vy < 0 && y < 0) 
-			y = 0;
+		x += dx;
+		y += dy;
 	}
 	else
 	{
@@ -74,6 +72,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (ny < 0) // mario is jumping
 		{
 			jump = false;
+			brake = false;
 		}
 		//
 		// Collision logic with other objects
@@ -124,6 +123,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
+	if (vx < 0 && x < 0) x = 0; // right edge
+	if (vy < 0 && y < 0) y = 0; //max height
 }
 
 void CMario::Render()
@@ -202,7 +204,6 @@ void CMario::Render()
 		}
 	}
 
-
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
@@ -221,14 +222,14 @@ void CMario::SetState(int state)
 		nx = 1;
 		if (BrakeCalculation() == false)
 		{
-			vx = MARIO_WALKING_SPEED / 2;
+			vx = MARIO_WALKING_SPEED;
 		}
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		nx = -1;
 		if (BrakeCalculation() == false)
 		{
-			vx = -MARIO_WALKING_SPEED / 2;
+			vx = -MARIO_WALKING_SPEED;
 		}
 		break;
 	//case MARIO_STATE_RUNNING_RIGHT:
