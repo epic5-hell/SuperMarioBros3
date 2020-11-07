@@ -64,6 +64,34 @@
 # brake left
 10037	6	0	20	16	0
 
+# RACCOON MARIO
+# idle right
+10041	243	634	264	662	0
+
+# walk right
+10042	272	634	294	662	0
+10043	303	634	324	661	0
+
+# idle left
+10044	182	634	203	662	0
+
+# walk left
+10045	152	634	174	662	0
+10046	122	634	143	661	0
+
+# jump right
+10047	392	754	415	781	0
+
+# jump left
+10048	31	754	54	781	0
+
+# brake right
+10049	5 	633	21	663	0
+
+# brake left
+10050	425	633	441	663	0
+
+
 #BRICK
 #wooden brick
 20000	408	225	424	241	20
@@ -185,9 +213,22 @@
 #running left small
 # 527		50		50		50
 
-
-
-
+# idle raccoon right
+2000	10041	100
+# idle raccoon left
+2001	10044	100
+# walk raccoon right
+2002	10041	100	10042	100	10043	100
+# walk raccoon left
+2003	10044	100	10045	100	10046	100
+# jump raccoon right
+2004	10047	100
+# jump raccoon left
+2005	10048	100
+# brake raccoon right
+2006	10049	50
+# brake raccoon left
+2007	10050	50
 
 
 # ==== WOODEN BRICK =========
@@ -237,7 +278,7 @@
 #
 [ANIMATION_SETS]
 # MARIO
-1	400	401	500	501	506	507	508	509	402	403	502	503	516	517	520	521	599
+1	400	401	500	501	506	507	508	509	402	403	502	503	516	517	520	521	2000	2001	2002	2003	2004	2005	2006	2007	599
 
 # WOODEN BRICK 
 40	601

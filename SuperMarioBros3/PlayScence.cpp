@@ -338,6 +338,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	CMario *mario = ((CPlayScene*)scence)->GetPlayer();
+	if (mario->GetState() == MARIO_STATE_DIE) return;
+
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
@@ -345,15 +347,16 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		{
 			mario->SetState(MARIO_STATE_JUMP);
 			mario->SetJump(true);
-			
 		}
 		break;
 	case DIK_A: 
 		mario->Reset();
 		break;
 	case DIK_W:
-		if (mario->GetLevel() == MARIO_LEVEL_BIG)
-			mario->SetLevel(MARIO_LEVEL_SMALL);
+		mario->SetLevel(MARIO_LEVEL_SMALL);
+		break;
+	case DIK_Q:
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		break;
 	}
 }
