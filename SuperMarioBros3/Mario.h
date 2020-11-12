@@ -1,11 +1,15 @@
 #pragma once
 #include "GameObject.h"
 
-#define MARIO_WALKING_SPEED				0.2f 
-//0.1f
-#define MARIO_SPEED_UP					0.008f
+#define MARIO_WALKING_SPEED				0.2f
+#define MARIO_ACCELERATION				0.008f
+#define MARIO_RUNNING_SPEED				0.056f 
 #define MARIO_SPEED_DOWN				0.01f
-#define MARIO_SPEED_RUN					0.056f
+
+//0.1f
+//#define MARIO_SPEED_UP					0.008f
+//#define MARIO_SPEED_DOWN				0.01f
+//#define MARIO_SPEED_RUN					0.056f
 
 #define MARIO_JUMP_SPEED_Y				0.5f
 #define MARIO_JUMP_DEFLECT_SPEED		0.2f
@@ -32,6 +36,8 @@
 #define MARIO_ANI_BIG_WALKING_LEFT			3
 #define MARIO_ANI_BIG_JUMPING_RIGHT			4
 #define MARIO_ANI_BIG_JUMPING_LEFT			5
+#define MARIO_ANI_BIG_BRAKING_RIGHT			6
+#define MARIO_ANI_BIG_BRAKING_LEFT			7
 //#define MARIO_ANI_BIG_RUNNING_RIGHT		6
 //#define MARIO_ANI_BIG_RUNNING_LEFT		7
 //#define MARIO_ANI_BIG_RUNJUMPING_RIGHT	8
@@ -44,8 +50,7 @@
 //#define MARIO_ANI_BIG_DUCKING_LEFT		15
 //#define MARIO_ANI_BIG_KICKING_RIGHT		16
 //#define MARIO_ANI_BIG_KICKING_LEFT		17
-#define MARIO_ANI_BIG_BRAKING_RIGHT			6
-#define MARIO_ANI_BIG_BRAKING_LEFT			7
+
 
 // SMALL
 #define MARIO_ANI_SMALL_IDLE_RIGHT		8
@@ -79,8 +84,8 @@
 //#define MARIO_ANI_RACCOON_DUCKING_LEFT	26
 //#define MARIO_ANI_RACCOON_SLIDING_RIGHT	25
 //#define MARIO_ANI_RACCOON_SLIDING_LEFT	26
-#define MARIO_ANI_RACCOON_SKIDDING_RIGHT	19
-#define MARIO_ANI_RACCOON_SKIDDING_LEFT		20
+#define MARIO_ANI_RACCOON_BRAKING_RIGHT		19
+#define MARIO_ANI_RACCOON_SKI_BRAKING_LEFT	20
 //#define MARIO_ANI_RACCOON_HOLDING_RIGHT	25
 //#define MARIO_ANI_RACCOON_HOLDING_LEFT	26
 //#define MARIO_ANI_RACCOON_SPINNING_RIGHT	27
@@ -106,7 +111,7 @@
 #define	MARIO_LEVEL_RACCOON				3
 #define	MARIO_LEVEL_FIRE				4
 
-#define MARIO_BIG_BBOX_WIDTH			12
+#define MARIO_BIG_BBOX_WIDTH			15
 #define MARIO_BIG_BBOX_HEIGHT			27
 
 #define MARIO_SMALL_BBOX_WIDTH			13
@@ -136,8 +141,6 @@ class CMario : public CGameObject
 	bool brake;
 
 public:
-	bool IsReadyJump;
-	bool IsTouchingGround;
 	CMario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
@@ -160,6 +163,7 @@ public:
 	}
 	int GetLevel() { return level; }
 
+	// jump
 	bool GetJump()
 	{
 		return jump;
@@ -169,6 +173,7 @@ public:
 		this->jump = _jump;
 	}
 	
+	//brake
 	bool GetBrake()
 	{
 		return brake;
@@ -179,7 +184,10 @@ public:
 		return;
 	}
 
+	
 	void CalculatePotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
+
+
 
 	bool BrakeCalculation()
 	{
@@ -203,6 +211,5 @@ public:
 
 		return false;
 	}
-
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

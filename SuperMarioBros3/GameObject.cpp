@@ -73,8 +73,14 @@ void CGameObject::CalcPotentialCollisions(
 	{
 		if (dynamic_cast<CBrick*>(coObjects->at(i)) && vy < 0)
 		{
-			continue;
+			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
+			if (brick->getType() == BRICK_TYPE_BLOCK)
+			{
+				DebugOut(L"BRICK_TYPE_BLOCK");
+				continue;
+			}
 		}
+		
 
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 

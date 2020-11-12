@@ -18,8 +18,6 @@ CMario::CMario(float x, float y) : CGameObject()
 	this->x = x; 
 	this->y = y;
 
-	IsReadyJump = true;
-	IsTouchingGround = true;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -50,19 +48,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
-
-		/*x += dx;
-		y += dy;*/
-		if (x + dx < 0)
-			x = 0;
-		else
-			x += dx;
-
-
-		if (y + dy < -30)
-			y = -30;
-		else
-			y += dy;
+		x += dx;
+		y += dy;
 
 		//IsTouchingGround = false;
 	}
@@ -83,8 +70,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += min_tx*dx + nx*0.4f;
 		y += min_ty*dy + ny*0.4f;
 
-
-
 		if (ny != 0) vy = 0;
 
 		if (ny < 0) // mario is jumping
@@ -92,14 +77,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			jump = false;
 			brake = false;
 		}
-		
 
 		//
 		// Collision logic with other objects
 		//
-
-
-		
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -135,44 +116,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 				}
 			} // if Portal
-			else if (dynamic_cast<CBrick*>(e->obj))
-			{
-				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				
-				switch (brick->getType())
-				{
-				case BRICK_TYPE_NORMAL:
-
-					break;
-				case BRICK_TYPE_BLOCK:
-					if (e->ny == -1)
-					{
-						//BasicCollision(min_tx, min_ty, e->nx, e->ny, x0, y0, objectLeft, objectTop, objectRight, objectBottom);
-						if (e->ny > 0)
-						{
-							y += dy;
-						}
-						else if (e->nx != 0)
-						{
-							x += dx;
-						}
-						else
-						{
-							if (ny != 0) vy = 0;
-						}
-					}
-					else
-					{
-						
-					}
-					break;
-				case BRICK_TYPE_QUESTION:
-					
-					break;
-				}
-		
-				
-			}
 			else if (dynamic_cast<CPortal *>(e->obj))
 			{
 				CPortal *p = dynamic_cast<CPortal *>(e->obj);
@@ -317,7 +260,7 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMario::SetState(int state)

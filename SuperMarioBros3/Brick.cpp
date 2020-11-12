@@ -1,13 +1,13 @@
 #include "Brick.h"
 
-CBrick::CBrick(int _type)
+CBrick::CBrick(int brick_type)
 {
-	this->type = _type;
+	type = brick_type;
 }
 void CBrick::Render()
 {
 	animation_set->at(0)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
