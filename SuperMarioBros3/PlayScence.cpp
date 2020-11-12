@@ -33,7 +33,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_GOOMBA				2
 #define OBJECT_TYPE_KOOPAS				3
-#define OBJECT_TYPE_BLOCK				4
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -377,6 +376,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
+		
 		mario->SetState(MARIO_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		mario->SetState(MARIO_STATE_WALKING_LEFT);

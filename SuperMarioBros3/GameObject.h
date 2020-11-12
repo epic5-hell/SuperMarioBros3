@@ -54,10 +54,9 @@ public:
 	float vx;
 	float vy;
 
-	int DebugAlpha = 0;
-	int DebugTag = 0;
 
 	int nx;	 
+	int ny;
 
 	int state;
 
@@ -72,9 +71,6 @@ public:
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
-
-	void SetDebugAlpha(int Da) { DebugAlpha = Da; }
-	void SetDebugTag(int tag) { DebugTag = tag; }
 
 	void RenderBoundingBox();
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }

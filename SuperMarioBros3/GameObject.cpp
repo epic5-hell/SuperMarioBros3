@@ -7,12 +7,14 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include"Brick.h"
 
 CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
-	nx = 1;	
+	nx = 1;
+	ny = 0;
 }
 
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -69,6 +71,11 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
+		if (dynamic_cast<CBrick*>(coObjects->at(i)) && vy < 0)
+		{
+			continue;
+		}
+
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
 		if (e->t > 0 && e->t <= 1.0f)

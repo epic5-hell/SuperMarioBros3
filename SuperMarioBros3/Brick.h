@@ -5,7 +5,7 @@
 #define BRICK_BBOX_HEIGHT	16
 
 #define BRICK_TYPE_NORMAL		0
-#define BRICK_TYPE_BIG_BLOCK	1
+#define BRICK_TYPE_BLOCK		1
 #define BRICK_TYPE_QUESTION		3
 
 class CBrick : public CGameObject
@@ -15,7 +15,7 @@ private:
 	
 
 public:
-	CBrick(int _type = 0) { this->type = _type; }
+	CBrick(int _type);
 	
 	virtual void Render();
 	//virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
