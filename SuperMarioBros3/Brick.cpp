@@ -3,7 +3,7 @@
 void CBrick::Render()
 {
 	animation_set->at(0)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -13,10 +13,3 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 	r = x + BRICK_BBOX_WIDTH;
 	b = y + BRICK_BBOX_HEIGHT;
 }
-
-CBrick::CBrick(int _type)
-{
-	this->type = _type;
-}
-
-CBrick::~CBrick() {}

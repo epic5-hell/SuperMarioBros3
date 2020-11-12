@@ -74,12 +74,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			jump = false;
 			brake = false;
 		}
+		
 		//
 		// Collision logic with other objects
 		//
+		float objectLeft, objectTop, objectRight, objectBottom;
+		float marioLeft, marioTop, marioRight, marioBottom;
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+			GetBoundingBox(marioLeft, marioTop, marioRight, marioBottom);
 
 			// if Goomba
 			if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
@@ -111,8 +115,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 					}
 				}
+			} // if Portal
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+				brick->SetDebugAlpha(255);
+		
+				
 			}
-			// if Portal
 			else if (dynamic_cast<CPortal *>(e->obj))
 			{
 				CPortal *p = dynamic_cast<CPortal *>(e->obj);
@@ -153,6 +163,11 @@ void CMario::Render()
 			if (nx > 0)ani = MARIO_ANI_RACCOON_IDLE_RIGHT;
 			else ani = MARIO_ANI_RACCOON_IDLE_LEFT;
 		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0)ani = MARIO_ANI_FIRE_IDLE_RIGHT;
+			else ani = MARIO_ANI_FIRE_IDLE_LEFT;
+		}
 	}
 
 	// state = WALK
@@ -170,6 +185,10 @@ void CMario::Render()
 		{
 			ani = MARIO_ANI_RACCOON_WALKING_RIGHT;
 		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			ani = MARIO_ANI_FIRE_WALKING_RIGHT;
+		}
 	}
 	else if (vx < 0) // mario is walking left
 	{
@@ -184,6 +203,10 @@ void CMario::Render()
 		else if (level == MARIO_LEVEL_RACCOON)
 		{
 			ani = MARIO_ANI_RACCOON_WALKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			ani = MARIO_ANI_FIRE_WALKING_LEFT;
 		}
 	}
 
@@ -206,6 +229,11 @@ void CMario::Render()
 			if (nx > 0) ani = MARIO_ANI_RACCOON_JUMPING_RIGHT;
 			else ani = MARIO_ANI_RACCOON_JUMPING_LEFT;
 		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0) ani = MARIO_ANI_FIRE_JUMPING_RIGHT;
+			else ani = MARIO_ANI_FIRE_JUMPING_LEFT;
+		}
 	}
 
 	// state = BRAKE
@@ -226,6 +254,11 @@ void CMario::Render()
 			if (nx > 0) ani = MARIO_ANI_RACCOON_BRAKING_RIGHT;
 			else ani = MARIO_ANI_RACCOON_BRAKING_LEFT;
 		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0) ani = MARIO_ANI_FIRE_BRAKING_RIGHT;
+			else ani = MARIO_ANI_FIRE_BRAKING_LEFT;
+		}
 	}
 
 
@@ -234,7 +267,7 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
@@ -317,6 +350,11 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	{
 		right = x + MARIO_RACCOON_BBOX_WIDTH;
 		bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
+	}
+	else if (level == MARIO_LEVEL_FIRE)
+	{
+		right = x + MARIO_FIRE_BBOX_WIDTH;
+		bottom = y + MARIO_FIRE_BBOX_HEIGHT;
 	}
 }
 
