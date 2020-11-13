@@ -211,13 +211,14 @@ public:
 		{
 			if (nx > 0)
 			{
-				vx += MARIO_WALKING_SPEED / 30;
+				vx += MARIO_WALKING_SPEED / 10;
 			}
 			else
 			{
-				vx -= MARIO_WALKING_SPEED / 30;
+				vx -= MARIO_WALKING_SPEED / 10;
 			}
 			brake = true;
+			time_mario = 0;
 			return true;
 		}
 		else

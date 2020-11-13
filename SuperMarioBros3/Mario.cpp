@@ -74,7 +74,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (ny < 0) // mario is jumping
 		{
 			jump = false;
-			brake = false;
 		}
 
 		//
@@ -359,14 +358,14 @@ void CMario::SetState(int state)
 		nx = 1;
 		if (BrakeCalculation() == false)
 		{
-			vx = MARIO_WALKING_SPEED/2;
+			vx = MARIO_WALKING_SPEED;
 		}
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		nx = -1;
 		if (BrakeCalculation() == false)
 		{
-			vx = -MARIO_WALKING_SPEED/2;
+			vx = -MARIO_WALKING_SPEED;
 		}
 		break;
 	case MARIO_STATE_RUNNING_RIGHT:
@@ -403,6 +402,16 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_IDLE: 
 		vx = 0;
+		break;
+	case MARIO_STATE_SPEED_DOWN:
+		if (vx > 0)
+		{
+			vx -= MARIO_SPEED_DOWN;
+		}
+		else if (vx < 0)
+		{
+			vx += MARIO_SPEED_DOWN;
+		}
 		break;
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;

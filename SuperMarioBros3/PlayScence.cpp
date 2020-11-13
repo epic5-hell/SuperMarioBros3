@@ -413,7 +413,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	}
 	else
 	{
-		/*mario->SetMarioTime(0);
+		mario->SetMarioTime(0);
 		if ((mario->nx > 0 && mario->vx <= 0) || (mario->nx < 0 && mario->vx >= 0))
 		{
 			mario->SetState(MARIO_STATE_IDLE);
@@ -421,7 +421,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		if (mario->vx != 0)
 		{
 			mario->SetState(MARIO_STATE_SPEED_DOWN);
-		}*/
+		}
 		mario->SetState(MARIO_STATE_IDLE);
 	}
 
