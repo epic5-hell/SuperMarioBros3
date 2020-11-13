@@ -73,7 +73,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		if (ny < 0) // mario is jumping
 		{
-			jump = false;
+			jumping = false;
 		}
 
 		//
@@ -139,7 +139,7 @@ void CMario::Render()
 	// opportunity: fly, fall, turning tail, hold, fire, jump
 
 	// state = JUMP
-	else if (jump == true)
+	else if (jumping == true)
 	{
 		if (level == MARIO_LEVEL_BIG)
 		{
@@ -345,7 +345,7 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)

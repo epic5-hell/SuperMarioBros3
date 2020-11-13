@@ -340,10 +340,10 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		if (mario->GetJump() == false)
+		if (mario->GetJumping() == false)
 		{
 			mario->SetState(MARIO_STATE_JUMP);
-			mario->SetJump(true);
+			mario->SetJumping(true);
 		}
 		break;
 	case DIK_A: 
@@ -422,7 +422,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		{
 			mario->SetState(MARIO_STATE_SPEED_DOWN);
 		}
-		mario->SetState(MARIO_STATE_IDLE);
+		//mario->SetState(MARIO_STATE_IDLE);
 	}
 
 }

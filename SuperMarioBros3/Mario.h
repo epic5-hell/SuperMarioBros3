@@ -152,12 +152,18 @@ class CMario : public CGameObject
 	int time_mario = 0;
 	DWORD untouchable_start;
 	DWORD running_start = 0;
+	DWORD turning_start = 0;
+	DWORD flying_start = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
-	bool jump = false;
+	bool jumping = false;
+	bool flying = false;
+
 	bool brake;
 
+	bool canFly = false;
+	
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
@@ -182,25 +188,28 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	//run
 	void StartRunning() { running_start = GetTickCount(); }
+	//fly
+	void StartFlying() { flying_start = GetTickCount(); }
+
 	void Reset();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 	// jump
-	bool GetJump()
+	bool GetJumping()
 	{
-		return jump;
+		return jumping;
 	}
-	void SetJump(bool _jump)
+	void SetJumping(bool _jumping)
 	{
-		this->jump = _jump;
+		this->jumping = _jumping;
 	}
 	
 	//brake
-	bool GetBrake()
+	bool GetBraking()
 	{
 		return brake;
 	}
-	void SetBrake(bool _brake)
+	void SetBraking(bool _brake)
 	{
 		brake = _brake;
 		return;
@@ -246,4 +255,27 @@ public:
 	{
 		time_mario = _time_mario;
 	}
+
+	//fly
+	//DWORD GetFlyingStart()
+	//{
+	//	return flying_start;
+	//}
+	//bool GetFlying()
+	//{
+	//	return flying;
+	//}
+	//void SetFlying(int _flying)
+	//{
+	//	this->flying = _flying;
+	//}
+	//bool GetCanFly()
+	//{
+	//	return canFly;
+	//}
+	//void SetCanFly(bool _canFly)
+	//{
+	//	canFly = _canFly;
+	//	return;
+	//}
 };
