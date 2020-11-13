@@ -2,12 +2,7 @@
 #include <fstream>
 
 #include "PlayScence.h"
-#include "Utils.h"
-#include "Textures.h"
-#include "Sprites.h"
-#include "Portal.h"
-#include "Map.h"
-#include "Brick.h"
+
 
 using namespace std;
 
@@ -380,11 +375,54 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
+	// moving
 	if (game->IsKeyDown(DIK_RIGHT))
-		
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	{
+		if (game->IsKeyDown(DIK_RSHIFT)) //running right
+		{
+			if (mario->GetRunningStart() == 0)
+			{
+				mario->StartRunning();
+			}
+			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			mario->CalculateMarioTimeUp();
+		}
+		else // just walking right
+		{
+			mario->SetMarioTime(0);
+			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
+	}
+
 	else if (game->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
+	{
+		if (game->IsKeyDown(DIK_LSHIFT)) //running left
+		{
+			if (mario->GetRunningStart() == 0)
+			{
+				mario->StartRunning();
+			}
+			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			mario->CalculateMarioTimeUp();
+		}
+		else // just walking left
+		{
+			mario->SetMarioTime(0);
+			mario->SetState(MARIO_STATE_WALKING_LEFT);
+		}
+	}
 	else
+	{
+		/*mario->SetMarioTime(0);
+		if ((mario->nx > 0 && mario->vx <= 0) || (mario->nx < 0 && mario->vx >= 0))
+		{
+			mario->SetState(MARIO_STATE_IDLE);
+		}
+		if (mario->vx != 0)
+		{
+			mario->SetState(MARIO_STATE_SPEED_DOWN);
+		}*/
 		mario->SetState(MARIO_STATE_IDLE);
+	}
+
 }

@@ -76,7 +76,6 @@ void CGameObject::CalcPotentialCollisions(
 			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
 			if (brick->getType() == BRICK_TYPE_BLOCK)
 			{
-				DebugOut(L"BRICK_TYPE_BLOCK");
 				continue;
 			}
 		}

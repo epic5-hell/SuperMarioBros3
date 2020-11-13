@@ -12,8 +12,18 @@ void CBrick::Render()
 
 void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y;
-	r = x + BRICK_BBOX_WIDTH;
-	b = y;
+	if (type == BRICK_TYPE_BLOCK)
+	{
+		l = x;
+		t = y;
+		r = x + BRICK_BBOX_WIDTH;
+		b = y;
+	}
+	else // BRICK_TYPE_NORMAL
+	{
+		l = x;
+		t = y;
+		r = x + BRICK_BBOX_WIDTH;
+		b = y+BRICK_BBOX_HEIGHT;
+	}
 }

@@ -8,7 +8,9 @@
 #include "Goomba.h"
 #include "Koopas.h"
 #include "Map.h"
-
+#include "Utils.h"
+#include "Sprites.h"
+#include "Portal.h"
 
 class CPlayScene: public CScene
 {

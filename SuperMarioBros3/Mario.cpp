@@ -9,7 +9,7 @@
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_BIG;
+	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 
@@ -28,7 +28,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
 
-	CGame* game = CGame::GetInstance();
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -138,6 +137,33 @@ void CMario::Render()
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
 
+	// opportunity: fly, fall, turning tail, hold, fire, jump
+
+	// state = JUMP
+	else if (jump == true)
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			if (nx > 0) ani = MARIO_ANI_BIG_JUMPING_RIGHT;
+			else ani = MARIO_ANI_BIG_JUMPING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_SMALL)
+		{
+			if (nx > 0) ani = MARIO_ANI_SMALL_JUMPING_RIGHT;
+			else ani = MARIO_ANI_SMALL_JUMPING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (nx > 0) ani = MARIO_ANI_RACCOON_JUMPING_RIGHT;
+			else ani = MARIO_ANI_RACCOON_JUMPING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0) ani = MARIO_ANI_FIRE_JUMPING_RIGHT;
+			else ani = MARIO_ANI_FIRE_JUMPING_LEFT;
+		}
+	}
+
 	// state = IDLE
 	else if (state == MARIO_STATE_IDLE)
 	{
@@ -160,72 +186,6 @@ void CMario::Render()
 		{
 			if (nx > 0)ani = MARIO_ANI_FIRE_IDLE_RIGHT;
 			else ani = MARIO_ANI_FIRE_IDLE_LEFT;
-		}
-	}
-
-	// state = WALK
-	else if (vx > 0) // mario is walking right
-	{
-		if (level == MARIO_LEVEL_BIG)
-		{
-			ani = MARIO_ANI_BIG_WALKING_RIGHT;
-		}
-		else if (level == MARIO_LEVEL_SMALL)
-		{
-			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-		}
-		else if (level == MARIO_LEVEL_RACCOON)
-		{
-			ani = MARIO_ANI_RACCOON_WALKING_RIGHT;
-		}
-		else if (level == MARIO_LEVEL_FIRE)
-		{
-			ani = MARIO_ANI_FIRE_WALKING_RIGHT;
-		}
-	}
-	else if (vx < 0) // mario is walking left
-	{
-		if (level == MARIO_LEVEL_BIG)
-		{
-			ani = MARIO_ANI_BIG_WALKING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_SMALL)
-		{
-			ani = MARIO_ANI_SMALL_WALKING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_RACCOON)
-		{
-			ani = MARIO_ANI_RACCOON_WALKING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_FIRE)
-		{
-			ani = MARIO_ANI_FIRE_WALKING_LEFT;
-		}
-	}
-
-	// opportunity: fly, fall, turning tail, hold, fire, jump
-	// state = JUMP
-	if (jump == true)
-	{
-		if (level == MARIO_LEVEL_BIG)
-		{
-			if (nx > 0) ani = MARIO_ANI_BIG_JUMPING_RIGHT;
-			else ani = MARIO_ANI_BIG_JUMPING_LEFT;
-		}
-		else if(level == MARIO_LEVEL_SMALL)
-		{
-			if (nx > 0) ani = MARIO_ANI_SMALL_JUMPING_RIGHT;
-			else ani = MARIO_ANI_SMALL_JUMPING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_RACCOON)
-		{
-			if (nx > 0) ani = MARIO_ANI_RACCOON_JUMPING_RIGHT;
-			else ani = MARIO_ANI_RACCOON_JUMPING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_FIRE)
-		{
-			if (nx > 0) ani = MARIO_ANI_FIRE_JUMPING_RIGHT;
-			else ani = MARIO_ANI_FIRE_JUMPING_LEFT;
 		}
 	}
 
@@ -254,6 +214,132 @@ void CMario::Render()
 		}
 	}
 
+	//	 state = RUN
+	else if (state == MARIO_STATE_RUNNING_RIGHT) //running right
+	{
+		if (vx >= MARIO_RUNNING_SPEED * 4) // MAX SPEED
+		{
+			if (level == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_RUNNING_MAX_SPEED_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_RUNNING_MAX_SPEED_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_RACCOON_RUNNING_MAX_SPEED_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_FIRE_RUNNING_MAX_SPEED_RIGHT;
+			}
+		}
+		else // NORMALLY
+		{
+			if (level == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_RUNNING_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_RUNNING_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_RACCOON_RUNNING_RIGHT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_FIRE_RUNNING_RIGHT;
+			}
+		}
+	}
+	else if (state == MARIO_STATE_RUNNING_LEFT) // running left
+	{
+		if (vx == -MARIO_RUNNING_SPEED * 4) // MAX SPEED
+		{
+			if (level == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_RUNNING_MAX_SPEED_LEFT;
+			}
+			else if (level == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_RUNNING_MAX_SPEED_LEFT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_RACCOON_RUNNING_MAX_SPEED_LEFT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_FIRE_RUNNING_MAX_SPEED_LEFT;
+			}
+		}
+		else // NORMALLY
+		{
+			if (level == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_RUNNING_LEFT;
+			}
+			else if (level == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_RUNNING_LEFT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_RACCOON_RUNNING_LEFT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_FIRE_RUNNING_LEFT;
+			}
+		}
+	}
+
+	// state = WALK
+	else if (nx > 0) // mario is walking right
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			ani = MARIO_ANI_BIG_WALKING_RIGHT;
+		}
+		else if (level == MARIO_LEVEL_SMALL)
+		{
+			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
+		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			ani = MARIO_ANI_RACCOON_WALKING_RIGHT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			ani = MARIO_ANI_FIRE_WALKING_RIGHT;
+		}
+	}
+	else if (nx < 0) // mario is walking left
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			ani = MARIO_ANI_BIG_WALKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_SMALL)
+		{
+			ani = MARIO_ANI_SMALL_WALKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			ani = MARIO_ANI_RACCOON_WALKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			ani = MARIO_ANI_FIRE_WALKING_LEFT;
+		}
+	}
+
+
+
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
@@ -273,44 +359,44 @@ void CMario::SetState(int state)
 		nx = 1;
 		if (BrakeCalculation() == false)
 		{
-			vx = MARIO_WALKING_SPEED;
+			vx = MARIO_WALKING_SPEED/2;
 		}
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		nx = -1;
 		if (BrakeCalculation() == false)
 		{
-			vx = -MARIO_WALKING_SPEED;
+			vx = -MARIO_WALKING_SPEED/2;
 		}
 		break;
-	//case MARIO_STATE_RUNNING_RIGHT:
-	//	nx = 1;
-	//	if (BrakeCalculation() == false)
-	//	{
-	//		if (vx >= MARIO_SPEED_RUN * 4)
-	//		{
-	//			vx = MARIO_SPEED_RUN * 4;
-	//		}
-	//		else
-	//		{
-	//			vx = MARIO_SPEED_UP * 4 ;
-	//		}
-	//	}
-	//	break;
-	//case MARIO_STATE_RUNNING_LEFT:
-	//	nx = 1;
-	//	if (BrakeCalculation() == false)
-	//	{
-	//		if (vx >= MARIO_SPEED_RUN * 4)
-	//		{
-	//			vx = MARIO_SPEED_RUN * 4;
-	//		}
-	//		else
-	//		{
-	//			vx = MARIO_SPEED_UP * 4;
-	//		}
-	//	}
-	//	break;
+	case MARIO_STATE_RUNNING_RIGHT:
+		nx = 1;
+		if (BrakeCalculation() == false)
+		{
+			if (vx >= MARIO_RUNNING_SPEED * 4)
+			{
+				vx = MARIO_RUNNING_SPEED * 4;
+			}
+			else
+			{
+				vx = MARIO_ACCELERATION * 4 * time_mario;
+			}
+		}
+		break;
+	case MARIO_STATE_RUNNING_LEFT:
+		nx = -1;
+		if (BrakeCalculation() == false)
+		{
+			if (vx >= MARIO_RUNNING_SPEED * 4)
+			{
+				vx = MARIO_RUNNING_SPEED * 4;
+			}
+			else
+			{
+				vx = -(MARIO_ACCELERATION * 4 * time_mario);
+			}
+		}
+		break;
 	case MARIO_STATE_JUMP:
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		vy = -MARIO_JUMP_SPEED_Y;
