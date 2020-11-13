@@ -378,7 +378,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	// moving
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
-		if (game->IsKeyDown(DIK_RSHIFT)) //running right
+		if (game->IsKeyDown(DIK_LSHIFT)) //running right
 		{
 			if (mario->GetRunningStart() == 0)
 			{
@@ -393,7 +393,6 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
 		}
 	}
-
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (game->IsKeyDown(DIK_LSHIFT)) //running left

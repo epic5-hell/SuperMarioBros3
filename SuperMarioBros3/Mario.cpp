@@ -358,14 +358,14 @@ void CMario::SetState(int state)
 		nx = 1;
 		if (BrakeCalculation() == false)
 		{
-			vx = MARIO_WALKING_SPEED;
+			vx = MARIO_WALKING_SPEED / 2;
 		}
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		nx = -1;
 		if (BrakeCalculation() == false)
 		{
-			vx = -MARIO_WALKING_SPEED;
+			vx = -MARIO_WALKING_SPEED / 2;
 		}
 		break;
 	case MARIO_STATE_RUNNING_RIGHT:
@@ -386,9 +386,9 @@ void CMario::SetState(int state)
 		nx = -1;
 		if (BrakeCalculation() == false)
 		{
-			if (vx >= MARIO_RUNNING_SPEED * 4)
+			if (vx <= -MARIO_RUNNING_SPEED * 4)
 			{
-				vx = MARIO_RUNNING_SPEED * 4;
+				vx = -MARIO_RUNNING_SPEED * 4;
 			}
 			else
 			{
