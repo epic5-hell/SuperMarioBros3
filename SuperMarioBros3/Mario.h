@@ -172,17 +172,27 @@ class CMario : public CGameObject
 	int time_mario = 0;
 	DWORD untouchable_start;
 	DWORD running_start = 0;
-	DWORD turning_start = 0;
+	DWORD spinning_start = 0;
 	DWORD flying_start = 0;
+	DWORD kicking_start = 0;
+	DWORD shooting_start = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
-	bool jumping = false;
+
+	bool kicking = false;
+	bool holding = false;
+	bool shooting = false;
 	bool flying = false;
+	bool falling = false;
+	bool jumping = false;
+	bool spinning = false;
 
 	bool brake;
 
 	bool canFly = false;
+	bool canHold = false;
+	bool canFall = false;
 	
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
@@ -206,10 +216,11 @@ public:
 	int GetLevel() { return level; }
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	//run
 	void StartRunning() { running_start = GetTickCount(); }
-	//fly
+	void StartSpinning() { spinning_start = GetTickCount(); }
 	void StartFlying() { flying_start = GetTickCount(); }
+	void StartKicking() { kicking_start = GetTickCount(); }
+	void StartShooting() { shooting_start = GetTickCount(); }
 
 	void Reset();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -271,10 +282,6 @@ public:
 			time_mario += 1;
 		}
 	}
-	void SetMarioTime(int _time_mario)
-	{
-		time_mario = _time_mario;
-	}
 
 	//fly
 	DWORD GetFlyingStart()
@@ -297,5 +304,83 @@ public:
 	{
 		canFly = _canFly;
 		return;
+	}
+
+	//fall
+	bool GetFalling()
+	{
+		return falling;
+	}
+	void SetFalling(bool _falling)
+	{
+		this->falling = _falling;
+	}
+	bool GetCanFall()
+	{
+		return canFall;
+	}
+	void SetCanFall(bool _canFall)
+	{
+		canFall = _canFall;
+		return;
+	}
+
+	//kick
+	bool GetKicking()
+	{
+		return kicking;
+	}
+	void SetKicking(bool _kicking)
+	{
+		this->kicking = _kicking;
+	}
+
+	//spin
+	bool GetSpinning()
+	{
+		return spinning;
+	}
+	void SetSpinning(bool _spinning)
+	{
+		this->spinning = _spinning;
+	}
+
+	//hold
+	bool GetHolding()
+	{
+		return holding;
+	}
+	void SetHolding(bool _holding)
+	{
+		this->holding = _holding;
+	}
+	bool GetCanHold()
+	{
+		return canHold;
+	}
+	void SetCanHold(bool _canHold)
+	{
+		canHold = _canHold;
+		return;
+	}
+	
+	//shoot
+	bool GetShooting()
+	{
+		return shooting;
+	}
+	void SetShooting(bool _shooting)
+	{
+		this->shooting = _shooting;
+	}
+
+	
+	int GetMarioTime()
+	{
+		return time_mario;
+	}
+	void SetMarioTime(int _time_mario)
+	{
+		time_mario = _time_mario;
 	}
 };
