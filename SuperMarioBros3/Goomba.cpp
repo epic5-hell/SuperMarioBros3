@@ -68,6 +68,23 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += dy;
 
 	}
+	else
+	{
+		float min_tx, min_ty;
+		float nx = 0;
+		float ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		// TODO: This is a very ugly designed function!!!!
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		// groomba walks on block 
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f;
+
+		if (ny != 0) vy = 0;
+	}
 	// Collision with other Goombas
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
@@ -85,14 +102,12 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
-
 		else // Collisions with the others
 		{
 			if (e->nx != 0 && ny == 0)
 			{
 				vx = -vx;
 			}
-
 		}
 	}
 	if (vx < 0 && x < 0) 
@@ -116,29 +131,15 @@ void CGoomba::Render()
 			ani = GOOMBA_NORMAL_ANI_DIE;
 			state = GOOMBA_STATE_DISAPPEAR;
 		}
-		else if (state == GOOMBA_STATE_WALKING)
+		else if (state == GOOMBA_STATE_DIE_BY_KICK)
 		{
 			ani = GOOMBA_NORMAL_ANI_WALKING;
-			state = GOOMBA_STATE_WALKING;
 		}
+		break;
 	}
+	case GOOMBA_TYPE_WINGS: return;
 	}
-	if (type_goomba == GOOMBA_TYPE_NORMAL)
-	{
-		if (state == GOOMBA_STATE_DIE)
-		{
-			ani = GOOMBA_NORMAL_ANI_DIE;
-		}
-		else if (state == GOOMBA_STATE_WALKING)
-		{
 
-		}
-		else if (state == GOOMBA_STATE_DISAPPEAR)
-		{
-			return;
-		}
-	}
-		ani = GOOMBA_NORMAL_ANI_WALKING;
 
 
 	animation_set->at(ani)->Render(x, y);
@@ -158,5 +159,6 @@ void CGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = -GOOMBA_WALKING_SPEED;
+		break;
 	}
 }
