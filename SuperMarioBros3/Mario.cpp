@@ -220,19 +220,19 @@ void CMario::Render()
 		{
 			if (level == MARIO_LEVEL_SMALL)
 			{
-				ani = MARIO_ANI_SMALL_RUNNING_MAX_SPEED_RIGHT;
+				ani = MARIO_ANI_SMALL_MAX_SPEED_RIGHT;
 			}
 			else if (level == MARIO_LEVEL_BIG)
 			{
-				ani = MARIO_ANI_BIG_RUNNING_MAX_SPEED_RIGHT;
+				ani = MARIO_ANI_BIG_MAX_SPEED_RIGHT;
 			}
 			else if (level == MARIO_LEVEL_RACCOON)
 			{
-				ani = MARIO_ANI_RACCOON_RUNNING_MAX_SPEED_RIGHT;
+				ani = MARIO_ANI_RACCOON_MAX_SPEED_RIGHT;
 			}
 			else if (level == MARIO_LEVEL_FIRE)
 			{
-				ani = MARIO_ANI_FIRE_RUNNING_MAX_SPEED_RIGHT;
+				ani = MARIO_ANI_FIRE_MAX_SPEED_RIGHT;
 			}
 		}
 		else // NORMALLY
@@ -261,19 +261,19 @@ void CMario::Render()
 		{
 			if (level == MARIO_LEVEL_SMALL)
 			{
-				ani = MARIO_ANI_SMALL_RUNNING_MAX_SPEED_LEFT;
+				ani = MARIO_ANI_SMALL_MAX_SPEED_LEFT;
 			}
 			else if (level == MARIO_LEVEL_BIG)
 			{
-				ani = MARIO_ANI_BIG_RUNNING_MAX_SPEED_LEFT;
+				ani = MARIO_ANI_BIG_MAX_SPEED_LEFT;
 			}
 			else if (level == MARIO_LEVEL_RACCOON)
 			{
-				ani = MARIO_ANI_RACCOON_RUNNING_MAX_SPEED_LEFT;
+				ani = MARIO_ANI_RACCOON_MAX_SPEED_LEFT;
 			}
 			else if (level == MARIO_LEVEL_FIRE)
 			{
-				ani = MARIO_ANI_FIRE_RUNNING_MAX_SPEED_LEFT;
+				ani = MARIO_ANI_FIRE_MAX_SPEED_LEFT;
 			}
 		}
 		else // NORMALLY
