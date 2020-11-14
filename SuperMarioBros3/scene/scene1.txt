@@ -2,8 +2,8 @@ jj# id	file_path	transparent_color_r	g	b
 [TEXTURES]
 0	textures\mario.png	68	145	190
 1	textures\mario2.png	68	145	190
-10	textures\enemies.png	156	219	239
-11	textures\enemies-2.png	156	219	239
+10	textures\enemies.png	3	26	110
+11	textures\enemies-2.png	0	128	128
 20	textures\misc.png	176	224	248
 30	map\map1-1_bank.png	255	255	255
 
@@ -45,25 +45,6 @@ jj# id	file_path	transparent_color_r	g	b
 #sit down left
 10016	55	93	69	120	0
 
-#hold idle right
-10017	259	93	273	120	1
-#hold right	
-10018	240	93	255	120	1
-10019	221	93	237	119	1
-#hold idle left
-10020	249	93	263	120	0
-#hold left
-10021	267	93	282	120	0
-10022	285	93	301	119	0
-#duck right
-10023	453	102	467	120	1
-#duck left
-10024	55	102	69	120	0
-#kick right
-10025	195	93	216	120	1
-#kick left
-10026	306	93	327	120	0
-
 # SMALL MARIO
 # idle right
 10101	507	17	519	32	1
@@ -88,22 +69,6 @@ jj# id	file_path	transparent_color_r	g	b
 10111	55	16	71	32	0
 10112	73	16	89	32	0
 
-#hold idle right
-#10115	363	16	377	32	1
-#hold idle left
-#10116	145	16	159	32	0
-#hold right
-#10117	344	16	359	32	1
-#hold left
-#10118	163	16	178	32	0
-#kick right
-#10119	325	16	341	32	1
-#kick left
-#10120	181	16	197	32	0
-#slide right
-#10121	307	16	322	32	1
-#slide left
-#10122	200	16	245	32	0
 # die 
 10199	307	16	323	32	0
 
@@ -138,46 +103,6 @@ jj# id	file_path	transparent_color_r	g	b
 10219	421	351	443	378	1
 #sit down left
 10220	79	351	101	378	0
-
-#fall right
-#10209	368	350	391	377	1
-#10210	343	350	365	378	1
-#fall left
-#10211	131	350	154	377	0
-#10212	157	350	179	378	0
-#fly right
-#10219	185	350	209	377	1
-#10220	211	350	235	377	1
-#10221	237	350	261	378	1
-
-#fly left
-#10222	313	350	337	377	0
-#10223	287	350	311	377	0
-#10224	261	350	285	387	0
-#duck right
-#10225	421	360	443	378	1
-#duck left
-#10226	79	360	101	378	0
-#slide right
-10227	401	384	417	411	1
-#slide left
-#10228	105	384	121	411	0
-#hold right
-#10231	500	384	521	412	1
-#10232	473	384	495	412	1
-#10233	446	384	469	411	1
-#hold left
-#10234	1	384	22	412	0
-#10235	27	384	49	412	0
-#10236	53	384	76	411	0
-#turn right
-#10237	124	350	147	378	1
-#turn back
-#10238	105	350	121	378	1
-#turn left
-#10239	375	350	398	378	0
-#turn forward 
-#10340	357	350	373	378	0
 
 # FIRE MARIO
 #idle right
@@ -271,12 +196,14 @@ jj# id	file_path	transparent_color_r	g	b
 # CLOUD
 60001	160	16	176	32	30
 
-#GOOMBA
-#goomba normal
-#30001	463	20	479	36	11
-#30002	21	20	37	36	10
-#die
-#30003	40	27	56	36	10
+# GOOMBA NORMAL
+# walk
+30001	5	14	21	30	10
+30002	25	14	41	30	10
+# die
+30003	45	21	61	30	10
+
+#GOOMBA WINGS
 
 #KOOPA
 #koopa small red
@@ -419,7 +346,6 @@ jj# id	file_path	transparent_color_r	g	b
 
 #spin left (turn around)
 
-
 # ==== WOODEN BRICK =========
 601	20000	100
 
@@ -432,11 +358,13 @@ jj# id	file_path	transparent_color_r	g	b
 622	20012	100
 623	20013	100
 
-# ==== GOOMBA  =========
+# ==== GOOMBA NORMARL=========
 # walk
 701	30001	100	30002	100
 # die
 702	30003	100
+
+# ==== GOOMBA WINGS ==========
 
 # ==== BLOCK=========
 #pink
@@ -508,14 +436,16 @@ jj# id	file_path	transparent_color_r	g	b
 #CLOUD
 22	1001
 # GOOMBA
-3	701	702
+33	701	702
 # KOOPA
 5001	100001
+
 
 [OBJECTS]
 # -- BRICK--
 #type	x	y	ani
 #type 1 = ground, pipe or cloud, 2 = block, 3 = brick reward
+
 # WOODEN BRICK
 1	2256	304	40
 1	2256	304	40
@@ -854,26 +784,26 @@ jj# id	file_path	transparent_color_r	g	b
 1	1440	192	22
 1	1456	192	22
 
-#==ENEMY==
-#typeOb	x	y	ani	type	start_x	final_x	level
+# === ENEMY ===
 
+#typeOb	x	y	ani
+#type 3 = red koopas, 4 = goomba normal, 5 = goomba wings, 6 = green koopas walk, 7 = green koopas wings
+
+#== MARIO ==
+0	100	300	1
 # GOOMBA
-#type 1: small, 2: ...
-#type 3 = koopa, 4 = goomba
-4	832	384	3	1
-4	880	384	3	1
-4	224	400	3	1
-4	528	400	3	1
-
+#4	832	384	33
+#4	880	384	33
+4	224	400	33
+#4	528	400	33
+			
 # KOOPA
 #type 1: small red, 2: small green, 3: 
 #3	576	368	5001	10	560	512
-3	144	398	5001	10	150	0
+#3	144	398	5001	10	150	0
 
-#== MARIO ==
-0	100.0	300	1
 
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
-50	2256	112	0	2288	304	2
+#50	2256	112	0	2288	304	2

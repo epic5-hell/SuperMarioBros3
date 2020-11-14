@@ -27,8 +27,11 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_MARIO				0
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_BLOCK				2
-#define OBJECT_TYPE_KOOPA				3
-#define OBJECT_TYPE_GOOMBA				4
+#define OBJECT_TYPE_RED_KOOPAS			3
+#define OBJECT_TYPE_NORMAL_GOOMBA		4
+#define	OBJECT_TYPE_WINGS_GOOMBA		5
+#define OBJECT_TYPE_GREEN_KOOPAS_WALK	6
+#define OBJECT_TYPE_GREEN_KOOPAS_WINGS	7
 
 
 #define OBJECT_TYPE_PORTAL				50
@@ -172,19 +175,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	case OBJECT_TYPE_BRICK:
-	{
-		obj = new CBrick(100);
-		break;
-	}
-	case OBJECT_TYPE_BLOCK:
-	{
-		obj = new CBrick(200);
-		break;
-	}
-		/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
-	case OBJECT_TYPE_PORTAL:
+	case OBJECT_TYPE_BRICK: obj = new CBrick(100); break;
+	case OBJECT_TYPE_BLOCK:	obj = new CBrick(200); break;
+	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
+	case OBJECT_TYPE_RED_KOOPAS: obj = new CKoopas(); break;
+	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
 			float b = atof(tokens[5].c_str());
@@ -259,7 +254,7 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
