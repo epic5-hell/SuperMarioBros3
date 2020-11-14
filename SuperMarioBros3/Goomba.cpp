@@ -84,37 +84,39 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += min_ty * dy + ny * 0.4f;
 
 		if (ny != 0) vy = 0;
-	}
-	// Collision with other Goombas
-	for (UINT i = 0; i < coEventsResult.size(); i++)
-	{
-		LPCOLLISIONEVENT e = coEventsResult[i];
 
-		if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
+		// Collision with other Goombas
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-			if (e->nx != 0)
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
 			{
-				if (goomba->GetState() != GOOMBA_STATE_DIE)
+				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+				if (e->nx != 0)
 				{
-					goomba->vx = -goomba->vx;
-					this->vx = -this->vx;
+					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					{
+						goomba->vx = -goomba->vx;
+						this->vx = -this->vx;
+					}
 				}
 			}
-		}
-		else // Collisions with the others
-		{
-			if (e->nx != 0 && ny == 0)
+			else // Collisions with the others
 			{
-				vx = -vx;
+				if (nx != 0 && ny == 0)
+				{
+					vx = -vx;
+				}
 			}
 		}
 	}
 	if (vx < 0 && x < 0) 
 	{
-		x = 0; 
+		
 		vx = -vx;
 	}
+
 }
 
 void CGoomba::Render()
