@@ -410,6 +410,13 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 		}
 	}
+	else if (game->IsKeyDown(DIK_DOWN))    //sit down
+	{
+		if (mario->GetLevel() != MARIO_LEVEL_SMALL)
+		{
+			mario->SetState(MARIO_STATE_SITDOWN);
+		}
+	}
 	else
 	{
 		mario->SetMarioTime(0);

@@ -66,8 +66,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//	x += nx*abs(rdx); 
 
 		// block every object first!
-		x += min_tx*dx + nx*0.4f;
-		y += min_ty*dy + ny*0.4f;
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
 		if (ny != 0) vy = 0;
 
@@ -126,7 +126,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 	if (vx < 0 && x < 0) x = 0; // right edge
-	if (vy < 0 && y < 0) y = 0; //max height
+	//if (vy < 0 && y < 0) y = 0; //max height
 }
 
 void CMario::Render()
@@ -210,6 +210,30 @@ void CMario::Render()
 		{
 			if (nx > 0) ani = MARIO_ANI_FIRE_BRAKING_RIGHT;
 			else ani = MARIO_ANI_FIRE_BRAKING_LEFT;
+		}
+	}
+
+	else if (state == MARIO_STATE_SITDOWN)
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			if (nx > 0) ani = MARIO_ANI_BIG_SITDOWN_RIGHT;
+			else ani = MARIO_ANI_BIG_SITDOWN_LEFT;
+		}
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			if (nx > 0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
+			else ani = MARIO_ANI_SMALL_IDLE_LEFT;
+		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (nx > 0) ani = MARIO_ANI_RACCOON_SITDOWN_RIGHT;
+			else ani = MARIO_ANI_RACCOON_SITDOWN_LEFT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0) ani = MARIO_ANI_FIRE_SITDOWN_RIGHT;
+			else ani = MARIO_ANI_FIRE_SITDOWN_LEFT;
 		}
 	}
 
@@ -337,15 +361,12 @@ void CMario::Render()
 		}
 	}
 
-
-
-
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
 	animation_set->at(ani)->Render(x, y, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
@@ -400,6 +421,9 @@ void CMario::SetState(int state)
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		vy = -MARIO_JUMP_SPEED_Y;
 		break;
+	case MARIO_STATE_SITDOWN:
+		vx = 0;
+		break;
 	case MARIO_STATE_IDLE: 
 		vx = 0;
 		break;
@@ -422,8 +446,12 @@ void CMario::SetState(int state)
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
-	top = y; 
+	top = y;
 
+	if (state == MARIO_STATE_SITDOWN && level != MARIO_LEVEL_SMALL) 
+	{
+		top += 9;
+	}
 	if (level == MARIO_LEVEL_BIG)
 	{
 		right = x + MARIO_BIG_BBOX_WIDTH;
