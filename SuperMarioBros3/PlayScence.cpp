@@ -356,6 +356,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) return;
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		break;
+	case DIK_Z:
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->GetTurning() == false)
+		{
+			mario->StartTurning();
+			mario->SetState(MARIO_STATE_TURNING_TAIL);
+			mario->SetTurning(true);
+		}
 	//case DIK_R:
 	//	if (mario->GetLevel() == MARIO_LEVEL_FIRE) return;
 	//	mario->SetLevel(MARIO_LEVEL_FIRE);
@@ -423,7 +430,6 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		{
 			mario->SetState(MARIO_STATE_SPEED_DOWN);
 		}
-		//mario->SetState(MARIO_STATE_IDLE);
 	}
 
 }

@@ -1,6 +1,6 @@
 jj# id	file_path	transparent_color_r	g	b
 [TEXTURES]
-0	textures\mario.png	68	145	190
+0	textures\mario1.png	68	145	190
 1	textures\mario2.png	68	145	190
 10	textures\enemies.png	3	26	110
 11	textures\enemies-2.png	0	128	128
@@ -44,6 +44,10 @@ jj# id	file_path	transparent_color_r	g	b
 10015	453	93	467	120	1
 #sit down left
 10016	55	93	69	120	0
+#kick right
+10017	195	93	216	120	1
+#kick left
+10018	306	93	327	120	0
 
 # SMALL MARIO
 # idle right
@@ -68,7 +72,10 @@ jj# id	file_path	transparent_color_r	g	b
 #max speed left
 10111	55	16	71	32	0
 10112	73	16	89	32	0
-
+#kick right
+10113	325	16	16	16	1
+#kick left
+10114	181	16	197	32	0
 # die 
 10199	307	16	323	32	0
 
@@ -103,6 +110,32 @@ jj# id	file_path	transparent_color_r	g	b
 10219	421	351	443	378	1
 #sit down left
 10220	79	351	101	378	0
+#kick right
+10221	419	384	441	412	1
+#kick left
+10222	81	384	103	412	0
+
+#turn tail right 1
+10223	124	350	147	378	1
+#turn tail right 2
+10224	149	350	165	378	1
+#turn tail right 3
+10225	375	350	398	378	0
+#turn tail right 4
+10226	105	350	121	378	1
+turn tail right 5
+10227	500	350	521	378	1
+
+#turn tail left 1
+10228	375	350	398	378	0
+#turn tail left 2
+10229	357	350	373	378	0
+#turn tail left 3
+10230	124	350	147	378	1
+#turn tail left 4
+10231	401	350	417	378	0
+#turn tail left 5
+10232	1	350	22	378	0
 
 # FIRE MARIO
 #idle right
@@ -246,18 +279,19 @@ jj# id	file_path	transparent_color_r	g	b
 10013	10015	100
 #sit down left
 10014	10016	100
+#kick right
+10015	10017	100
+#kick left
+10016	10018	100
 
 #hold idle right
 
 #hold idle left
 
-#hold right	
+#hold walk right	
 
-#hold left
+#hold walk left
 
-#kick right
-
-#kick left
 
 #Small mario 
 #idle right
@@ -284,6 +318,11 @@ jj# id	file_path	transparent_color_r	g	b
 10111	10109	25	10110	25
 #max speed left
 10112	10111	25	10112	25
+#kick right
+10113	10113	100
+#kick left
+10114	10114	100
+
 
 #hold idle right
 
@@ -292,10 +331,6 @@ jj# id	file_path	transparent_color_r	g	b
 #hold right
 
 #hold left
-
-#kick right
-
-#kick left
 
 #die
 10199	10199	100
@@ -329,6 +364,14 @@ jj# id	file_path	transparent_color_r	g	b
 10213	10219	100
 #sit down left
 10214	10220	100
+#kick right
+10215	10221	100
+#kick left
+10216	10222	100
+#turn tail right
+10217	10223	80	10224	80	10225	80	10226	80	10227	80
+#turn tail right
+10218	10228	80	10229	80	10230	80	10231	80	10232	80
 
 #fall right
 
@@ -341,10 +384,6 @@ jj# id	file_path	transparent_color_r	g	b
 #hold right
 
 #hold left
-
-#spin right (turn around)
-
-#spin left (turn around)
 
 # ==== WOODEN BRICK =========
 601	20000	100
@@ -397,12 +436,12 @@ jj# id	file_path	transparent_color_r	g	b
 [ANIMATION_SETS]
 # MARIO
 #id	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31	32	33	34	35	36	37	38	39	40	41	42	43	44	45	46	47	48	49	50	51	52	53	54	55	56	57	58	59	60	61	62	63	64	65	66	67	68	69	70	71	72	73	74	75	76	77	78	79	80	81	82	83	84	85	86	87	88	89	90	91	92	93	94	95	96	97	98	99	100
-1	10001	10002	10003	10004	10005	10006	10007	10008	10009	10010	10011	10012	10013	10014	10101	10102	10103	10104	10105	10106	10107	10108	10109	10110	10111	10112	10201	10202	10203	10204	10205	10206	10207	10208	10209	10210	10211	10212	10213	10214	10199
+1	10001	10002	10003	10004	10005	10006	10007	10008	10009	10010	10011	10012	10013	10014	10101	10102	10103	10104	10105	10106	10107	10108	10109	10110	10111	10112	10201	10202	10203	10204	10205	10206	10207	10208	10209	10210	10211	10212	10213	10214	10217	10218	10199
 
 # WOODEN BRICK 
 40	601
 
-# QUESTION MARK BRICK 
+# QUESTION MARK BRICK
 4720	611	612
 
 # GROUND BRICK

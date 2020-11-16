@@ -44,6 +44,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
+	if (GetTickCount() - turning_start > MARIO_TURNING_TIME)
+	{
+		turning = false;
+	}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -115,6 +120,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								SetState(MARIO_STATE_DIE);
 						}
 					}
+
+					else if (level == MARIO_LEVEL_RACCOON && turning)
+					{
+						if (goomba->GetState() != GOOMBA_STATE_DIE_BY_KICK)
+						{
+							goomba->SetState(GOOMBA_STATE_DIE_BY_KICK);
+						}
+					}
 				}
 			} // if Portal
 			/*else if (dynamic_cast<CPortal *>(e->obj))
@@ -140,6 +153,16 @@ void CMario::Render()
 		ani = MARIO_ANI_DIE;
 
 	// opportunity: fly, fall, turning tail, hold, fire, jump
+
+	// state = TURN
+	else if (turning)
+	{
+		if (nx < 0)
+		{
+			ani = MARIO_ANI_RACCOON_TURNING_LEFT;
+		}
+		else ani = MARIO_ANI_RACCOON_TURNING_RIGHT;
+	}
 
 	// state = JUMP
 	else if (jumping == true)
@@ -439,6 +462,9 @@ void CMario::SetState(int state)
 		{
 			vx += MARIO_SPEED_DOWN;
 		}
+		break;
+	case MARIO_STATE_TURNING_TAIL:
+		vx = 0;
 		break;
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;

@@ -36,24 +36,24 @@
 //BIG
 #define MARIO_ANI_BIG_IDLE_RIGHT		0
 #define MARIO_ANI_BIG_IDLE_LEFT			1
-#define MARIO_ANI_BIG_WALKING_RIGHT		2	
+#define MARIO_ANI_BIG_WALKING_RIGHT		2
 #define MARIO_ANI_BIG_WALKING_LEFT		3
 #define MARIO_ANI_BIG_JUMPING_RIGHT		4
 #define MARIO_ANI_BIG_JUMPING_LEFT		5
-//#define MARIO_ANI_BIG_FLYING_RIGHT	6	
-//#define MARIO_ANI_BIG_FLYING_LEFT		7
 #define MARIO_ANI_BIG_BRAKING_RIGHT		6	
 #define MARIO_ANI_BIG_BRAKING_LEFT		7
-//#define MARIO_ANI_BIG_HOLDING_RIGHT		10	
-//#define MARIO_ANI_BIG_HOLDING_LEFT		11
-//#define MARIO_ANI_BIG_KICKING_RIGHT		12	
-//#define MARIO_ANI_BIG_KICKING_LEFT		13
 #define MARIO_ANI_BIG_RUNNING_RIGHT		8
 #define MARIO_ANI_BIG_RUNNING_LEFT		9
 #define MARIO_ANI_BIG_MAX_SPEED_RIGHT	10
 #define MARIO_ANI_BIG_MAX_SPEED_LEFT	11
 #define MARIO_ANI_BIG_SITDOWN_RIGHT		12
 #define MARIO_ANI_BIG_SITDOWN_LEFT		13
+//#define MARIO_ANI_BIG_FLYING_RIGHT	6	
+//#define MARIO_ANI_BIG_FLYING_LEFT		7
+//#define MARIO_ANI_BIG_HOLDING_RIGHT	10	
+//#define MARIO_ANI_BIG_HOLDING_LEFT	11
+//#define MARIO_ANI_BIG_KICKING_RIGHT		14
+//#define MARIO_ANI_BIG_KICKING_LEFT		15
 
 //SMALL
 #define MARIO_ANI_SMALL_IDLE_RIGHT			14
@@ -62,46 +62,47 @@
 #define MARIO_ANI_SMALL_WALKING_LEFT		17
 #define MARIO_ANI_SMALL_JUMPING_RIGHT		18
 #define MARIO_ANI_SMALL_JUMPING_LEFT		19
-//#define MARIO_ANI_SMALL_FLYING_RIGHT		26	
-//#define MARIO_ANI_SMALL_FLYING_LEFT		27
-#define MARIO_ANI_SMALL_BRAKING_RIGHT		20	
+#define MARIO_ANI_SMALL_BRAKING_RIGHT		20
 #define MARIO_ANI_SMALL_BRAKING_LEFT		21
-//#define MARIO_ANI_SMALL_HOLDING_RIGHT		30	
-//#define MARIO_ANI_SMALL_HOLDING_LEFT		31
-//#define MARIO_ANI_SMALL_KICKING_RIGHT		32	
-//#define MARIO_ANI_SMALL_KICKING_LEFT		33
 #define MARIO_ANI_SMALL_RUNNING_RIGHT		22
 #define MARIO_ANI_SMALL_RUNNING_LEFT		23
 #define MARIO_ANI_SMALL_MAX_SPEED_RIGHT		24
 #define MARIO_ANI_SMALL_MAX_SPEED_LEFT		25
+//#define MARIO_ANI_SMALL_KICKING_RIGHT		26
+//#define MARIO_ANI_SMALL_KICKING_LEFT		27
+//#define MARIO_ANI_SMALL_FLYING_RIGHT		26	
+//#define MARIO_ANI_SMALL_FLYING_LEFT		27
+//#define MARIO_ANI_SMALL_HOLDING_RIGHT		30	
+//#define MARIO_ANI_SMALL_HOLDING_LEFT		31
+
+
 
 //RACCOON
 #define MARIO_ANI_RACCOON_IDLE_RIGHT		26
 #define MARIO_ANI_RACCOON_IDLE_LEFT			27
-#define MARIO_ANI_RACCOON_WALKING_RIGHT		28	
+#define MARIO_ANI_RACCOON_WALKING_RIGHT		28
 #define MARIO_ANI_RACCOON_WALKING_LEFT		29        
 #define MARIO_ANI_RACCOON_JUMPING_RIGHT		30
 #define MARIO_ANI_RACCOON_JUMPING_LEFT		31
-//#define MARIO_ANI_RACCOON_FLYING_RIGHT	46	
-//#define MARIO_ANI_RACCOON_FLYING_LEFT		47
-#define MARIO_ANI_RACCOON_BRAKING_RIGHT		32	
+#define MARIO_ANI_RACCOON_BRAKING_RIGHT		32
 #define MARIO_ANI_RACCOON_BRAKING_LEFT		33
-//#define MARIO_ANI_RACCOON_HOLDING_RIGHT		50
-//#define MARIO_ANI_RACCOON_HOLDING_LEFT		51
-//#define MARIO_ANI_RACCOON_KICKING_RIGHT		52
-//#define MARIO_ANI_RACCOON_KICKING_LEFT		53
 #define MARIO_ANI_RACCOON_RUNNING_RIGHT		34
 #define MARIO_ANI_RACCOON_RUNNING_LEFT		35
-//#define MARIO_ANI_RACCOON_SITDOWN_RIGHT		56
-//#define MARIO_ANI_RACCOON_SITDOWN_LEFT		57
-//#define MARIO_ANI_RACCOON_TURNING_RIGHT		58	
-//#define MARIO_ANI_RACCOON_TURNING_LEFT		59
 #define MARIO_ANI_RACCOON_MAX_SPEED_RIGHT	36
 #define MARIO_ANI_RACCOON_MAX_SPEED_LEFT	37
 #define MARIO_ANI_RACCOON_SITDOWN_RIGHT		38
 #define MARIO_ANI_RACCOON_SITDOWN_LEFT		39
+//#define MARIO_ANI_RACCOON_KICKING_RIGHT		50
+//#define MARIO_ANI_RACCOON_KICKING_LEFT		51
+#define MARIO_ANI_RACCOON_TURNING_RIGHT		40
+#define	MARIO_ANI_RACCOON_TURNING_LEFT		41
 
-#define MARIO_ANI_DIE					40
+//#define MARIO_ANI_RACCOON_FLYING_RIGHT	46	
+//#define MARIO_ANI_RACCOON_FLYING_LEFT		47
+//#define MARIO_ANI_RACCOON_HOLDING_RIGHT		50
+//#define MARIO_ANI_RACCOON_HOLDING_LEFT		51
+
+#define MARIO_ANI_DIE					42
 
 #define MARIO_ANI_FIRE_IDLE_RIGHT		60
 #define MARIO_ANI_FIRE_IDLE_LEFT		61
@@ -150,8 +151,8 @@
 
 // run
 #define MARIO_RUNNING_LIMIT_TIME		300
-//spin
-#define MARIO_SPINNING_TIME				400
+//turn tail
+#define MARIO_TURNING_TIME				400
 //kick
 #define MARIO_KICKING_TIME				200	
 //shoot
@@ -168,7 +169,7 @@ class CMario : public CGameObject
 	int time_mario = 0;
 	DWORD untouchable_start;
 	DWORD running_start = 0;
-	DWORD spinning_start = 0;
+	DWORD turning_start = 0;
 	DWORD flying_start = 0;
 	DWORD kicking_start = 0;
 	DWORD shooting_start = 0;
@@ -182,7 +183,7 @@ class CMario : public CGameObject
 	bool flying = false;
 	bool falling = false;
 	bool jumping = false;
-	bool spinning = false;
+	bool turning = false;
 
 	bool brake;
 
@@ -213,7 +214,7 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StartRunning() { running_start = GetTickCount(); }
-	void StartSpinning() { spinning_start = GetTickCount(); }
+	void StartTurning() { turning_start = GetTickCount(); }
 	void StartFlying() { flying_start = GetTickCount(); }
 	void StartKicking() { kicking_start = GetTickCount(); }
 	void StartShooting() { shooting_start = GetTickCount(); }
@@ -331,14 +332,14 @@ public:
 		this->kicking = _kicking;
 	}
 
-	//spin
-	bool GetSpinning()
+	//turn tail
+	bool GetTurning()
 	{
-		return spinning;
+		return turning;
 	}
-	void SetSpinning(bool _spinning)
+	void SetTurning(bool _spinning)
 	{
-		this->spinning = _spinning;
+		this->turning = _spinning;
 	}
 
 	//hold

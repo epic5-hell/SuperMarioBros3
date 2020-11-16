@@ -142,8 +142,6 @@ void CGoomba::Render()
 	case GOOMBA_TYPE_WINGS: return;
 	}
 
-
-
 	animation_set->at(ani)->Render(x, y);
 
 	//RenderBoundingBox();
@@ -158,6 +156,10 @@ void CGoomba::SetState(int state)
 		y += GOOMBA_NORMAL_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 10;
 		vx = 0;
 		vy = 0;
+		break;
+	case GOOMBA_STATE_DIE_BY_KICK:
+		vy = -GOOMBA_DIE_DEFLECT_SPEED;
+		//vx = -vx;
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = -GOOMBA_WALKING_SPEED;
