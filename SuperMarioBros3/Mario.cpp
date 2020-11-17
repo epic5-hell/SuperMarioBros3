@@ -50,6 +50,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		turning = false;
 	}
 
+	//if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
+	//{
+	//	kicking = false;
+	//}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -146,6 +151,30 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					{
 						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
 						koopas->SetState(KOOPAS_STATE_SPINNING);
+					}
+				}
+				else if (e->nx != 0)
+				{
+					if (untouchable == 0)
+					{
+						if (koopas->GetState() != KOOPAS_STATE_DIE)
+						{
+							if (level > MARIO_LEVEL_SMALL)
+							{
+								if (level == MARIO_LEVEL_RACCOON)
+								{
+									level = MARIO_LEVEL_BIG;
+									StartUntouchable();
+								}
+								else if (level == MARIO_LEVEL_BIG)
+								{
+									level = MARIO_LEVEL_SMALL;
+									StartUntouchable();
+								}
+							}
+							else if (level==MARIO_LEVEL_SMALL)
+								SetState(MARIO_STATE_DIE);
+						}
 					}
 				}
 				else if (nx != 0) //mario turns his tail
