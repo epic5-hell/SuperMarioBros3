@@ -85,7 +85,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (ny != 0) vy = 0;
 
-		// Collision with other Goombas
+		// Collision with other goomba
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];

@@ -27,7 +27,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_MARIO				0
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_BLOCK				2
-#define OBJECT_TYPE_RED_KOOPAS			3
+#define OBJECT_TYPE_BRICk_REWARD		3
 #define OBJECT_TYPE_NORMAL_GOOMBA		4
 #define	OBJECT_TYPE_WINGS_GOOMBA		5
 #define OBJECT_TYPE_GREEN_KOOPAS_WALK	6
@@ -178,7 +178,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK: obj = new CBrick(100); break;
 	case OBJECT_TYPE_BLOCK:	obj = new CBrick(200); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
-	case OBJECT_TYPE_RED_KOOPAS: obj = new CKoopas(); break;
+	//case OBJECT_TYPE_RED_KOOPAS: obj = new CKoopas(111); break;
+	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
 	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
