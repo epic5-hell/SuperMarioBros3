@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
+#include "Koopas.h"
 #include "Portal.h"
 #include "Brick.h"
 
@@ -89,9 +90,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			// if Goomba
-			if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
+			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
 			{
-				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
+				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
 				// jump on top >> kill Goomba and deflect a bit 
 				if (e->ny < 0)
@@ -116,11 +117,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								level = MARIO_LEVEL_SMALL;
 								StartUntouchable();
 							}
-							else 
+							else
 								SetState(MARIO_STATE_DIE);
 						}
 					}
-
 					else if (level == MARIO_LEVEL_RACCOON && turning)
 					{
 						if (goomba->GetState() != GOOMBA_STATE_DIE_BY_KICK)
@@ -129,7 +129,40 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 					}
 				}
-			} // if Portal
+			}
+			else if (dynamic_cast<CKoopas*>(e->obj))
+			{
+				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
+
+				// jump on top >> Koopas turns into shell
+				if (e->ny < 0)
+				{
+					if (koopas->GetState() != KOOPAS_STATE_SHELL)
+					{
+						koopas->SetState(KOOPAS_STATE_SHELL);
+						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
+					}
+					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+					{
+						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
+						koopas->SetState(KOOPAS_STATE_SPINNING);
+					}
+				}
+				else if (nx != 0) //mario turns his tail
+				{
+					if (level == MARIO_LEVEL_RACCOON && turning)
+					{
+						if (koopas->GetState() != KOOPAS_STATE_DIE && koopas->GetState() != KOOPAS_STATE_SHELL)
+						{
+							koopas->SetState(KOOPAS_STATE_SHELL);
+						}
+						else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+						{
+							koopas->vy = -KOOPAS_DIE_DEFLECT_SPEED;
+						}
+					}
+				}
+			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))
 			{
 				CPortal *p = dynamic_cast<CPortal *>(e->obj);
@@ -238,7 +271,7 @@ void CMario::Render()
 			else ani = MARIO_ANI_FIRE_BRAKING_LEFT;
 		}
 	}
-
+	// state = SIT DOWN
 	else if (state == MARIO_STATE_SITDOWN)
 	{
 		if (level == MARIO_LEVEL_BIG)
@@ -474,6 +507,11 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
+	if (state == MARIO_STATE_DIE)
+	{
+		left = top = right = bottom = 0;
+		return;
+	}
 	left = x;
 	top = y;
 

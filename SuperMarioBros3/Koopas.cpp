@@ -114,6 +114,10 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						{
 							goomba->SetState(GOOMBA_STATE_DIE_BY_KICK);
 						}
+						else if (goomba->GetState() == GOOMBA_STATE_WALKING)
+						{
+							continue;
+						}
 					}
 					else if (!dynamic_cast<CMario*>(e->obj))
 					{
@@ -154,7 +158,7 @@ void CKoopas::Render()
 		}
 		else if (state == KOOPAS_STATE_SHELL)
 		{
-			ani = KOOPAS_GREEN_ANI_SHELL_UP;
+			ani = KOOPAS_GREEN_ANI_SHELL_DOWN;
 		}
 		else if (state == KOOPAS_STATE_SPINNING)
 		{
