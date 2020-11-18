@@ -83,7 +83,7 @@ jj# id	file_path	transparent_color_r	g	b
 10111	55	16	71	32	0
 10112	73	16	89	32	0
 #kick right
-10113	325	16	16	16	1
+10113	325	16	341	32	1
 #kick left
 10114	181	16	197	32	0
 #hold idle right
