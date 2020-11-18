@@ -50,10 +50,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		turning = false;
 	}
 
-	//if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
-	//{
-	//	kicking = false;
-	//}
+	if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
+	{
+		kicking = false;
+	}
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -153,31 +153,31 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						koopas->SetState(KOOPAS_STATE_SPINNING);
 					}
 				}
-				else if (e->nx != 0)
-				{
-					if (untouchable == 0)
-					{
-						if (koopas->GetState() != KOOPAS_STATE_DIE)
-						{
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								if (level == MARIO_LEVEL_RACCOON)
-								{
-									level = MARIO_LEVEL_BIG;
-									StartUntouchable();
-								}
-								else if (level == MARIO_LEVEL_BIG)
-								{
-									level = MARIO_LEVEL_SMALL;
-									StartUntouchable();
-								}
-							}
-							else if (level==MARIO_LEVEL_SMALL)
-								SetState(MARIO_STATE_DIE);
-						}
-					}
-				}
-				else if (nx != 0) //mario turns his tail
+				//else if (e->nx != 0) //koopas collisions with koopas
+				//{
+				//	if (untouchable == 0)
+				//	{
+				//		if (koopas->GetState() != KOOPAS_STATE_DIE && koopas->GetState() != KOOPAS_STATE_SHELL)
+				//		{
+				//			if (level > MARIO_LEVEL_SMALL)
+				//			{
+				//				if (level == MARIO_LEVEL_RACCOON)
+				//				{
+				//					level = MARIO_LEVEL_BIG;
+				//					StartUntouchable();
+				//				}
+				//				else if (level == MARIO_LEVEL_BIG)
+				//				{
+				//					level = MARIO_LEVEL_SMALL;
+				//					StartUntouchable();
+				//				}
+				//			}
+				//			else if (level==MARIO_LEVEL_SMALL)
+				//				SetState(MARIO_STATE_DIE);
+				//		}
+				//	}
+				//}
+				else if (nx != 0) //mario collisions with koopas
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
 					{
@@ -187,7 +187,37 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 						else if (koopas->GetState() == KOOPAS_STATE_SHELL)
 						{
-							koopas->vy = -KOOPAS_DIE_DEFLECT_SPEED;
+							//koopas->vy = -KOOPAS_DIE_DEFLECT_SPEED;
+							koopas->SetState(KOOPAS_STATE_DIE);
+						}
+					}
+					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+					{
+						StartKicking();
+						kicking = true;
+						koopas->nx = this->nx;
+						koopas->SetState(KOOPAS_STATE_SPINNING);
+						
+					}
+					else if (untouchable == 0 && kicking == false)
+					{
+						if (koopas->GetState() != KOOPAS_STATE_SHELL)
+						{
+							if (level > MARIO_LEVEL_SMALL)
+							{
+								if (level == MARIO_LEVEL_RACCOON)
+								{
+									level = MARIO_LEVEL_BIG;
+									StartUntouchable();
+								}
+								else
+								{
+									level = MARIO_LEVEL_SMALL;
+									StartUntouchable();
+								}
+							}
+							else
+								SetState(MARIO_STATE_DIE);
 						}
 					}
 				}
@@ -406,6 +436,31 @@ void CMario::Render()
 			{
 				ani = MARIO_ANI_FIRE_RUNNING_LEFT;
 			}
+		}
+	}
+
+	// state = KICK
+	else if (kicking)
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			if (nx > 0) ani = MARIO_ANI_BIG_KICKING_RIGHT;
+			else ani = MARIO_ANI_BIG_KICKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_SMALL)
+		{
+			if (nx > 0) ani = MARIO_ANI_SMALL_KICKING_RIGHT;
+			else ani = MARIO_ANI_SMALL_KICKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (nx > 0) ani = MARIO_ANI_RACCOON_KICKING_RIGHT;
+			else ani = MARIO_ANI_RACCOON_KICKING_LEFT;
+		}
+		else if (level == MARIO_LEVEL_FIRE)
+		{
+			if (nx > 0) ani = MARIO_ANI_FIRE_KICKING_RIGHT;
+			else ani = MARIO_ANI_FIRE_KICKING_LEFT;
 		}
 	}
 

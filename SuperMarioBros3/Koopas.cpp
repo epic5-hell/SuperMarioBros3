@@ -130,7 +130,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (vx < 0 && x < 0)
 	{
-
 		vx = -vx;
 	}
 	// clean up collision events
