@@ -57,6 +57,65 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (state != KOOPAS_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
+	//koopas shell is being held by mario
+	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	if (holding == true)
+	{
+		if (!mario->GetHolding())
+		{
+			holding = false;
+			mario->StartKicking();
+			mario->SetKicking(true);
+			nx = mario->nx;
+			SetState(KOOPAS_STATE_SPINNING);
+		}
+	}
+	if (holding)
+	{
+		y = mario->y + 8;
+		if (mario->nx > 0)
+		{
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
+			{
+				x = mario->x + MARIO_BIG_BBOX_WIDTH;
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+			{
+				x = mario->x + MARIO_SMALL_BBOX_WIDTH;
+				y = y - 10;
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			{
+				x = mario->x + MARIO_RACCOON_BBOX_WIDTH;
+			}
+			else
+			{
+				x = mario->x + MARIO_FIRE_BBOX_WIDTH;
+			}
+		}
+		else
+		{
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
+			{
+				x = mario->x - MARIO_BIG_BBOX_WIDTH;
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+			{
+				x = mario->x - MARIO_SMALL_BBOX_WIDTH;
+				y = y - 10;
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			{
+				x = mario->x - MARIO_RACCOON_BBOX_WIDTH;
+			}
+			else
+			{
+				x = mario->x - MARIO_FIRE_BBOX_WIDTH;
+			}
+		}
+		mario->SetCanHold(true);
+	}
+
 	if (coEvents.size() == 0)
 	{
 		x += dx;

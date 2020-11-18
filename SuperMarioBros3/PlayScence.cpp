@@ -370,21 +370,22 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	}
 }
 
-//void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
-//{
-//	CMario* mario = ((CPlayScene*)scence)->GetPlayer();
-//	if (mario->GetState() == MARIO_STATE_DIE) return;
-//	switch (KeyCode)
-//	{
-//	case DIK_Q:
-//		mario->SetHolding(false);
-//		mario->SetCanHold(false);
-//		break;
-//	case DIK_X:
-//		mario->SetJumping(true);
-//		break;
-//	}
-//}
+void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
+{
+	CMario* mario = ((CPlayScene*)scence)->GetPlayer();
+	if (mario->GetState() == MARIO_STATE_DIE) return;
+	switch (KeyCode)
+	{
+	case DIK_Q:
+		mario->SetHolding(false);
+		mario->SetCanHold(false);
+		break;
+	case DIK_X:
+		mario->SetJumping(true);
+		break;
+	}
+}
+
 
 void CPlayScenceKeyHandler::KeyState(BYTE *states)
 {
@@ -395,7 +396,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
 	//holding koopas shell
-	if (game->IsKeyDown(DIK_Q))    
+	if (game->IsKeyDown(DIK_Q))
 	{
 		mario->SetHolding(true);
 	}

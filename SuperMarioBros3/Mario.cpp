@@ -177,7 +177,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				//		}
 				//	}
 				//}
-				else if (nx != 0) //mario co	llisions with koopas
+				else if (nx != 0) //mario collisions with koopas
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
 					{
@@ -193,11 +193,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
 					{
-						StartKicking();
-						kicking = true;
-						koopas->nx = this->nx;
-						koopas->SetState(KOOPAS_STATE_SPINNING);
-						
+						if (holding)
+						{
+							koopas->SetHolding(true);
+						}
+						else
+						{
+							StartKicking();
+							kicking = true;
+							koopas->nx = this->nx;
+							koopas->SetState(KOOPAS_STATE_SPINNING);
+						}						
 					}
 					else if (untouchable == 0 && kicking == false)
 					{
@@ -256,6 +262,56 @@ void CMario::Render()
 		else ani = MARIO_ANI_RACCOON_TURNING_RIGHT;
 	}
 
+	// state = hold
+	else if (canHold)
+	{
+		if (state == MARIO_STATE_IDLE)
+		{
+			if (level == MARIO_LEVEL_BIG)
+			{
+				if (nx > 0) ani = MARIO_ANI_BIG_HOLDING_IDLE_RIGHT;
+				else ani = MARIO_ANI_BIG_HOLDING_IDLE_LEFT;
+			}
+			else if (level == MARIO_LEVEL_SMALL)
+			{
+				if (nx > 0) ani = MARIO_ANI_SMALL_HOLDING_IDLE_RIGHT;
+				else ani = MARIO_ANI_SMALL_HOLDING_IDLE_LEFT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				if (nx > 0) ani = MARIO_ANI_RACCOON_HOLDING_IDLE_RIGHT;
+				else ani = MARIO_ANI_RACCOON_HOLDING_IDLE_LEFT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				if (nx > 0) ani = MARIO_ANI_FIRE_HOLDING_IDLE_RIGHT;
+				else ani = MARIO_ANI_FIRE_HOLDING_IDLE_LEFT;
+			}
+		}
+		else
+		{
+			if (level == MARIO_LEVEL_BIG)
+			{
+				if (nx > 0) ani = MARIO_ANI_BIG_HOLDING_WALK_RIGHT;
+				else ani = MARIO_ANI_BIG_HOLDING_WALK_LEFT;
+			}
+			else if (level == MARIO_LEVEL_SMALL)
+			{
+				if (nx > 0) ani = MARIO_ANI_SMALL_HOLDING_WALK_RIGHT;
+				else ani = MARIO_ANI_SMALL_HOLDING_WALK_LEFT;
+			}
+			else if (level == MARIO_LEVEL_RACCOON)
+			{
+				if (nx > 0) ani = MARIO_ANI_RACCOON_HOLDING_WALK_RIGHT;
+				else ani = MARIO_ANI_RACCOON_HOLDING_WALK_LEFT;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				if (nx > 0) ani = MARIO_ANI_FIRE_HOLDING_WALK_RIGHT;
+				else ani = MARIO_ANI_FIRE_HOLDING_WALK_LEFT;
+			}
+		}
+	}
 	// state = JUMP
 	else if (jumping == true)
 	{
