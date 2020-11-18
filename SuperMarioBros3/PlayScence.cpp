@@ -330,7 +330,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
-	CMario *mario = ((CPlayScene*)scence)->GetPlayer();
+	CMario* mario = ((CPlayScene*)scence)->GetPlayer();
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
 	switch (KeyCode)
@@ -342,12 +342,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetJumping(true);
 		}
 		break;
-	case DIK_A: 
+	case DIK_A:
 		mario->Reset();
-		break;
-	case DIK_Q:
-		if (mario->GetLevel() == MARIO_LEVEL_SMALL) return;
-		mario->SetLevel(MARIO_LEVEL_SMALL);
 		break;
 	case DIK_W:
 		if (mario->GetLevel() == MARIO_LEVEL_BIG) return;
@@ -357,6 +353,12 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) return;
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		break;
+	case DIK_R:
+		if (mario->GetLevel() == MARIO_LEVEL_SMALL) return;
+		mario->SetLevel(MARIO_LEVEL_SMALL);
+		break;
+	case DIK_T:
+		return;
 	case DIK_Z:
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->GetTurning() == false)
 		{
@@ -364,12 +366,25 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetState(MARIO_STATE_TURNING_TAIL);
 			mario->SetTurning(true);
 		}
-	//case DIK_R:
-	//	if (mario->GetLevel() == MARIO_LEVEL_FIRE) return;
-	//	mario->SetLevel(MARIO_LEVEL_FIRE);
-	//	break;
+		break;
 	}
 }
+
+//void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
+//{
+//	CMario* mario = ((CPlayScene*)scence)->GetPlayer();
+//	if (mario->GetState() == MARIO_STATE_DIE) return;
+//	switch (KeyCode)
+//	{
+//	case DIK_Q:
+//		mario->SetHolding(false);
+//		mario->SetCanHold(false);
+//		break;
+//	case DIK_X:
+//		mario->SetJumping(true);
+//		break;
+//	}
+//}
 
 void CPlayScenceKeyHandler::KeyState(BYTE *states)
 {
@@ -378,6 +393,12 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
+
+	//holding koopas shell
+	if (game->IsKeyDown(DIK_Q))    
+	{
+		mario->SetHolding(true);
+	}
 	// moving
 	if (game->IsKeyDown(DIK_RIGHT))
 	{

@@ -48,6 +48,16 @@ jj# id	file_path	transparent_color_r	g	b
 10017	195	93	216	120	1
 #kick left
 10018	306	93	327	120	0
+#hold right idle
+10019	259	93	263	120	1
+#hold left idle
+10020	249	93	263	120	0
+#hold right walk
+10021	240	93	255	120	1
+10022	221	93	237	119	1
+#hold left walk
+10023	267	93	282	120	0
+10024	285	93	301	119	0
 
 # SMALL MARIO
 # idle right
@@ -76,7 +86,15 @@ jj# id	file_path	transparent_color_r	g	b
 10113	325	16	16	16	1
 #kick left
 10114	181	16	197	32	0
-# die 
+#hold right idle
+10115	363	16	377	32	1
+#hold left idle
+10116	145	16	159	32	0
+#hold right walk
+10117	344	16	359	32	1
+#hold left walk
+10118	163	16	178	32	0
+#die 
 10199	307	16	323	32	0
 
 # RACCOON MARIO
@@ -114,7 +132,6 @@ jj# id	file_path	transparent_color_r	g	b
 10221	419	384	441	412	1
 #kick left
 10222	81	384	103	412	0
-
 #turn tail right 1
 10223	124	350	147	378	1
 #turn tail right 2
@@ -125,7 +142,6 @@ jj# id	file_path	transparent_color_r	g	b
 10226	105	350	121	378	1
 turn tail right 5
 10227	500	350	521	378	1
-
 #turn tail left 1
 10228	375	350	398	378	0
 #turn tail left 2
@@ -136,6 +152,17 @@ turn tail right 5
 10231	401	350	417	378	0
 #turn tail left 5
 10232	1	350	22	378	0
+
+#hold right idle
+10233	500	384	521	412	1
+#hold left idle
+10234	1	384	22	412	0
+#hold right walk
+10235	473	384	495	412	1
+10236	446	384	469	412	1
+#hold left walk
+10237	27	384	49	412	0
+10238	53	384	76	412	0
 
 # FIRE MARIO
 #idle right

@@ -177,7 +177,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				//		}
 				//	}
 				//}
-				else if (nx != 0) //mario collisions with koopas
+				else if (nx != 0) //mario co	llisions with koopas
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
 					{
