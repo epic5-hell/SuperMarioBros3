@@ -357,6 +357,10 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) return;
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		break;
+	case DIK_T:
+		if (mario->GetLevel() == MARIO_LEVEL_FIRE) return;
+		mario->SetLevel(MARIO_LEVEL_FIRE);
+		break;
 	case DIK_Z:
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->GetTurning() == false)
 		{
@@ -365,7 +369,6 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetTurning(true);
 		}
 		break;
-
 	}
 }
 
