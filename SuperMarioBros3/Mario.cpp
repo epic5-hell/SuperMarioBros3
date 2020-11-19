@@ -298,87 +298,91 @@ void CMario::Render()
 	// state = FALL
 	else if (falling)
 	{
-		if (nx > 0)
-		{
-			if (state == MARIO_LEVEL_BIG)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT;
-			}
-			else if (state == MARIO_LEVEL_SMALL)
-			{
-				ani = MARIO_ANI_SMALL_FLYING_RIGHT;
-			}
-			else if (state == MARIO_LEVEL_RACCOON)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-			}
-			else if (state == MARIO_LEVEL_FIRE)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-			}
-		}
-		else if (nx < 0)
-		{
-			if (state == MARIO_LEVEL_BIG)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT;
-			}
-			else if (state == MARIO_LEVEL_SMALL)
-			{
-				ani = MARIO_ANI_SMALL_FLYING_LEFT;
-			}
-			else if (state == MARIO_LEVEL_RACCOON)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-			}
-			else if (state == MARIO_LEVEL_FIRE)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-			}
-		}
+		if (nx > 0) ani = MARIO_ANI_RACCOON_FALLING_RIGHT;
+		else ani = MARIO_ANI_RACCOON_FALLING_LEFT;
+		//if (nx > 0)
+		//{
+		//	if (state == MARIO_LEVEL_BIG)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT;
+		//	}
+		//	else if (state == MARIO_LEVEL_SMALL)
+		//	{
+		//		ani = MARIO_ANI_SMALL_FLYING_RIGHT;
+		//	}
+		//	else if (state == MARIO_LEVEL_RACCOON)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_FIRE)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+		//	}
+		//}
+		//else if (nx < 0)
+		//{
+		//	if (state == MARIO_LEVEL_BIG)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT;
+		//	}
+		//	else if (state == MARIO_LEVEL_SMALL)
+		//	{
+		//		ani = MARIO_ANI_SMALL_FLYING_LEFT;
+		//	}
+		//	else if (state == MARIO_LEVEL_RACCOON)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_FIRE)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+		//	}
+		//}
 	}
 
 	// state = FLY
 	else if (flying)
 	{
-		if (nx > 0)
-		{
-			if (state == MARIO_LEVEL_BIG)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-			}
-			else if (state == MARIO_LEVEL_SMALL)
-			{
-				ani = MARIO_ANI_SMALL_FLYING_RIGHT; //fix later
-			}
-			else if (state == MARIO_LEVEL_RACCOON)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-			}
-			else if (state == MARIO_LEVEL_FIRE)
-			{
-				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-			}
-		}
-		else if (nx < 0)
-		{
-			if (state == MARIO_LEVEL_BIG)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT;
-			}
-			else if (state == MARIO_LEVEL_SMALL)
-			{
-				ani = MARIO_ANI_SMALL_FLYING_LEFT;
-			}
-			else if (state == MARIO_LEVEL_RACCOON)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-			}
-			else if (state == MARIO_LEVEL_FIRE)
-			{
-				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-			}
-		}
+		if (nx > 0) ani = MARIO_ANI_RACCOON_FLYING_RIGHT;
+		else ani = MARIO_ANI_RACCOON_FLYING_LEFT;
+		//if (nx > 0)
+		//{
+		//	if (state == MARIO_LEVEL_BIG)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_SMALL)
+		//	{
+		//		ani = MARIO_ANI_SMALL_FLYING_RIGHT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_RACCOON)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_FIRE)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+		//	}
+		//}
+		//else if (nx < 0)
+		//{
+		//	if (state == MARIO_LEVEL_BIG)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT;
+		//	}
+		//	else if (state == MARIO_LEVEL_SMALL)
+		//	{
+		//		ani = MARIO_ANI_SMALL_FLYING_LEFT;
+		//	}
+		//	else if (state == MARIO_LEVEL_RACCOON)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+		//	}
+		//	else if (state == MARIO_LEVEL_FIRE)
+		//	{
+		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+		//	}
+		//}
 	}
 	// state = TURN
 	else if (turning)
@@ -390,7 +394,7 @@ void CMario::Render()
 		else ani = MARIO_ANI_RACCOON_TURNING_RIGHT;
 	}
 
-	// state = hold
+	// state = HOLD
 	else if (canHold)
 	{
 		if (state == MARIO_STATE_IDLE)

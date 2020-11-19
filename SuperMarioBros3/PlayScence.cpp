@@ -386,11 +386,10 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetCanHold(false);
 		break;
 	case DIK_X:
-		return;
-		/*mario->SetCanFly(false);
+		mario->SetCanFly(false);
 		mario->SetFlying(false);
-		mario->SetFalling(true);
-		mario->SetJumping(true);*/
+		mario->SetFalling(false);
+		mario->SetJumping(true);
 		break;
 	}
 }
@@ -412,33 +411,32 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 
 	else if (game->IsKeyDown(DIK_X))
 	{
-		return;
-		//if (mario->GetMarioTime() >= MARIO_MAX_STACK)
-		//	mario->SetCanFly(true);
-		//if (/*mario->GetLevel() == MARIO_LEVEL_RACCOON &&*/ mario->GetCanFly())
-		//{
-		//	if (mario->nx > 0)
-		//	{
-		//		mario->SetState(MARIO_STATE_FLYING_RIGHT);
-		//	}
-		//	else if (mario->nx < 0)
-		//	{
-		//		mario->SetState(MARIO_STATE_FLYING_LEFT);
-		//	}
-		//	if (mario->GetFlyingStart() == 0)
-		//	{
-		//		mario->StartFlying();
-		//	}
-		//	mario->SetFlying(true);
-		//}
-		//else
-		//{
-		//	if (mario->GetCanFall() == true)
-		//	{
-		//		mario->SetState(MARIO_STATE_FALLING_DOWN);
-		//		mario->SetFalling(true);
-		//	}
-		//}
+		if (mario->GetMarioTime() >= MARIO_MAX_STACK)
+			mario->SetCanFly(true);
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->GetCanFly())
+		{
+			if (mario->nx > 0)
+			{
+				mario->SetState(MARIO_STATE_FLYING_RIGHT);
+			}
+			else if (mario->nx < 0)
+			{
+				mario->SetState(MARIO_STATE_FLYING_LEFT);
+			}
+			if (mario->GetFlyingStart() == 0)
+			{
+				mario->StartFlying();
+			}
+			mario->SetFlying(true);
+		}
+		else
+		{
+			if (mario->GetCanFall() == true)
+			{
+				mario->SetState(MARIO_STATE_FALLING_DOWN);
+				mario->SetFalling(true);
+			}
+		}
 	}
 	// moving
 	if (game->IsKeyDown(DIK_RIGHT))
