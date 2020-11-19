@@ -20,7 +20,32 @@ CMario::CMario(float x, float y) : CGameObject()
 	this->y = y;
 
 }
+void CMario::CalcPotentialCollisions(
+	vector<LPGAMEOBJECT>* coObjects,
+	vector<LPCOLLISIONEVENT>& coEvents)
+{
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		if (dynamic_cast<CBrick*>(coObjects->at(i)) && vy < 0)
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
+			if (brick->getType() == BRICK_TYPE_BLOCK)
+			{
+				continue;
+			}
+		}
 
+		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
+
+		if (e->t > 0 && e->t <= 1.0f)
+			coEvents.push_back(e);
+		/*else if(e->)*/
+		else
+			delete e;
+	}
+
+	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
@@ -55,13 +80,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		kicking = false;
 	}
 
+	if (GetTickCount() - flying_start >= MARIO_FLYING_LIMIT_TIME)
+	{
+		canFly = false;
+		flying = false;
+		flying_start = 0;
+	}
+
+	if (!canFly)
+	{
+		canFall = true;
+	}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
-
-		//IsTouchingGround = false;
 	}
 	else
 	{
@@ -82,9 +117,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		if (ny != 0) vy = 0;
 
-		if (ny < 0) // mario is jumping
+		if (ny < 0) // jumping
 		{
 			jumping = false;
+			falling = false;
+			canFly = true;
+			canFall = false;
+		}
+
+		if (ny < 0 && this->time_mario < MARIO_MAX_STACK) // mario power not enough
+		{
+			canFly = false;
 		}
 
 		//
@@ -250,8 +293,93 @@ void CMario::Render()
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
 
-	// opportunity: fly, fall, turning tail, hold, fire, jump
+	// opportunity: fall, fly, turning tail, hold, fire, jump
 
+	// state = FALL
+	else if (falling)
+	{
+		if (nx > 0)
+		{
+			if (state == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT;
+			}
+			else if (state == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_FLYING_RIGHT;
+			}
+			else if (state == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+			}
+			else if (state == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+			}
+		}
+		else if (nx < 0)
+		{
+			if (state == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT;
+			}
+			else if (state == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_FLYING_LEFT;
+			}
+			else if (state == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+			}
+			else if (state == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+			}
+		}
+	}
+
+	// state = FLY
+	else if (flying)
+	{
+		if (nx > 0)
+		{
+			if (state == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+			}
+			else if (state == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_FLYING_RIGHT; //fix later
+			}
+			else if (state == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+			}
+			else if (state == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
+			}
+		}
+		else if (nx < 0)
+		{
+			if (state == MARIO_LEVEL_BIG)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT;
+			}
+			else if (state == MARIO_LEVEL_SMALL)
+			{
+				ani = MARIO_ANI_SMALL_FLYING_LEFT;
+			}
+			else if (state == MARIO_LEVEL_RACCOON)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+			}
+			else if (state == MARIO_LEVEL_FIRE)
+			{
+				ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
+			}
+		}
+	}
 	// state = TURN
 	else if (turning)
 	{
@@ -639,8 +767,22 @@ void CMario::SetState(int state)
 	case MARIO_STATE_TURNING_TAIL:
 		vx = 0;
 		break;
+	case MARIO_STATE_FLYING_RIGHT:
+		vx = MARIO_WALKING_SPEED;
+		vy = -MARIO_WALKING_SPEED;
+		nx = 1;
+		break;
+	case MARIO_STATE_FLYING_LEFT:
+		vx = -MARIO_WALKING_SPEED;
+		vy = -MARIO_WALKING_SPEED;
+		nx = -1;
+		break;
+	case MARIO_STATE_FALLING_DOWN:
+		vy = 0.08f;
+		break;
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
+		vx = 0;
 		break;
 	}
 }

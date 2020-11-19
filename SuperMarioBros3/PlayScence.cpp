@@ -346,19 +346,17 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		mario->Reset();
 		break;
 	case DIK_W:
-		if (mario->GetLevel() == MARIO_LEVEL_BIG) return;
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		break;
-	case DIK_E:
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) return;
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
-		break;
-	case DIK_R:
 		if (mario->GetLevel() == MARIO_LEVEL_SMALL) return;
 		mario->SetLevel(MARIO_LEVEL_SMALL);
 		break;
-	case DIK_T:
-		return;
+	case DIK_E:
+		if (mario->GetLevel() == MARIO_LEVEL_BIG) return;
+		mario->SetLevel(MARIO_LEVEL_BIG);
+		break;
+	case DIK_R:
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) return;
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		break;
 	case DIK_Z:
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->GetTurning() == false)
 		{
@@ -367,6 +365,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetTurning(true);
 		}
 		break;
+
 	}
 }
 
@@ -381,7 +380,11 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetCanHold(false);
 		break;
 	case DIK_X:
-		mario->SetJumping(true);
+		return;
+		/*mario->SetCanFly(false);
+		mario->SetFlying(false);
+		mario->SetFalling(true);
+		mario->SetJumping(true);*/
 		break;
 	}
 }
@@ -400,6 +403,37 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	{
 		mario->SetHolding(true);
 	}
+
+	else if (game->IsKeyDown(DIK_X))
+	{
+		return;
+		//if (mario->GetMarioTime() >= MARIO_MAX_STACK)
+		//	mario->SetCanFly(true);
+		//if (/*mario->GetLevel() == MARIO_LEVEL_RACCOON &&*/ mario->GetCanFly())
+		//{
+		//	if (mario->nx > 0)
+		//	{
+		//		mario->SetState(MARIO_STATE_FLYING_RIGHT);
+		//	}
+		//	else if (mario->nx < 0)
+		//	{
+		//		mario->SetState(MARIO_STATE_FLYING_LEFT);
+		//	}
+		//	if (mario->GetFlyingStart() == 0)
+		//	{
+		//		mario->StartFlying();
+		//	}
+		//	mario->SetFlying(true);
+		//}
+		//else
+		//{
+		//	if (mario->GetCanFall() == true)
+		//	{
+		//		mario->SetState(MARIO_STATE_FALLING_DOWN);
+		//		mario->SetFalling(true);
+		//	}
+		//}
+	}
 	// moving
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
@@ -410,7 +444,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 				mario->StartRunning();
 			}
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
-			mario->CalculateMarioTimeUp();
+			mario->CalcMarioTimeUp();
 		}
 		else // just walking right
 		{
@@ -427,7 +461,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 				mario->StartRunning();
 			}
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
-			mario->CalculateMarioTimeUp();
+			mario->CalcMarioTimeUp();
 		}
 		else // just walking left
 		{
