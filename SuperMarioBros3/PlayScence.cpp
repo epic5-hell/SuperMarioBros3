@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "PlayScence.h"
+#include "Map.h"
 
 
 using namespace std;
@@ -38,7 +39,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 
 #define MAX_SCENE_LINE					1024
 
-
+Map* map;
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
@@ -68,7 +69,7 @@ void CPlayScene::_ParseSection_MAP(string line)
 	int totalTiles = atoi(tokens[5].c_str());
 	wstring file_path = ToWSTR(tokens[6]);
 
-	this->map = new Map(idTileSet, totalRowsTileSet, totalColumnsTileSet, totalRowsMap, totalColumnsMap, totalTiles);
+	map = new Map(idTileSet, totalRowsTileSet, totalColumnsTileSet, totalRowsMap, totalColumnsMap, totalTiles);
 	map->LoadMap(file_path.c_str());
 	map->ExtractTileFromTileSet();
 }
@@ -294,6 +295,8 @@ void CPlayScene::Update(DWORD dt)
 		cy -= ScreenHeight / 2;	
 
 	CGame::GetInstance()->SetCamPos(round(cx), round(cy));
+	
+	map->SetCamPos(cx, cy);
 }
 
 void CPlayScene::Render()
