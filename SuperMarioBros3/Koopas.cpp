@@ -59,7 +59,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	//koopas shell is being held by mario
 	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	if (holding == true)
+	if (holding)
 	{
 		if (!mario->GetHolding())
 		{

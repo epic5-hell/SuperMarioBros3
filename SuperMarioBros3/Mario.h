@@ -135,11 +135,10 @@
 #define MARIO_ANI_FIRE_FLYING_RIGHT			88
 #define MARIO_ANI_FIRE_FLYING_LEFT			89
 
+#define MARIO_ANI_FIRE_SHOOTING_RIGHT		90
+#define MARIO_ANI_FIRE_SHOOTING_LEFT		91
 
-//#define MARIO_ANI_FIRE_SHOOTING_RIGHT	86
-//#define MARIO_ANI_FIRE_SHOOTING_LEFT	87
-
-#define MARIO_ANI_DIE					90
+#define MARIO_ANI_DIE						92
 
 
 
@@ -191,6 +190,7 @@ class CMario : public CGameObject
 	bool falling = false;
 	bool jumping = false;
 	bool turning = false;
+	bool shooted = false;
 
 	bool brake;
 
@@ -378,7 +378,15 @@ public:
 		this->shooting = _shooting;
 	}
 
-	
+	//shooted
+	bool GetShooted()
+	{
+		return shooted;
+	}
+	void SetShooted(bool _shooted)
+	{
+		shooted = _shooted;
+	}
 	int GetMarioTime()
 	{
 		return time_mario;

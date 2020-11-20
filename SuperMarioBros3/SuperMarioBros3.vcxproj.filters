@@ -44,6 +44,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -89,6 +92,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

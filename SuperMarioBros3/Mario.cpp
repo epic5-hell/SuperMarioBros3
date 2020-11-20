@@ -156,16 +156,29 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (untouchable == 0)
+					if (untouchable == 0 && !turning)
 					{
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
 						{
-							if (level > MARIO_LEVEL_SMALL)
+							if (level == MARIO_LEVEL_RACCOON)
 							{
-								level = MARIO_LEVEL_SMALL;
+								level = MARIO_LEVEL_BIG;
+								shooting = false;
 								StartUntouchable();
 							}
-							else
+							else if (level == MARIO_LEVEL_BIG)
+							{
+								level = MARIO_LEVEL_SMALL;
+								shooting = false;
+								StartUntouchable();
+							}
+							else if (level == MARIO_LEVEL_FIRE)
+							{
+								level = MARIO_LEVEL_SMALL;
+								shooting = false;
+								StartUntouchable();
+							}
+							else // level = MARIO_LEVEL_SMALL
 								SetState(MARIO_STATE_DIE);
 						}
 					}
@@ -196,30 +209,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						koopas->SetState(KOOPAS_STATE_SPINNING);
 					}
 				}
-				//else if (e->nx != 0) //koopas collisions with koopas
-				//{
-				//	if (untouchable == 0)
-				//	{
-				//		if (koopas->GetState() != KOOPAS_STATE_DIE && koopas->GetState() != KOOPAS_STATE_SHELL)
-				//		{
-				//			if (level > MARIO_LEVEL_SMALL)
-				//			{
-				//				if (level == MARIO_LEVEL_RACCOON)
-				//				{
-				//					level = MARIO_LEVEL_BIG;
-				//					StartUntouchable();
-				//				}
-				//				else if (level == MARIO_LEVEL_BIG)
-				//				{
-				//					level = MARIO_LEVEL_SMALL;
-				//					StartUntouchable();
-				//				}
-				//			}
-				//			else if (level==MARIO_LEVEL_SMALL)
-				//				SetState(MARIO_STATE_DIE);
-				//		}
-				//	}
-				//}
 				else if (nx != 0) //mario collisions with koopas
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
@@ -248,7 +237,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							koopas->SetState(KOOPAS_STATE_SPINNING);
 						}						
 					}
-					else if (untouchable == 0 && kicking == false)
+					else if (untouchable == 0 && !kicking)
 					{
 						if (koopas->GetState() != KOOPAS_STATE_SHELL)
 						{
@@ -257,11 +246,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								if (level == MARIO_LEVEL_RACCOON)
 								{
 									level = MARIO_LEVEL_BIG;
+									shooting = false;
 									StartUntouchable();
 								}
 								else
 								{
 									level = MARIO_LEVEL_SMALL;
+									shooting = false;
 									StartUntouchable();
 								}
 							}
@@ -300,89 +291,12 @@ void CMario::Render()
 	{
 		if (nx > 0) ani = MARIO_ANI_RACCOON_FALLING_RIGHT;
 		else ani = MARIO_ANI_RACCOON_FALLING_LEFT;
-		//if (nx > 0)
-		//{
-		//	if (state == MARIO_LEVEL_BIG)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT;
-		//	}
-		//	else if (state == MARIO_LEVEL_SMALL)
-		//	{
-		//		ani = MARIO_ANI_SMALL_FLYING_RIGHT;
-		//	}
-		//	else if (state == MARIO_LEVEL_RACCOON)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_FIRE)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-		//	}
-		//}
-		//else if (nx < 0)
-		//{
-		//	if (state == MARIO_LEVEL_BIG)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT;
-		//	}
-		//	else if (state == MARIO_LEVEL_SMALL)
-		//	{
-		//		ani = MARIO_ANI_SMALL_FLYING_LEFT;
-		//	}
-		//	else if (state == MARIO_LEVEL_RACCOON)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_FIRE)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-		//	}
-		//}
 	}
-
 	// state = FLY
 	else if (flying)
 	{
 		if (nx > 0) ani = MARIO_ANI_RACCOON_FLYING_RIGHT;
 		else ani = MARIO_ANI_RACCOON_FLYING_LEFT;
-		//if (nx > 0)
-		//{
-		//	if (state == MARIO_LEVEL_BIG)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_SMALL)
-		//	{
-		//		ani = MARIO_ANI_SMALL_FLYING_RIGHT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_RACCOON)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_FIRE)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_RIGHT; //fix later
-		//	}
-		//}
-		//else if (nx < 0)
-		//{
-		//	if (state == MARIO_LEVEL_BIG)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT;
-		//	}
-		//	else if (state == MARIO_LEVEL_SMALL)
-		//	{
-		//		ani = MARIO_ANI_SMALL_FLYING_LEFT;
-		//	}
-		//	else if (state == MARIO_LEVEL_RACCOON)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-		//	}
-		//	else if (state == MARIO_LEVEL_FIRE)
-		//	{
-		//		ani = MARIO_ANI_BIG_FLYING_LEFT; //fix later
-		//	}
-		//}
 	}
 	// state = TURN
 	else if (turning)
@@ -444,8 +358,16 @@ void CMario::Render()
 			}
 		}
 	}
+
+	// state = SHOOT
+	else if (shooting)
+	{
+		if (nx > 0) ani = MARIO_ANI_FIRE_SHOOTING_RIGHT;
+		else ani = MARIO_ANI_FIRE_SHOOTING_LEFT;
+
+	}
 	// state = JUMP
-	else if (jumping == true)
+	else if (jumping)
 	{
 		if (level == MARIO_LEVEL_BIG)
 		{

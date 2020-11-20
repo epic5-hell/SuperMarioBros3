@@ -11,6 +11,7 @@
 #include "Utils.h"
 #include "Sprites.h"
 #include "Portal.h"
+#include "FireBullet.h"
 
 class CPlayScene: public CScene
 {

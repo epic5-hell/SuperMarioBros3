@@ -28,12 +28,13 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_MARIO				0
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_BLOCK				2
-#define OBJECT_TYPE_BRICk_REWARD		3
+#define OBJECT_TYPE_BRICK_REWARD		3
 #define OBJECT_TYPE_NORMAL_GOOMBA		4
 #define	OBJECT_TYPE_WINGS_GOOMBA		5
 #define OBJECT_TYPE_GREEN_KOOPAS_WALK	6
 #define OBJECT_TYPE_GREEN_KOOPAS_WINGS	7
-
+#define OBJECT_TYPE_RED_KOOPAS_WALK		8
+#define OBJECT_TYPE_FIRE_BULLET			9
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -179,8 +180,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK: obj = new CBrick(100); break;
 	case OBJECT_TYPE_BLOCK:	obj = new CBrick(200); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
-	//case OBJECT_TYPE_RED_KOOPAS: obj = new CKoopas(111); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
+	case OBJECT_TYPE_FIRE_BULLET: obj = new CFireBullet(); break;
 	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
@@ -372,6 +373,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetTurning(true);
 		}
 		break;
+	case DIK_V:
+		if (mario->GetLevel() == MARIO_LEVEL_FIRE)
+		{
+			mario->SetShooting(true);
+		}
+		break;
+
 	}
 }
 
@@ -391,6 +399,12 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetFalling(false);
 		mario->SetJumping(true);
 		break;
+	case DIK_V:
+		if (mario->GetLevel() == MARIO_LEVEL_FIRE)
+		{
+			mario->SetShooting(false);
+			mario->SetShooted(false);
+		}
 	}
 }
 
