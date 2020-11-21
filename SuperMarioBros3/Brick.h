@@ -6,7 +6,7 @@
 
 #define BRICK_TYPE_NORMAL		100
 #define BRICK_TYPE_BLOCK		200
-//#define BRICK_TYPE_QUESTION		3
+//#define BRICK_TYPE_QUESTION		300
 
 class CBrick : public CGameObject
 {
