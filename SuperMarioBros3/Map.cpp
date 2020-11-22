@@ -1,4 +1,3 @@
-
 #include <fstream>
 #include <iostream>
 #include "Map.h"
@@ -63,7 +62,6 @@ void Map::LoadMap(LPCWSTR path)
 		TileMap[i] = new int[TotalColumnsOfMap];
 		for (int j = 0; j < TotalColumnsOfMap; j++)
 		{
-			
 			f >> TileMap[i][j];
 		}
 	}

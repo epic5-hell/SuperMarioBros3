@@ -12,7 +12,7 @@ class Map
 {
 private:
 	int** TileMap;
-	vector<LPSPRITE> Tiles; 
+	vector<LPSPRITE> Tiles;
 	LPDIRECT3DTEXTURE9 TileSet; //map1-1_bank.png
 	int TotalColumnsOfMap, TotalRowsOfMap;
 	int TotalColumnsOfTileSet, TotalRowsOfTileSet;
@@ -21,7 +21,7 @@ private:
 	int MapWidth;
 	int MapHeight;
 
-	float CamX, CamY;
+	//float CamX, CamY;
 
 public:
 	Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles);
@@ -31,7 +31,7 @@ public:
 	void ExtractTileFromTileSet();
 	void LoadMap(LPCWSTR file_path);
 
-	void SetCamPos(float x, float y) { CamX = x; CamY = y; }
+	//void SetCamPos(float x, float y) { CamX = x; CamY = y; }
 
 	int GetTotalColumnsMap();
 	int GetTotalRowsMap();

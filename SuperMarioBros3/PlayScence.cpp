@@ -297,7 +297,7 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame::GetInstance()->SetCamPos(round(cx), round(cy));
 	
-	map->SetCamPos(cx, cy);
+	//map->SetCamPos(cx, cy);
 }
 
 void CPlayScene::Render()
