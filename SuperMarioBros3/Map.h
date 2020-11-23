@@ -18,9 +18,6 @@ private:
 	int TotalColumnsOfTileSet, TotalRowsOfTileSet;
 	int TotalTiles; //total tiles of tileset
 
-
-	//float CamX, CamY;
-
 public:
 	Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles);
 	~Map();

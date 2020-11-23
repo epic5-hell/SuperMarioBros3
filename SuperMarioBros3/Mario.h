@@ -219,12 +219,12 @@ public:
 	}
 	int GetLevel() { return level; }
 
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	void StartRunning() { running_start = GetTickCount(); }
-	void StartTurning() { turning_start = GetTickCount(); }
-	void StartFlying() { flying_start = GetTickCount(); }
-	void StartKicking() { kicking_start = GetTickCount(); }
-	void StartShooting() { shooting_start = GetTickCount(); }
+	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartRunning() { running_start = GetTickCount64(); }
+	void StartTurning() { turning_start = GetTickCount64(); }
+	void StartFlying() { flying_start = GetTickCount64(); }
+	void StartKicking() { kicking_start = GetTickCount64(); }
+	void StartShooting() { shooting_start = GetTickCount64(); }
 
 	void Reset();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

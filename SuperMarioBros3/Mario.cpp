@@ -64,23 +64,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
 
-	if (GetTickCount() - turning_start > MARIO_TURNING_TIME)
+	if (GetTickCount64() - turning_start > MARIO_TURNING_TIME)
 	{
 		turning = false;
 	}
 
-	if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
+	if (GetTickCount64() - kicking_start > MARIO_KICKING_TIME)
 	{
 		kicking = false;
 	}
 
-	if (GetTickCount() - flying_start >= MARIO_FLYING_LIMIT_TIME)
+	if (GetTickCount64() - flying_start >= MARIO_FLYING_LIMIT_TIME)
 	{
 		canFly = false;
 		flying = false;
