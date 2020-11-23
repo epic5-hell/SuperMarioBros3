@@ -263,9 +263,18 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
-	for (size_t i = 0; i < objects.size(); i++)
+	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+	}*/
+
+	for (size_t i = 0; i < objects.size(); i++) // di den dau ve den do
+	{
+		CGame* game = CGame::GetInstance();
+		float rangeXleft = player->x - game->GetScreenHeight() - 100; // gioi han le trai
+		float rangeXright = player->x + game->GetScreenHeight() + 100; // gioi han le phai
+		if (objects[i]->x > rangeXleft && objects[i]->x < rangeXright) // kiem tra object trong pham vi gioi han
+			objects[i]->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

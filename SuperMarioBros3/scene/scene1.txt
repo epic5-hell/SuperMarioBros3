@@ -353,6 +353,12 @@ turn tail right 5
 
 # walk left
 
+# RED MUSHROOM 
+90001	156	121	172	137	40
+# GREEN MUSHROOM 
+90002	286	121	302	137	40
+# SUPER LEAF
+90003	180	123	196	137	40
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 
@@ -621,6 +627,12 @@ turn tail right 5
 #shell down spin left
 2006	70010	50	70011	50	70012	50	70013	50
 
+# RED MUSHROOM 
+3001	90001	100
+# GREEN MUSHROOM 
+3002	90002	100
+# SUPER LEAF
+3003	90003	100
 
 # id	ani1	ani2	ani3
 #

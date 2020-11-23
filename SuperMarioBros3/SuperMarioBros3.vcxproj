@@ -129,6 +129,7 @@
     <ClCompile Include="FireBullet.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MushRoom.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="FireBullet.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MushRoom.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
