@@ -249,7 +249,7 @@ public:
 		brake = _brake;
 		return;
 	}
-	bool BrakeCalculation()
+	bool BrakeCalc()
 	{
 		if (nx * vx < 0)
 		{
@@ -387,6 +387,7 @@ public:
 	{
 		shooted = _shooted;
 	}
+
 	int GetMarioTime()
 	{
 		return time_mario;

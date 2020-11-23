@@ -11,7 +11,6 @@ Map::Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _t
 	this->TotalRowsOfMap = _totalRowsMap;
 	this->TotalColumnsOfMap = _totalColumnsMap;
 	this->TotalTiles = _totalTiles;
-	this->MapWidth = this->MapHeight = 0;
 }
 
 Map::~Map()
@@ -32,13 +31,13 @@ void Map::Render()
 	for (int r = 0; r < TotalRowsOfMap; r++)
 		for (int c = 0; c < TotalColumnsOfMap; c++)
 		{
-			Tiles[TileMap[r][c] - 1]->Draw(c * TILE_WIDTH, r * TILE_HEIGHT, 255);
+			Tiles[TileMap[r][c] - 1]->Draw(c * TILE_WIDTH, r * TILE_HEIGHT, 255); //(x,y,alpha)
 		}
 }
 
 void Map::ExtractTileFromTileSet()
 {
-	for (int TileNumber = 0; TileNumber < TotalTiles; TileNumber++)
+	for (int TileNumber = 0; TileNumber < TotalTiles; TileNumber++) //total tiles = 91
 	{
 		int left = TileNumber % TotalColumnsOfTileSet * TILE_WIDTH;
 		int top = TileNumber / TotalColumnsOfTileSet * TILE_HEIGHT;
@@ -66,8 +65,6 @@ void Map::LoadMap(LPCWSTR path)
 		}
 	}
 	f.close();
-	this->GetMapHeight();
-	this->GetMapWidth();
 }
 
 int Map::GetMapWidth()
@@ -78,14 +75,4 @@ int Map::GetMapWidth()
 int Map::GetMapHeight()
 {
 	return TotalRowsOfMap * TILE_HEIGHT;
-}
-
-int Map::GetTotalColumnsMap() 
-{ 
-	return this->TotalColumnsOfMap; 
-}
-
-int Map::GetTotalRowsMap() 
-{
-	return this->TotalRowsOfMap; 
 }

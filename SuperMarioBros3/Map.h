@@ -18,23 +18,16 @@ private:
 	int TotalColumnsOfTileSet, TotalRowsOfTileSet;
 	int TotalTiles; //total tiles of tileset
 
-	int MapWidth;
-	int MapHeight;
 
 	//float CamX, CamY;
 
 public:
 	Map(int _idTileSet, int _totalRowsTileSet, int _totalColumnsTileSet, int _totalRowsMap, int _totalColumnsMap, int _totalTiles);
 	~Map();
-	void Draw(float x, float y);
 	void Render();
 	void ExtractTileFromTileSet();
 	void LoadMap(LPCWSTR file_path);
 
-	//void SetCamPos(float x, float y) { CamX = x; CamY = y; }
-
-	int GetTotalColumnsMap();
-	int GetTotalRowsMap();
 	int GetMapHeight();
 	int GetMapWidth();
 };

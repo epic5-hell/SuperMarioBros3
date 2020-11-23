@@ -40,7 +40,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 
 #define MAX_SCENE_LINE					1024
 
-Map* map;
+//Map* map;
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
@@ -280,7 +280,7 @@ void CPlayScene::Update(DWORD dt)
 	float MapWidth = map->GetMapWidth();
 	float MapHeight = map->GetMapHeight();
 
-	// update camera following to mario
+	
 	if (map != nullptr && (cx > MapWidth - ScreenWidth / 2))
 		cx = MapWidth - ScreenWidth;
 	else if (cx < ScreenWidth / 2)
@@ -293,7 +293,7 @@ void CPlayScene::Update(DWORD dt)
 	else if (cy < ScreenHeight / 2)
 		cy = 0;
 	else
-		cy -= ScreenHeight / 2;	
+		cy -= ScreenHeight / 2;
 
 	CGame::GetInstance()->SetCamPos(round(cx), round(cy));
 	
