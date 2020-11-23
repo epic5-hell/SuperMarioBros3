@@ -3,6 +3,7 @@
 
 #define MARIO_WALKING_SPEED				0.2f
 #define MARIO_ACCELERATION				0.008f
+#define	MARIO_FICTION					0.0001f
 #define MARIO_RUNNING_SPEED				0.056f 
 #define MARIO_SPEED_DOWN				0.01f
 
@@ -280,7 +281,7 @@ public:
 	}
 	void CalcMarioTimeUp()
 	{
-		if (GetTickCount() - running_start > MARIO_RUNNING_LIMIT_TIME && time_mario <= MARIO_MAX_STACK)
+		if (GetTickCount64() - running_start > MARIO_RUNNING_LIMIT_TIME && time_mario <= MARIO_MAX_STACK)
 		{
 			running_start = 0;
 			time_mario += 1;

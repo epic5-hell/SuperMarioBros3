@@ -28,7 +28,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_MARIO				0
 #define OBJECT_TYPE_BRICK				1
 #define OBJECT_TYPE_BLOCK				2
-#define OBJECT_TYPE_BRICK_REWARD		3
+#define OBJECT_TYPE_QUESTION_BRICK		3
 #define OBJECT_TYPE_NORMAL_GOOMBA		4
 #define	OBJECT_TYPE_WINGS_GOOMBA		5
 #define OBJECT_TYPE_GREEN_KOOPAS_WALK	6
@@ -179,6 +179,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(100); break;
 	case OBJECT_TYPE_BLOCK:	obj = new CBrick(200); break;
+	case OBJECT_TYPE_QUESTION_BRICK: obj = new CBrick(300); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
 	case OBJECT_TYPE_FIRE_BULLET: obj = new CFireBullet(); break;
@@ -423,7 +424,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		mario->SetHolding(true);
 	}
 
-	else if (game->IsKeyDown(DIK_X))
+	else if (game->IsKeyDown(DIK_X) && mario->GetLevel() == MARIO_LEVEL_RACCOON)
 	{
 		if (mario->GetMarioTime() >= MARIO_MAX_STACK)
 			mario->SetCanFly(true);

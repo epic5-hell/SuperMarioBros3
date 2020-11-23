@@ -158,7 +158,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						this->vx = -this->vx;
 						koopas->vx = -koopas->vx;
 					}
-
 				}
 			}
 
@@ -192,7 +191,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		vx = -vx;
 	}
 	// clean up collision events
-	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 }
 

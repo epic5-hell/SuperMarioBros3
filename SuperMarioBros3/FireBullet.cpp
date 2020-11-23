@@ -5,7 +5,7 @@ CFireBullet::CFireBullet() : CGameObject()
 {
 	IsUsed = false;
 	SetState(BULLET_STATE_DISAPPEAR);
-	height_limit = 0;
+	height = 0;
 }
 
 void CFireBullet::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
@@ -59,7 +59,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			SetState(BULLET_STATE_FLYING);
 			vy = 0.1f;
-			height_limit = mario->y;
+			height = mario->y;
 			mario->SetShooted(true);
 		}
 	}
@@ -69,7 +69,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(BULLET_STATE_DISAPPEAR);
 	}
 
-	if (this->y <= height_limit)
+	if (this->y <= height)
 		vy = 0.1f;
 
 
@@ -96,7 +96,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else if (ny < 0) vy = -0.2f;*/
 
 		if (ny > 0)
-			height_limit = this->y;
+			height = this->y;
 
 		if (ny != 0) vy = -vy;
 
@@ -136,15 +136,10 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					//SetState(BULLET_STATE_DISAPPEAR);
 				}
 			}
-			/*else if (!dynamic_cast<CGoomba*>(e->obj) || !dynamic_cast<CKoopas*>(e->obj))
+			/*else if (dynamic_cast<CMario*>(e->obj))
 			{
 				IsUsed = false;
-				SetState(BULLET_STATE_DISAPPEAR);
 			}*/
-			else if (dynamic_cast<CMario*>(e->obj))
-			{
-				IsUsed = false;
-			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -172,11 +167,6 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-
-	//if (this->x < 0 || this->y >170)
-	//{
-	//	SetState(BULLET_STATE_DISAPPEAR);
-	//}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

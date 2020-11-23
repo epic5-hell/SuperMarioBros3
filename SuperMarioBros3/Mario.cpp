@@ -64,23 +64,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
 
-	if (GetTickCount64() - turning_start > MARIO_TURNING_TIME)
+	if (GetTickCount() - turning_start > MARIO_TURNING_TIME)
 	{
 		turning = false;
 	}
 
-	if (GetTickCount64() - kicking_start > MARIO_KICKING_TIME)
+	if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
 	{
 		kicking = false;
 	}
 
-	if (GetTickCount64() - flying_start >= MARIO_FLYING_LIMIT_TIME)
+	if (GetTickCount() - flying_start >= MARIO_FLYING_LIMIT_TIME)
 	{
 		canFly = false;
 		flying = false;
@@ -262,6 +262,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 				}
 			}
+			else if (dynamic_cast<CBrick*> (e->obj))
+			{
+				if (e->ny > 0)
+				{
+					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+					if (brick->getType() == BRICK_TYPE_QUESTION_NORMAL 
+						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM 
+						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					{
+						if (brick->GetIsAlive())
+							brick->SetIsAlive(false);
+					}
+				}
+			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))
 			{
 				CPortal *p = dynamic_cast<CPortal *>(e->obj);
@@ -270,11 +284,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-
 	if (vx < 0 && x < 0) x = 0; // right edge
 	//if (vy < 0 && y < 0) y = 0; //max height
+		// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CMario::Render()
@@ -289,8 +302,12 @@ void CMario::Render()
 	// state = FALL
 	else if (falling)
 	{
-		if (nx > 0) ani = MARIO_ANI_RACCOON_FALLING_RIGHT;
-		else ani = MARIO_ANI_RACCOON_FALLING_LEFT;
+		if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (nx > 0) ani = MARIO_ANI_RACCOON_FALLING_LEFT;
+			else ani = MARIO_ANI_RACCOON_FALLING_RIGHT;
+		}
+		else return;
 	}
 	// state = FLY
 	else if (flying)

@@ -20,7 +20,7 @@
 class CFireBullet: public CGameObject
 {
 	bool IsUsed = false;
-	float height_limit;
+	float height;
 
 public:
 	CFireBullet();
