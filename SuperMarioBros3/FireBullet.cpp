@@ -89,7 +89,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// TODO: This is a very ugly designed function!!!!
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		x += min_tx * dx + nx * 0.4f;
+		//x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
 		/*if (ny > 0) vy = 0.2f;
@@ -136,10 +136,10 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					//SetState(BULLET_STATE_DISAPPEAR);
 				}
 			}
-			/*else if (dynamic_cast<CMario*>(e->obj))
+			else if (dynamic_cast<CMario*>(e->obj))
 			{
 				IsUsed = false;
-			}*/
+			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -189,7 +189,7 @@ void CFireBullet::Render()
 
 
 	animation_set->at(ani)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CFireBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -206,10 +206,10 @@ void  CFireBullet::SetState(int state)
 	switch (state)
 	{
 	case BULLET_STATE_FLYING:
-		//if (nx > 0)
-		//	vx = BULLET_FLYING_SPEED;
-		//else
-		//	vx = -BULLET_FLYING_SPEED;
+		if (nx > 0)
+			vx = BULLET_FLYING_SPEED;
+		else
+			vx = -BULLET_FLYING_SPEED;
 		IsUsed = true;
 		break;
 	case BULLET_STATE_DISAPPEAR:

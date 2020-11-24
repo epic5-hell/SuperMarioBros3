@@ -92,6 +92,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		canFall = true;
 	}
 
+	if (int(y - checkY) >= 1)
+	{
+		jumping = false;
+	}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -114,6 +119,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
+
+		checkY = y;
 
 		if (ny != 0) vy = 0;
 
@@ -394,7 +401,6 @@ void CMario::Render()
 	{
 		if (nx > 0) ani = MARIO_ANI_FIRE_SHOOTING_RIGHT;
 		else ani = MARIO_ANI_FIRE_SHOOTING_LEFT;
-
 	}
 	// state = JUMP
 	else if (jumping)

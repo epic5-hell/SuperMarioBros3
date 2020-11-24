@@ -273,8 +273,14 @@ void CPlayScene::Update(DWORD dt)
 		CGame* game = CGame::GetInstance();
 		float rangeXleft = player->x - game->GetScreenHeight() - 100; // gioi han le trai
 		float rangeXright = player->x + game->GetScreenHeight() + 100; // gioi han le phai
-		if (objects[i]->x > rangeXleft && objects[i]->x < rangeXright) // kiem tra object trong pham vi gioi han
+		if (objects[i]->x > rangeXleft&& objects[i]->x < rangeXright)// kiem tra object trong pham vi gioi han
+		{
 			objects[i]->Update(dt, &coObjects);
+		}
+		if (objects[i] == dynamic_cast<CFireBullet*>(objects[i]))
+		{
+			objects[i]->Update(dt, &coObjects);
+		}
 	}
 
 	// skip the rest if scene was already unloaded

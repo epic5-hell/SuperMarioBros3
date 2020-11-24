@@ -202,6 +202,8 @@ class CMario : public CGameObject
 	bool canFly = false;
 	bool canHold = false;
 	bool canFall = false;
+
+	float checkY;
 	
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
