@@ -277,8 +277,8 @@ void CPlayScene::Update(DWORD dt)
 			objects[i]->Update(dt, &coObjects);
 	}
 
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return; 
+	// skip the rest if scene was already unloaded
+	if (player == NULL) return;
 
 	// Update camera to follow mario
 	float cx, cy;
@@ -406,8 +406,8 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_X:
 		mario->SetCanFly(false);
 		mario->SetFlying(false);
-		mario->SetFalling(false);
-		mario->SetJumping(true);
+		mario->SetFalling(true);
+		//mario->SetJumping(true);
 		break;
 	case DIK_V:
 		if (mario->GetLevel() == MARIO_LEVEL_FIRE)
@@ -479,6 +479,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 			mario->SetMarioTime(0);
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
 		}
+
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{

@@ -59,7 +59,7 @@ public:
 	float ay;
 
 	int nx;	 
-	int ny;
+	//int ny;
 
 	int state;
 

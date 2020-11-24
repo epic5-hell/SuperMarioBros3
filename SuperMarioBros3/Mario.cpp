@@ -117,13 +117,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		if (ny != 0) vy = 0;
 
-		if (ny < 0) // jumping
+		if (ny < 0) // mario is on ground
 		{
 			jumping = false;
 			falling = false;
 			canFly = true;
 			canFall = false;
 		}
+		/*if (vy > 0 && jumping)
+		{
+			canFall = true;
+			falling = true;
+			jumping = false;
+		}*/
 
 		if (ny < 0 && this->time_mario < MARIO_MAX_STACK) // mario power not enough
 		{
@@ -264,15 +270,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 			else if (dynamic_cast<CBrick*> (e->obj))
 			{
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 				if (e->ny > 0)
 				{
-					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 					if (brick->getType() == BRICK_TYPE_QUESTION_NORMAL 
 						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM 
 						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
 						if (brick->GetIsAlive())
 							brick->SetIsAlive(false);
+					}
+				}
+				else if (e->ny < 0)
+				{
+					if (brick->getType() == BRICK_TYPE_BLOCK)
+					{
+						
 					}
 				}
 			}
@@ -377,7 +390,7 @@ void CMario::Render()
 	}
 
 	// state = SHOOT
-	else if (shooting)
+	else if (shooting && level == MARIO_LEVEL_FIRE)
 	{
 		if (nx > 0) ani = MARIO_ANI_FIRE_SHOOTING_RIGHT;
 		else ani = MARIO_ANI_FIRE_SHOOTING_LEFT;
@@ -388,8 +401,16 @@ void CMario::Render()
 	{
 		if (level == MARIO_LEVEL_BIG)
 		{
-			if (nx > 0) ani = MARIO_ANI_BIG_JUMPING_RIGHT;
-			else ani = MARIO_ANI_BIG_JUMPING_LEFT;
+			if (vy < 0)
+			{
+				if (nx > 0) ani = MARIO_ANI_BIG_JUMPING_RIGHT;
+				else ani = MARIO_ANI_BIG_JUMPING_LEFT;
+			}
+			else
+			{
+				if (nx > 0) ani = MARIO_ANI_BIG_FALLING_RIGHT;
+				else ani = MARIO_ANI_BIG_FALLING_LEFT;
+			}
 		}
 		else if (level == MARIO_LEVEL_SMALL)
 		{
@@ -398,13 +419,29 @@ void CMario::Render()
 		}
 		else if (level == MARIO_LEVEL_RACCOON)
 		{
-			if (nx > 0) ani = MARIO_ANI_RACCOON_JUMPING_RIGHT;
-			else ani = MARIO_ANI_RACCOON_JUMPING_LEFT;
+			if (vy < 0)
+			{
+				if (nx > 0) ani = MARIO_ANI_RACCOON_JUMPING_RIGHT;
+				else ani = MARIO_ANI_RACCOON_JUMPING_LEFT;
+			}
+			else
+			{
+				if (nx < 0) ani = MARIO_ANI_RACCOON_FALLING_RIGHT;
+				else ani = MARIO_ANI_RACCOON_FALLING_LEFT;
+			}
 		}
 		else if (level == MARIO_LEVEL_FIRE)
 		{
-			if (nx > 0) ani = MARIO_ANI_FIRE_JUMPING_RIGHT;
-			else ani = MARIO_ANI_FIRE_JUMPING_LEFT;
+			if (vy < 0)
+			{
+				if (nx > 0) ani = MARIO_ANI_FIRE_JUMPING_RIGHT;
+				else ani = MARIO_ANI_FIRE_JUMPING_LEFT;
+			}
+			else
+			{
+				if (nx > 0) ani = MARIO_ANI_FIRE_FALLING_RIGHT;
+				else ani = MARIO_ANI_FIRE_FALLING_LEFT;
+			}
 		}
 	}
 
