@@ -7,6 +7,7 @@
 #include "Koopas.h"
 #include "Portal.h"
 #include "Brick.h"
+#include "MushRoom.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -29,7 +30,7 @@ void CMario::CalcPotentialCollisions(
 		if (dynamic_cast<CBrick*>(coObjects->at(i)) && vy < 0)
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
-			if (brick->getType() == BRICK_TYPE_BLOCK)
+			if (brick->GetType() == BRICK_TYPE_BLOCK)
 			{
 				continue;
 			}
@@ -280,20 +281,32 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 				if (e->ny > 0)
 				{
-					if (brick->getType() == BRICK_TYPE_QUESTION_NORMAL 
-						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM 
-						|| brick->getType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL 
+						|| brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM
+						|| brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
 						if (brick->GetIsAlive())
-							brick->SetIsAlive(false);
+						{
+							brick->SetIsAlive(false);	
+							
+						}
 					}
 				}
-				else if (e->ny < 0)
+			}
+			else if (dynamic_cast<CMushRoom*>(e->obj))
+			{
+				CMushRoom* mushroom = dynamic_cast<CMushRoom*>(e->obj);
+				if (mushroom->GetType() == MUSHROOM_RED)
 				{
-					if (brick->getType() == BRICK_TYPE_BLOCK)
+					if (level == MARIO_LEVEL_SMALL)
 					{
-						
+						SetLevel(MARIO_LEVEL_BIG);
+						mushroom->SetAppear(false);
 					}
+				}
+				else // type = MUSHROOM_GREEN
+				{
+					mushroom->SetAppear(false);
 				}
 			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))
@@ -307,7 +320,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (vx < 0 && x < 0) x = 0; // right edge
 	//if (vy < 0 && y < 0) y = 0; //max height
 		// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++)
+		delete coEvents[i];
 }
 
 void CMario::Render()
@@ -483,6 +497,7 @@ void CMario::Render()
 		{
 			if (nx > 0) ani = MARIO_ANI_BIG_BRAKING_RIGHT;
 			else ani = MARIO_ANI_BIG_BRAKING_LEFT;
+			DebugOut(L"Brake!!!!");
 		}
 		else if (level == MARIO_LEVEL_SMALL)
 		{

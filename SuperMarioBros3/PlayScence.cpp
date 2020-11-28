@@ -25,16 +25,21 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define SCENE_SECTION_OBJECTS			6
 #define SCENE_SECTION_MAP				7
 
-#define OBJECT_TYPE_MARIO				0
-#define OBJECT_TYPE_BRICK				1
-#define OBJECT_TYPE_BLOCK				2
-#define OBJECT_TYPE_QUESTION_BRICK		3
-#define OBJECT_TYPE_NORMAL_GOOMBA		4
-#define	OBJECT_TYPE_WINGS_GOOMBA		5
-#define OBJECT_TYPE_GREEN_KOOPAS_WALK	6
-#define OBJECT_TYPE_GREEN_KOOPAS_WINGS	7
-#define OBJECT_TYPE_RED_KOOPAS_WALK		8
-#define OBJECT_TYPE_FIRE_BULLET			9
+#define OBJECT_TYPE_MARIO							0
+#define OBJECT_TYPE_BRICK							1
+#define OBJECT_TYPE_BLOCK							2
+#define OBJECT_TYPE_QUESTION_BRICK_NORMAL			3
+#define OBJECT_TYPE_NORMAL_GOOMBA					4
+#define	OBJECT_TYPE_WINGS_GOOMBA					5
+#define OBJECT_TYPE_GREEN_KOOPAS_WALK				6
+#define OBJECT_TYPE_GREEN_KOOPAS_WINGS				7
+#define OBJECT_TYPE_RED_KOOPAS_WALK					8
+#define OBJECT_TYPE_FIRE_BULLET						9
+#define	OBJECT_TYPE_RED_MUSHROOM					10
+#define	OBJECT_TYPE_GREEN_MUSHROOM					11
+#define	OBJECT_TYPE_LEAF							12
+#define OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF	13
+#define OBJECT_TYPE_QUESTION_BRICK_MUSHROOM			14
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -179,10 +184,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(100); break;
 	case OBJECT_TYPE_BLOCK:	obj = new CBrick(200); break;
-	case OBJECT_TYPE_QUESTION_BRICK: obj = new CBrick(300); break;
+	case OBJECT_TYPE_QUESTION_BRICK_NORMAL: obj = new CBrick(300); break;
+	case OBJECT_TYPE_QUESTION_BRICK_MUSHROOM: obj = new CBrick(400); break;
+	case OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF: obj = new CBrick(500); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
 	case OBJECT_TYPE_FIRE_BULLET: obj = new CFireBullet(); break;
+	case OBJECT_TYPE_RED_MUSHROOM: obj = new CMushRoom(111); break;
 	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());

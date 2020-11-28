@@ -143,7 +143,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (brick->getType() == BRICK_TYPE_NORMAL)
+				if (brick->GetType() == BRICK_TYPE_NORMAL)
 				{
 					if (e->ny > 0)
 					{
@@ -152,7 +152,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					else if (nx != 0 && ny == 0)
 						IsUsed = false;
 				}
-				else if (brick->getType() == BRICK_TYPE_BLOCK)
+				else if (brick->GetType() == BRICK_TYPE_BLOCK)
 				{
 					if (e->ny > 0)
 					{

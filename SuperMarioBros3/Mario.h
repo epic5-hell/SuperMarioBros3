@@ -140,7 +140,7 @@
 #define MARIO_ANI_FIRE_SHOOTING_LEFT		93
 #define	MARIO_ANI_FIRE_FALLING_RIGHT		94
 #define	MARIO_ANI_FIRE_FALLING_LEFT			95
-
+ 
 #define MARIO_ANI_DIE						96
 
 
@@ -195,8 +195,6 @@ class CMario : public CGameObject
 	bool turning = false;
 	bool shooted = false;
 
-	bool falling_slowly = false;
-
 	bool brake;
 
 	bool canFly = false;
@@ -207,10 +205,11 @@ class CMario : public CGameObject
 	
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
-	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	void SetState(int _state);
+	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
+
 	void SetLevel(int _level)
 	{
 		int oldLevel = this->level;
@@ -253,7 +252,7 @@ public:
 	}
 	void SetBraking(bool _brake)
 	{
-		brake = _brake;
+		this->brake = _brake;
 	}
 	bool BrakeCalc()
 	{
@@ -312,7 +311,7 @@ public:
 	}
 	void SetCanFly(bool _canFly)
 	{
-		canFly = _canFly;
+		this->canFly = _canFly;
 	}
 
 	//fall
@@ -330,17 +329,7 @@ public:
 	}
 	void SetCanFall(bool _canFall)
 	{
-		canFall = _canFall;
-	}
-
-	//fall slowly
-	bool GetFallingSlowly()
-	{
-		return falling_slowly;
-	}
-	void SetFallingSlowly(bool _falling_slowly)
-	{
-		this->falling_slowly = _falling_slowly;
+		this->canFall = _canFall;
 	}
 
 	//kick
@@ -378,7 +367,7 @@ public:
 	}
 	void SetCanHold(bool _canHold)
 	{
-		canHold = _canHold;
+		this->canHold = _canHold;
 	}
 	
 	//shoot
@@ -398,7 +387,7 @@ public:
 	}
 	void SetShooted(bool _shooted)
 	{
-		shooted = _shooted;
+		this->shooted = _shooted;
 	}
 
 	int GetMarioTime()
@@ -407,6 +396,6 @@ public:
 	}
 	void SetMarioTime(int _time_mario)
 	{
-		time_mario = _time_mario;
+		this->time_mario = _time_mario;
 	}
 };

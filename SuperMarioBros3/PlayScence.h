@@ -12,6 +12,7 @@
 #include "Sprites.h"
 #include "Portal.h"
 #include "FireBullet.h"
+#include "MushRoom.h"
 
 class CPlayScene: public CScene
 {

@@ -65,9 +65,9 @@
 #fly left
 10026	169	93	188	119	0
 #fall right
-10027	469	93	485	119	1
+10029	469	93	485	119	1
 #fall left
-10028	37	93	53	119	0
+10030	37	93	53	119	0
 
 # SMALL MARIO
 # idle right
@@ -415,9 +415,9 @@ turn tail right 5
 #fly left
 10022	10026	100
 #fall right
-10023	10027	100
+10023	10029	100
 #fall left
-10024	10028	100
+10024	10030	100
 
 #Small mario 
 #idle right
@@ -696,6 +696,12 @@ turn tail right 5
 # FIRE BULLET
 35	10327	10328
 
+# RED MUSHROOM, GREEN MUSHROOM 
+36	3001	3002
+# SUPER LEAF
+50	3003
+
+
 [OBJECTS]
 # -- BRICK--
 #type	x	y	ani
@@ -703,7 +709,8 @@ turn tail right 5
 #type: 1 = ground, pipe; 2 = block, cloud; 3 = brick reward
 #type: 4 = goomba normal, 5 = goomba wings
 #type: 6 = green koopas walk, 7 = green koopas wings, 8 = red koopas
-#type: 9 = fire bullet
+#type: 9 = fire bullet, 10 = red mushroom, 11 = green mushroom, 12 = leaf
+#type: 13 = question brick mushroom, 14 = question brick mushroom leaf
 # WOODEN BRICK
 1	2256	304	40
 1	2256	304	40
@@ -727,13 +734,14 @@ turn tail right 5
 
 # ---- question brick ----
 3	224	304	4720
-3	240	304	4720
+13	240	304	4720
 3	416	320	4720
 3	176	352	4720
 3	192	352	4720
 3	704	352	4720
-3	1472	368	4720
-3	656	384	4720
+13	1472	368	4720
+13	656	384	4720
+14	1440	128	4720
 
 # ---- ground brick ----
 1	624	400	85
@@ -1054,6 +1062,19 @@ turn tail right 5
 9	1000	1000	35
 9	1000	1000	35
 9	1000	1000	35
+
+# RED MUSHROOM 1
+10	240	304	36
+# RED MUSHROOM 2
+10	656	384	36
+# RED MUSHROOM 3
+10	1472	368	36
+# LEAF 1
+12	240	304	50
+# LEAF 2
+12	656	384	50
+#LEAF 3
+12	1472	368	50
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id

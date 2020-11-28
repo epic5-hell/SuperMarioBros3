@@ -111,11 +111,11 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	if (vx < 0 && x < 0) 
-	{
-		
-		vx = -vx;
-	}
+	//if (vx < 0 && x < 0) 
+	//{
+	//	
+	//	vx = -vx;
+	//}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
