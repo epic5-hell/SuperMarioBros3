@@ -65,14 +65,17 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
 			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 			{
-				if (!brick->GetIsAlive() && !brick->GetIsUsed())
+				if (mario->GetLevel() == MARIO_LEVEL_BIG)
 				{
-					if (!appear)
+					if (!brick->GetIsAlive() && !brick->GetIsUsed())
 					{
-						SetState(LEAF_STATE_RISING);
-						SetAppear(true);
-						StartRising();
-						brick->SetIsUsed(true);
+						if (!appear)
+						{
+							SetState(LEAF_STATE_RISING);
+							SetAppear(true);
+							StartRising();
+							brick->SetIsUsed(true);
+						}
 					}
 				}
 			}
@@ -119,22 +122,6 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CMario*>(e->obj))
-			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				{
-					mario->SetLevel(MARIO_LEVEL_RACCOON);
-					appear = false;
-					//SetPosition(5000, 5000);
-				}
-				else if(mario->GetLevel()== MARIO_LEVEL_RACCOON)
-				{
-					appear = false;
-					//SetPosition(5000, 5000);
-				}
-			}
-
 		}
 	}
 
@@ -156,6 +143,7 @@ void CLeaf::Render()
 		else // vx < 0
 			ani = LEAF_ANI_LEFT;
 	}
+	else return;
 }
 
 void CLeaf::SetState(int state)
