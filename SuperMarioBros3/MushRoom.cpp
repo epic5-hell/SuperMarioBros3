@@ -152,7 +152,7 @@ void CMushRoom::Render()
 void CMushRoom::SetState(int state)
 {
 	CGameObject::SetState(state);
-	//CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	switch (state)
 	{
 	case MUSHROOM_STATE_IDLE:
@@ -160,7 +160,14 @@ void CMushRoom::SetState(int state)
 		vy = 0;
 		break;
 	case MUSHROOM_STATE_MOVING:
-		vx = MUSHROOM_SPEED_MOVING;
+		if (mario->GetQBrickCollision() == true)
+		{
+			vx = -MUSHROOM_SPEED_MOVING;
+		}
+		else
+		{
+			vx = MUSHROOM_SPEED_MOVING;
+		}
 		break;
 	case MUSHROOM_STATE_RISING:
 		vy = MUSHROOM_SPEED_RISING;

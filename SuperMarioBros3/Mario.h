@@ -202,6 +202,8 @@ class CMario : public CGameObject
 	bool canFall = false;
 
 	float checkY;
+
+	bool QBrick_collision;
 	
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
@@ -209,6 +211,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	void SetState(int _state);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
+	void FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy);
 
 	void SetLevel(int _level)
 	{
@@ -397,5 +400,15 @@ public:
 	void SetMarioTime(int _time_mario)
 	{
 		this->time_mario = _time_mario;
+	}
+
+	// collision with question brick
+	bool GetQBrickCollision()
+	{
+		return QBrick_collision;
+	}
+	void SetQBrickCollision(bool poolQBrick_collision)
+	{
+		this->QBrick_collision = poolQBrick_collision;
 	}
 };

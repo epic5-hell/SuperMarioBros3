@@ -8,6 +8,7 @@
 #include "Portal.h"
 #include "Brick.h"
 #include "MushRoom.h"
+#include "Leaf.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -40,12 +41,53 @@ void CMario::CalcPotentialCollisions(
 
 		if (e->t > 0 && e->t <= 1.0f)
 			coEvents.push_back(e);
-		/*else if(e->)*/
 		else
 			delete e;
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
+void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, 
+	float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
+{
+	min_tx = 1.0f;
+	min_ty = 1.0f;
+	int min_ix = -1;
+	int min_iy = -1;
+
+	nx = 0.0f;
+	ny = 0.0f;
+
+	coEventsResult.clear();
+
+	for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		LPCOLLISIONEVENT c = coEvents[i];
+
+		if (c->t < min_tx && c->nx != 0) {
+			min_tx = c->t; nx = c->nx; min_ix = i; rdx = c->dx;
+		}
+
+		if (c->t < min_ty && c->ny != 0) {
+			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
+		}
+		if (dynamic_cast<CMushRoom*>(c->obj) || dynamic_cast<CLeaf*>(c->obj) || dynamic_cast<CFireBullet*>(c->obj) || dynamic_cast<CKoopas*>(c->obj) || dynamic_cast<CGoomba*>(c->obj))
+		{
+			ny = -0.0001f;
+		}
+
+		if (dynamic_cast<CBrick*>(c->obj))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(c->obj);
+			if (brick->GetType() == BRICK_TYPE_BLOCK)
+			{
+				nx = 0;
+			}
+		}
+	}
+
+	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
+	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -65,23 +107,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
 
-	if (GetTickCount() - turning_start > MARIO_TURNING_TIME)
+	if (GetTickCount64() - turning_start > MARIO_TURNING_TIME)
 	{
 		turning = false;
 	}
 
-	if (GetTickCount() - kicking_start > MARIO_KICKING_TIME)
+	if (GetTickCount64() - kicking_start > MARIO_KICKING_TIME)
 	{
 		kicking = false;
 	}
 
-	if (GetTickCount() - flying_start >= MARIO_FLYING_LIMIT_TIME)
+	if (GetTickCount64() - flying_start >= MARIO_FLYING_LIMIT_TIME)
 	{
 		canFly = false;
 		flying = false;
@@ -281,13 +323,28 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 				if (e->ny > 0)
 				{
-					if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL 
-						|| brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM
-						|| brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL)
 					{
 						if (brick->GetIsAlive())
 						{
-							brick->SetIsAlive(false);	
+							brick->SetIsAlive(false);
+
+						}
+					}
+					else if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM || brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					{
+						if (brick->GetIsAlive())
+						{
+							if (x > brick->x + BRICK_BBOX_WIDTH / 2)
+							{
+								SetQBrickCollision(true);
+								brick->SetIsAlive(false);
+							}
+							else // x <= brick->x + BRICK_BBOX_WIDTH / 2
+							{
+								SetQBrickCollision(false);
+								brick->SetIsAlive(false);
+							}
 							
 						}
 					}
@@ -309,6 +366,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					mushroom->SetAppear(false);
 				}
 			}
+			else if (dynamic_cast<CLeaf*>(e->obj))
+			{
+				CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+				if (level == MARIO_LEVEL_BIG)
+				{
+					SetLevel(MARIO_LEVEL_RACCOON);
+					leaf->SetAppear(false);
+				}
+				else if (level == MARIO_LEVEL_RACCOON)
+				{
+					leaf->SetAppear(false);
+				}
+			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))
 			{
 				CPortal *p = dynamic_cast<CPortal *>(e->obj);
@@ -317,7 +387,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 
-	if (vx < 0 && x < 0) x = 0; // right edge
+	if (vx < 0 && x < 0)  // right edge
+	{
+		x = 0;
+	}
+
 	//if (vy < 0 && y < 0) y = 0; //max height
 		// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++)
@@ -497,7 +571,6 @@ void CMario::Render()
 		{
 			if (nx > 0) ani = MARIO_ANI_BIG_BRAKING_RIGHT;
 			else ani = MARIO_ANI_BIG_BRAKING_LEFT;
-			DebugOut(L"Brake!!!!");
 		}
 		else if (level == MARIO_LEVEL_SMALL)
 		{

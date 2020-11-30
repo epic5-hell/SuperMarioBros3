@@ -191,6 +191,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
 	case OBJECT_TYPE_FIRE_BULLET: obj = new CFireBullet(); break;
 	case OBJECT_TYPE_RED_MUSHROOM: obj = new CMushRoom(111); break;
+	case OBJECT_TYPE_GREEN_MUSHROOM: obj = new CMushRoom(222); break;
+	case OBJECT_TYPE_LEAF: obj = new CLeaf(); break;
 	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());

@@ -13,6 +13,7 @@
 #include "Portal.h"
 #include "FireBullet.h"
 #include "MushRoom.h"
+#include "Leaf.h"
 
 class CPlayScene: public CScene
 {

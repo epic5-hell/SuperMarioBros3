@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
-#include"Brick.h"
+
 
 CGameObject::CGameObject()
 {
