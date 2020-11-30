@@ -7,6 +7,7 @@
 20	textures\misc.png	176	224	248
 30	map\map1-1_bank.png	255	255	255
 40	textures\misc2.png	166	185	255
+50	textures\misc3.png	166	185	255
 
 #ID	TRTileSet	TCTileSet	TRMap	TCMap	TotalTiles	Matrix_Path
 [MAP]
@@ -363,8 +364,11 @@ turn tail right 5
 90001	156	121	172	137	40
 # GREEN MUSHROOM 
 90002	286	121	302	137	40
-# SUPER LEAF
-90003	180	123	196	137	40
+# super leaf right
+90003	233	122	249	136	50
+# super leaf left
+90004	180	123	196	137	40
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 
@@ -645,8 +649,10 @@ turn tail right 5
 3001	90001	100
 # GREEN MUSHROOM 
 3002	90002	100
-# SUPER LEAF
+# leaf right
 3003	90003	100
+# leaf left
+3004	90004	100
 
 # id	ani1	ani2	ani3
 #
@@ -699,7 +705,7 @@ turn tail right 5
 # RED MUSHROOM, GREEN MUSHROOM 
 36	3001	3002
 # SUPER LEAF
-50	3003
+50	3003	3004
 
 
 [OBJECTS]

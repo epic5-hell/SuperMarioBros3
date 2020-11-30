@@ -50,6 +50,9 @@
     <ClCompile Include="MushRoom.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Leaf.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -101,6 +104,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="MushRoom.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaf.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

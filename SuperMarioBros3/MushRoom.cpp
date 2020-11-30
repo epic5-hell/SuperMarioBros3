@@ -12,11 +12,6 @@ void CMushRoom::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<
 	{
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
-		if (dynamic_cast<CMario*> (coObjects->at(i)) && this->state != MUSHROOM_STATE_MOVING)
-		{
-			continue;
-		}
-
 		if (e->t > 0 && e->t <= 1.0f)
 			coEvents.push_back(e);
 		/*else if(e->)*/
