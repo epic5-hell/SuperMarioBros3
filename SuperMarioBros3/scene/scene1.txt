@@ -1049,8 +1049,8 @@ turn tail right 5
 
 
 #== MARIO ==
-0	1272	292	1
-#0	100	300	1
+#0	1272	292	1
+0	100	300	1
 # GOOMBA
 #4	832	384	33
 #4	880	384	33
@@ -1069,6 +1069,12 @@ turn tail right 5
 9	1000	1000	35
 9	1000	1000	35
 9	1000	1000	35
+# LEAF 1
+12	240	304	50
+# LEAF 2
+12	656	384	50
+#LEAF 3
+12	1472	368	50
 
 # RED MUSHROOM 1
 10	240	304	36
@@ -1076,12 +1082,7 @@ turn tail right 5
 10	656	384	36
 # RED MUSHROOM 3
 10	1472	368	36
-# LEAF 1
-12	240	304	50
-# LEAF 2
-12	656	384	50
-#LEAF 3
-12	1472	368	50
+
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id

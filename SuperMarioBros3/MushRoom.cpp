@@ -20,7 +20,13 @@ void CMushRoom::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<
 	}
 }
 
-void CMushRoom::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
+void CMushRoom::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, 
+	float& min_tx, 
+	float& min_ty, 
+	float& nx, 
+	float& ny,
+	float& rdx,
+	float& rdy)
 {
 	min_tx = 1.0f;
 	min_ty = 1.0f;
@@ -86,6 +92,7 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (!appear)
 					{
+						DebugOut(L"mario touch mushroom\n");
 						SetState(MUSHROOM_STATE_RISING);
 						SetAppear(true);
 						StartRising();
@@ -95,12 +102,13 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 			{
-				if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+				if (!brick->GetIsAlive() && !brick->GetIsUsed())
 				{
-					if (!brick->GetIsAlive() && !brick->GetIsUsed())
+					if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 					{
 						if (!appear)
 						{
+							
 							SetState(MUSHROOM_STATE_RISING);
 							SetAppear(true);
 							StartRising();

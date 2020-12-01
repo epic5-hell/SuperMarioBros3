@@ -27,6 +27,39 @@ void CLeaf::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCO
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+void CLeaf::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
+{
+	min_tx = 1.0f;
+	min_ty = 1.0f;
+	int min_ix = -1;
+	int min_iy = -1;
+
+	nx = 0.0f;
+	ny = 0.0f;
+
+	coEventsResult.clear();
+
+	for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		LPCOLLISIONEVENT c = coEvents[i];
+
+		if (c->t < min_tx && c->nx != 0) {
+			min_tx = c->t; nx = c->nx; min_ix = i; rdx = c->dx;
+		}
+
+		if (c->t < min_ty && c->ny != 0) {
+			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
+		}
+		if (dynamic_cast<CMario*>(c->obj))
+		{
+			nx = ny = 0;
+		}
+	}
+
+	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
+	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
+}
+
 void CLeaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (appear)
@@ -65,12 +98,13 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
 			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 			{
-				if (mario->GetLevel() == MARIO_LEVEL_BIG)
+				if (!brick->GetIsAlive() && !brick->GetIsUsed())
 				{
-					if (!brick->GetIsAlive() && !brick->GetIsUsed())
+					if (mario->GetLevel() == MARIO_LEVEL_BIG)
 					{
 						if (!appear)
 						{
+							DebugOut(L"mario touch leaf\n");
 							SetState(LEAF_STATE_RISING);
 							SetAppear(true);
 							StartRising();
@@ -102,7 +136,7 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			setting_start = 0;
 		}
 	}
-
+	DebugOut(L"gia tri appear la %d\n", appear);
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -138,12 +172,17 @@ void CLeaf::Render()
 
 	if (appear)
 	{
+		DebugOut(L"render leaf\n");
 		if (vx > 0)
 			ani = LEAF_ANI_RIGHT;
 		else // vx < 0
 			ani = LEAF_ANI_LEFT;
 	}
 	else return;
+
+	animation_set->at(ani)->Render(x, y);
+
+	//RenderBoundingBox();
 }
 
 void CLeaf::SetState(int state)
