@@ -100,11 +100,10 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (!brick->GetIsAlive() && !brick->GetIsUsed())
 				{
-					if (mario->GetLevel() == MARIO_LEVEL_BIG)
+					if (mario->GetLevel() != MARIO_LEVEL_SMALL)
 					{
 						if (!appear)
 						{
-							DebugOut(L"mario touch leaf\n");
 							SetState(LEAF_STATE_RISING);
 							SetAppear(true);
 							StartRising();
@@ -136,7 +135,6 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			setting_start = 0;
 		}
 	}
-	DebugOut(L"gia tri appear la %d\n", appear);
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -172,7 +170,6 @@ void CLeaf::Render()
 
 	if (appear)
 	{
-		DebugOut(L"render leaf\n");
 		if (vx > 0)
 			ani = LEAF_ANI_RIGHT;
 		else // vx < 0

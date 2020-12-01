@@ -269,15 +269,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
 					{
-						if (koopas->GetState() != KOOPAS_STATE_DIE && koopas->GetState() != KOOPAS_STATE_SHELL)
-						{
-							koopas->SetState(KOOPAS_STATE_SHELL);
-						}
-						else if (koopas->GetState() == KOOPAS_STATE_SHELL)
-						{
-							//koopas->vy = -KOOPAS_DIE_DEFLECT_SPEED;
-							koopas->SetState(KOOPAS_STATE_DIE);
-						}
+						koopas->SetState(KOOPAS_STATE_SHELL);
+						koopas->SetShellUp(true);
+						koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
+						koopas->vx = 0.1f * (-nx);
 					}
 					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
 					{

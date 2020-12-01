@@ -1,8 +1,8 @@
 #include "Koopas.h"
 
-CKoopas::CKoopas(int _type_koopas)
+CKoopas::CKoopas(int koopas_type)
 {
-	type_koopas = _type_koopas;
+	type = koopas_type;
 	SetState(KOOPAS_STATE_WALKING);
 	nx = -1;
 }
@@ -14,6 +14,7 @@ void CKoopas::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LP
 		{
 			continue;
 		}
+
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 		if (e->t > 0 && e->t <= 1.0f)
 			coEvents.push_back(e);
@@ -22,6 +23,38 @@ void CKoopas::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LP
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
+void CKoopas::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
+{
+	min_tx = 1.0f;
+	min_ty = 1.0f;
+	int min_ix = -1;
+	int min_iy = -1;
+
+	nx = 0.0f;
+	ny = 0.0f;
+
+	coEventsResult.clear();
+
+	for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		LPCOLLISIONEVENT c = coEvents[i];
+
+		if (c->t < min_tx && c->nx != 0) {
+			min_tx = c->t; nx = c->nx; min_ix = i; rdx = c->dx;
+		}
+
+		if (c->t < min_ty && c->ny != 0) {
+			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
+		}
+		if (dynamic_cast<CMario*>(c->obj))
+		{
+			ny = -0.01f;
+		}
+	}
+
+	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
+	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -59,6 +92,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	//koopas shell is being held by mario
 	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
 	if (holding)
 	{
 		if (!mario->GetHolding())
@@ -116,10 +150,18 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		mario->SetCanHold(true);
 	}
 
+	if (state != KOOPAS_STATE_WALKING)
+		CanPullBack = false;
+
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
+
+		if (CanPullBack && type == KOOPAS_TYPE_GREEN_WALK)
+		{
+			
+		}
 	}
 	else
 	{
@@ -135,10 +177,14 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// koopas shell is being held
 		if(!holding)
 			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		//y += min_ty * dy + ny * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
 
 		if (ny != 0) vy = 0;
 
+		if (ny < 0 && state == KOOPAS_STATE_SHELL)
+		{
+			vx = 0;
+		}
 		// Collision logic with the others koopas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -198,7 +244,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CKoopas::Render()
 {
 	int ani = -1;
-	switch (type_koopas)
+	switch (type)
 	{
 	case KOOPAS_TYPE_GREEN_WALK:
 	{
@@ -215,12 +261,25 @@ void CKoopas::Render()
 		}
 		else if (state == KOOPAS_STATE_SHELL)
 		{
-			ani = KOOPAS_GREEN_ANI_SHELL_DOWN;
+			if (ShellUp)
+			{
+				ani = KOOPAS_GREEN_ANI_SHELL_UP;
+			}
+			else
+				ani = KOOPAS_GREEN_ANI_SHELL_DOWN;
 		}
 		else if (state == KOOPAS_STATE_SPINNING)
 		{
-			if (vx > 0)	ani = KOOPAS_GREEN_ANI_SHELL_SPIN_RIGHT;
-			else ani = KOOPAS_GREEN_ANI_SHELL_SPIN_LEFT;
+			if (ShellUp)
+			{
+				if (vx > 0)	ani = KOOPAS_GREEN_ANI_SHELL_UP_SPIN_RIGHT;
+				else ani = KOOPAS_GREEN_ANI_SHELL_UP_SPIN_LEFT;
+			}
+			else
+			{
+				if (vx > 0)	ani = KOOPAS_GREEN_ANI_SHELL_DOWN_SPIN_RIGHT;
+				else ani = KOOPAS_GREEN_ANI_SHELL_DOWN_SPIN_LEFT;
+			}
 		}
 		else if (vx > 0) ani = KOOPAS_GREEN_ANI_WALKING_RIGHT;
 		else ani = KOOPAS_GREEN_ANI_WALKING_LEFT;
