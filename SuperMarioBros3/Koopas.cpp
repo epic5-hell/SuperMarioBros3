@@ -12,7 +12,11 @@ void CKoopas::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LP
 	{
 		if (dynamic_cast<CBrick*>(coObjects->at(i)) && vy < 0)
 		{
-			continue;
+			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
+			if (brick->GetType() == BRICK_TYPE_BLOCK)
+			{
+				continue;
+			}
 		}
 
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
@@ -160,7 +164,19 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		if (CanPullBack && type == KOOPAS_TYPE_GREEN_WALK)
 		{
-			
+			if (y - past_y >= 1.0f)
+			{
+				y -= 5;
+				if (vx < 0)
+				{
+					x += 13;
+				}
+				else 
+				{
+					x -= 13;
+				}
+				vx = -vx;
+			}
 		}
 	}
 	else
@@ -189,6 +205,12 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (!dynamic_cast<CMario*>(e->obj) && nx == 0)
+			{
+				past_y = y;
+				CanPullBack = true;
+			}
 
 			if (dynamic_cast<CKoopas*>(e->obj)) // if e->obj is Koopas 
 			{

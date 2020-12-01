@@ -36,6 +36,7 @@
 
 #define KOOPAS_TYPE_GREEN_WALK			111
 #define KOOPAS_TYPE_GREEN_FLY			222
+#define	KOOPAS_TYPE_RED_WALK			333
 
 
 class CKoopas : public CGameObject
