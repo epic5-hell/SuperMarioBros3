@@ -189,6 +189,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_QUESTION_BRICK_GREEN_MUSHROOM: obj = new CBrick(500); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
+	case OBJECT_TYPE_GREEN_KOOPAS_WINGS: obj = new CKoopas(222); break;
+	case OBJECT_TYPE_RED_KOOPAS_WALK: obj = new CKoopas(333); break;
 	case OBJECT_TYPE_FIRE_BULLET: obj = new CFireBullet(); break;
 	case OBJECT_TYPE_RED_MUSHROOM: obj = new CMushRoom(111); break;
 	case OBJECT_TYPE_GREEN_MUSHROOM: obj = new CMushRoom(222); break;

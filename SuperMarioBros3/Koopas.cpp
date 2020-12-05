@@ -162,7 +162,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += dx;
 		y += dy;
 
-		if (CanPullBack && type == KOOPAS_TYPE_GREEN_WALK)
+		if (CanPullBack && type == KOOPAS_TYPE_RED_WALK)
 		{
 			if (y - past_y >= 1.0f)
 			{
@@ -220,6 +220,9 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (koopas->GetState() != KOOPAS_STATE_SHELL)
 					{
 						koopas->SetState(KOOPAS_STATE_DIE);
+						koopas->SetShellUp(true);
+						koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
+						koopas->vx = 0.1f * (-nx);
 					}
 					else if (koopas->GetState() == KOOPAS_STATE_SPINNING || koopas->GetState() == KOOPAS_STATE_SHELL)
 					{
@@ -236,11 +239,10 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 					if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
-						
-						if (state == KOOPAS_STATE_SPINNING)
+						if (state == KOOPAS_STATE_SPINNING && brick->GetIsAlive())
 						{
 							brick->SetIsAlive(false);
-							//question_brick->SetIsUp(true);
+							//brick->SetIsUp(true);
 						}
 						vx = -vx;
 					}
@@ -294,23 +296,16 @@ void CKoopas::Render()
 	{
 		if (state == KOOPAS_STATE_DIE)
 		{
-			if (nx > 0)
-			{
-				ani = KOOPAS_GREEN_ANI_WALKING_RIGHT;
-			}
-			else
-			{
-				ani = KOOPAS_GREEN_ANI_WALKING_LEFT;
-			}
+			ani = KOOPAS_GREEN_ANI_SHELL_UP_IDLE;
 		}
 		else if (state == KOOPAS_STATE_SHELL)
 		{
 			if (ShellUp)
 			{
-				ani = KOOPAS_GREEN_ANI_SHELL_UP;
+				ani = KOOPAS_GREEN_ANI_SHELL_UP_IDLE;
 			}
 			else
-				ani = KOOPAS_GREEN_ANI_SHELL_DOWN;
+				ani = KOOPAS_GREEN_ANI_SHELL_DOWN_IDLE;
 		}
 		else if (state == KOOPAS_STATE_SPINNING)
 		{
@@ -327,6 +322,38 @@ void CKoopas::Render()
 		}
 		else if (vx > 0) ani = KOOPAS_GREEN_ANI_WALKING_RIGHT;
 		else ani = KOOPAS_GREEN_ANI_WALKING_LEFT;
+	}
+	break;
+	case KOOPAS_TYPE_RED_WALK:
+	{
+		if (state == KOOPAS_STATE_DIE)
+		{
+			ani = KOOPAS_RED_ANI_SHELL_UP_IDLE;
+		}
+		else if (state == KOOPAS_STATE_SHELL)
+		{
+			if (ShellUp)
+			{
+				ani = KOOPAS_RED_ANI_SHELL_UP_IDLE;
+			}
+			else
+				ani = KOOPAS_RED_ANI_SHELL_DOWN_IDLE;
+		}
+		else if (state == KOOPAS_STATE_SPINNING)
+		{
+			if (ShellUp)
+			{
+				if (vx > 0)	ani = KOOPAS_RED_ANI_SHELL_UP_SPIN_RIGHT;
+				else ani = KOOPAS_RED_ANI_SHELL_UP_SPIN_LEFT;
+			}
+			else
+			{
+				if (vx > 0)	ani = KOOPAS_RED_ANI_SHELL_DOWN_SPIN_RIGHT;
+				else ani = KOOPAS_RED_ANI_SHELL_DOWN_SPIN_LEFT;
+			}
+		}
+		else if (vx > 0) ani = KOOPAS_RED_ANI_WALKING_RIGHT;
+		else ani = KOOPAS_RED_ANI_WALKING_LEFT;
 	}
 	}
 

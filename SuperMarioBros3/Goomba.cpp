@@ -61,7 +61,7 @@ void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& botto
 	if (state == GOOMBA_STATE_DIE)
 	{
 		top = y + 7;
-		right = left + GOOMBA_NORMAL_BBOX_WIDTH;
+		right = x + GOOMBA_NORMAL_BBOX_WIDTH;
 		bottom = y + GOOMBA_NORMAL_BBOX_HEIGHT;
 	}
 	else if (state == GOOMBA_STATE_WALKING)
