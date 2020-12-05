@@ -97,6 +97,12 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//koopas shell is being held by mario
 	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
+	if (GetTickCount64() - jumping_start >= KOOPAS_TIME_JUMPING && type == KOOPAS_TYPE_GREEN_WINGS)
+	{
+		vy = -KOOPAS_JUMP_SPEED;
+		StartJumping();
+	}
+
 	if (holding)
 	{
 		if (!mario->GetHolding())
@@ -215,20 +221,22 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<CKoopas*>(e->obj)) // if e->obj is Koopas 
 			{
 				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
-				if (e->nx != 0 && this->GetState() == KOOPAS_STATE_SPINNING)
+				if (this->state == KOOPAS_STATE_SPINNING)
 				{
-					if (koopas->GetState() != KOOPAS_STATE_SHELL)
+					if (koopas->GetType() == KOOPAS_TYPE_GREEN_WINGS)
 					{
-						koopas->SetState(KOOPAS_STATE_DIE);
-						koopas->SetShellUp(true);
-						koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
-						koopas->vx = 0.1f * (-nx);
+						koopas->SetType(KOOPAS_TYPE_GREEN_WALK);
 					}
-					else if (koopas->GetState() == KOOPAS_STATE_SPINNING || koopas->GetState() == KOOPAS_STATE_SHELL)
-					{
-						this->vx = -this->vx;
-						koopas->vx = -koopas->vx;
-					}
+					koopas->SetState(KOOPAS_STATE_DIE);
+					koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
+					koopas->vx = 0.1f * (-nx);
+					//if (koopas->state != KOOPAS_STATE_SHELL)
+					//{
+					//	koopas->SetState(KOOPAS_STATE_DIE);
+					//	koopas->SetShellUp(true);
+					//	koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
+					//	koopas->vx = 0.1f * (-nx);
+					//}
 				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
@@ -322,6 +330,12 @@ void CKoopas::Render()
 		}
 		else if (vx > 0) ani = KOOPAS_GREEN_ANI_WALKING_RIGHT;
 		else ani = KOOPAS_GREEN_ANI_WALKING_LEFT;
+	}
+	break;
+	case KOOPAS_TYPE_GREEN_WINGS:
+	{
+		if (vx < 0) ani = KOOPAS_GREEN_ANI_FLYING_RIGHT;
+		else ani = KOOPAS_GREEN_ANI_FLYING_LEFT;
 	}
 	break;
 	case KOOPAS_TYPE_RED_WALK:

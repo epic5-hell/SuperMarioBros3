@@ -31,8 +31,8 @@
 #define KOOPAS_GREEN_ANI_SHELL_UP_SPIN_LEFT		7
 #define KOOPAS_GREEN_ANI_REVIVE_DOWN			8
 #define KOOPAS_GREEN_ANI_REVIVE_UP				9
-#define KOOPAS_GREEN_ANI_FLY_RIGHT				10
-#define KOOPAS_GREEN_ANI_FLY_LEFT				11
+#define KOOPAS_GREEN_ANI_FLYING_RIGHT				10
+#define KOOPAS_GREEN_ANI_FLYING_LEFT				11
 #define KOOPAS_RED_ANI_WALKING_RIGHT			12
 #define KOOPAS_RED_ANI_WALKING_LEFT				13
 #define KOOPAS_RED_ANI_SHELL_UP_IDLE			14
@@ -45,15 +45,17 @@
 #define KOOPAS_GREEN_ANI_REVIVE_UP				21
 
 #define KOOPAS_JUMP_SPEED			0.35f
-#define KOOPAS_TIME_JUMPING			900
+#define KOOPAS_TIME_JUMPING			700
 
 #define KOOPAS_TYPE_GREEN_WALK			111
-#define KOOPAS_TYPE_GREEN_FLY			222
+#define KOOPAS_TYPE_GREEN_WINGS			222
 #define	KOOPAS_TYPE_RED_WALK			333
 
 
 class CKoopas : public CGameObject
 {
+private:
+
 	int type;
 	float past_y;
 
@@ -61,7 +63,8 @@ class CKoopas : public CGameObject
 	bool CanPullBack = false;
 	bool ShellUp = false;
 
-
+	DWORD jumping_start = 0;
+	
 public:
 	CKoopas(int _type_koopas);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
@@ -77,8 +80,9 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-
 	virtual void SetState(int state);
+	
+	void StartJumping() { jumping_start = GetTickCount64(); }
 
 	//being hled
 	bool GetHolding()
@@ -97,7 +101,6 @@ public:
 	{
 		type = koopas_type;
 	}
-
 	// shell up
 	bool GetShellUp()
 	{

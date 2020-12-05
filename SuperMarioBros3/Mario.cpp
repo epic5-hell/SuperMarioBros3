@@ -244,19 +244,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			else if (dynamic_cast<CKoopas*>(e->obj))
 			{
 				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
-
 				// jump on top >> Koopas turns into shell
 				if (e->ny < 0)
 				{
-					if (koopas->GetState() != KOOPAS_STATE_SHELL)
+					if (koopas->GetType() == KOOPAS_TYPE_GREEN_WINGS)
 					{
-						koopas->SetState(KOOPAS_STATE_SHELL);
+						koopas->SetType(KOOPAS_TYPE_GREEN_WALK);
+						koopas->SetState(KOOPAS_STATE_WALKING);
 						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+					else // walking koopas
 					{
-						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
-						koopas->SetState(KOOPAS_STATE_SPINNING);
+						if (koopas->GetState() != KOOPAS_STATE_SHELL)
+						{
+							koopas->SetState(KOOPAS_STATE_SHELL);
+							vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
+						}
+						else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+						{
+							vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
+							koopas->SetState(KOOPAS_STATE_SPINNING);
+						}
 					}
 				}
 				else if (nx != 0) //mario collisions with koopas
