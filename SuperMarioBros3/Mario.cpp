@@ -135,9 +135,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		canFall = true;
 	}
 
-	if (int(y - checkY) >= 1)
+	if (abs((y - checkY)) >= 1)
 	{
-		jumping = false;
+		jumping = true;
 	}
 
 	// No collision occured, proceed normally
@@ -174,12 +174,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			canFly = true;
 			canFall = false;
 		}
-		/*if (vy > 0 && jumping)
-		{
-			canFall = true;
-			falling = true;
-			jumping = false;
-		}*/
 
 		if (ny < 0 && this->time_mario < MARIO_MAX_STACK) // mario power not enough
 		{
@@ -364,7 +358,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			else if (dynamic_cast<CLeaf*>(e->obj))
 			{
 				CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
-				if (level == MARIO_LEVEL_BIG)
+				if (level == MARIO_LEVEL_SMALL)
+				{
+					SetLevel(MARIO_LEVEL_BIG);
+					leaf->SetAppear(false);
+				}
+				else if (level == MARIO_LEVEL_BIG)
 				{
 					SetLevel(MARIO_LEVEL_RACCOON);
 					leaf->SetAppear(false);

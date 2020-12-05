@@ -4,6 +4,31 @@ CBrick::CBrick(int brick_type)
 {
 	type = brick_type;
 }
+void CBrick::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
+{
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
+
+		if (dynamic_cast<CBrick*>(coObjects->at(i)))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
+			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF || brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+			{
+				continue;
+			}
+		}
+
+		if (e->t > 0 && e->t <= 1.0f)
+		{
+			coEvents.push_back(e);
+		}
+		else
+			delete e;
+	}
+
+	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

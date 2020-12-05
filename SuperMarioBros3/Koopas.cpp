@@ -228,11 +228,35 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 				}
 			}
-
-			else  // Collisions with other things  
+			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				if (nx != 0 && ny == 0)
 				{
+
+					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+					if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					{
+						
+						if (state == KOOPAS_STATE_SPINNING)
+						{
+							brick->SetIsAlive(false);
+							//question_brick->SetIsUp(true);
+						}
+						vx = -vx;
+					}
+					else if (brick->GetType() == BRICK_TYPE_NORMAL)
+					{
+						vx = -vx;
+					}
+
+				}
+
+			}
+			else if (!dynamic_cast<CMario*>(e->obj) && !dynamic_cast<CFireBullet*>(e->obj))// Collisions with other things  
+			{
+				if (nx != 0 && ny == 0)
+				{
+					
 					if (dynamic_cast<CGoomba*>(e->obj))
 					{
 						CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -240,17 +264,14 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						{
 							goomba->SetState(GOOMBA_STATE_DIE_BY_KICK);
 						}
-						else if (goomba->GetState() == GOOMBA_STATE_WALKING)
-						{
-							continue;
-						}
 					}
-					else if (!dynamic_cast<CMario*>(e->obj))
+					else
 					{
 						vx = -vx;
 					}
 				}
 			}
+
 		}
 	}
 
@@ -259,7 +280,8 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		vx = -vx;
 	}
 	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) 
+		delete coEvents[i];
 
 }
 
