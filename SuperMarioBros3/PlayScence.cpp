@@ -40,6 +40,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define	OBJECT_TYPE_LEAF							12
 #define OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF	13
 #define OBJECT_TYPE_QUESTION_BRICK_GREEN_MUSHROOM	14
+#define OBJECT_TYPE_BREAKABLE_BRICK					15
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -187,6 +188,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_QUESTION_BRICK_NORMAL: obj = new CBrick(300); break;
 	case OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF: obj = new CBrick(400); break;
 	case OBJECT_TYPE_QUESTION_BRICK_GREEN_MUSHROOM: obj = new CBrick(500); break;
+	case OBJECT_TYPE_BREAKABLE_BRICK: obj = new CBrick(600); break;
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WALK: obj = new CKoopas(111); break;
 	case OBJECT_TYPE_GREEN_KOOPAS_WINGS: obj = new CKoopas(222); break;
@@ -195,6 +197,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_RED_MUSHROOM: obj = new CMushRoom(111); break;
 	case OBJECT_TYPE_GREEN_MUSHROOM: obj = new CMushRoom(222); break;
 	case OBJECT_TYPE_LEAF: obj = new CLeaf(); break;
+
 	/*case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());

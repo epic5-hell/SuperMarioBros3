@@ -59,7 +59,20 @@ void CMushRoom::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOL
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
-
+void CMushRoom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (appear)
+	{
+		left = x;
+		top = y;
+		right = left + MUSHROOM_BBOOX_WIDTH;
+		bottom = top + MUSHROOM_BBOX_HEIGHT;
+	}
+	else
+	{
+		left = top = right = bottom = 0;
+	}
+}
 
 void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -86,21 +99,22 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (dynamic_cast<CBrick*>(obj))
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
-			if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+			if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM && this->type == MUSHROOM_GREEN)
 			{
 				if (!brick->GetIsAlive() && !brick->GetIsUsed())
 				{
 					if (!appear)
 					{
-						DebugOut(L"mario touch mushroom\n");
+
 						SetState(MUSHROOM_STATE_RISING);
 						SetAppear(true);
 						StartRising();
 						brick->SetIsUsed(true);
+						DebugOut(L"mario touch green mushroom\n");
 					}
 				}
 			}
-			else if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+			else if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF && this->type == MUSHROOM_RED)
 			{
 				if (!brick->GetIsAlive() && !brick->GetIsUsed())
 				{
@@ -108,7 +122,6 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (!appear)
 						{
-							
 							SetState(MUSHROOM_STATE_RISING);
 							SetAppear(true);
 							StartRising();
@@ -188,7 +201,7 @@ void CMushRoom::Render()
 
 	animation_set->at(ani)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMushRoom::SetState(int state)
@@ -202,7 +215,7 @@ void CMushRoom::SetState(int state)
 		vy = 0;
 		break;
 	case MUSHROOM_STATE_MOVING:
-		if (mario->GetQBrickCollision() == true)
+		if (mario->GetQBrickCollision())
 		{
 			vx = -MUSHROOM_SPEED_MOVING;
 		}
@@ -212,21 +225,8 @@ void CMushRoom::SetState(int state)
 		}
 		break;
 	case MUSHROOM_STATE_RISING:
-		vy = MUSHROOM_SPEED_RISING;
+		vy = -MUSHROOM_SPEED_RISING;
 		break;
 	}
 }
-void CMushRoom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	if (appear)
-	{
-		left = x;
-		top = y;
-		right = left + MUSHROOM_BBOOX_WIDTH;
-		bottom = top + MUSHROOM_BBOX_HEIGHT;
-	}
-	else
-	{
-		left = top = right = bottom = 0;
-	}
-}
+

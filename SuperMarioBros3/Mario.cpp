@@ -16,9 +16,9 @@ CMario::CMario(float x, float y) : CGameObject()
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 
-	start_x = x; 
-	start_y = y; 
-	this->x = x; 
+	start_x = x;
+	start_y = y;
+	this->x = x;
 	this->y = y;
 
 }
@@ -47,7 +47,7 @@ void CMario::CalcPotentialCollisions(
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
-void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult, 
+void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventsResult,
 	float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
 {
 	min_tx = 1.0f;
@@ -89,7 +89,7 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
-void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
@@ -99,7 +99,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
+	
 	coEvents.clear();
 
 	// turn off collision when die 
@@ -107,7 +107,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -288,10 +288,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							kicking = true;
 							koopas->nx = this->nx;
 							koopas->SetState(KOOPAS_STATE_SPINNING);
-						}						
+						}
 					}
 					else if (untouchable == 0 && !kicking)
 					{
+
 						if (koopas->GetState() != KOOPAS_STATE_SHELL)
 						{
 							if (level > MARIO_LEVEL_SMALL)
@@ -310,7 +311,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								}
 							}
 							else
+							{
+								
 								SetState(MARIO_STATE_DIE);
+							}
+
 						}
 					}
 				}
@@ -342,7 +347,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								SetQBrickCollision(false);
 								brick->SetIsAlive(false);
 							}
-							
+
 						}
 					}
 				}
@@ -827,7 +832,7 @@ void CMario::SetState(int state)
 	case MARIO_STATE_SITDOWN:
 		vx = 0;
 		break;
-	case MARIO_STATE_IDLE: 
+	case MARIO_STATE_IDLE:
 		vx = 0;
 		break;
 	case MARIO_STATE_SPEED_DOWN:
@@ -863,7 +868,7 @@ void CMario::SetState(int state)
 	}
 }
 
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (state == MARIO_STATE_DIE)
 	{
@@ -873,7 +878,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x;
 	top = y;
 
-	if (state == MARIO_STATE_SITDOWN && level != MARIO_LEVEL_SMALL) 
+	if (state == MARIO_STATE_SITDOWN && level != MARIO_LEVEL_SMALL)
 	{
 		top += 9;
 	}

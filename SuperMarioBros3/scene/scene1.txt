@@ -427,12 +427,11 @@ turn tail right 5
 70053	71	75	89	91	14
 #revive up
 70054	71	277	89	283	15
-
-# KOOPAS GREEN FLY
-# walk right
-
-# walk left
-
+# BREAKABLE BRICK
+80001	274	188	290	204	40
+80002	293	188	309	204	40
+80003	312	188	328	204	40
+80004	331	188	347	204	40
 # RED MUSHROOM 
 90001	156	121	172	137	40
 # GREEN MUSHROOM 
@@ -669,6 +668,9 @@ turn tail right 5
 622	20012	100
 623	20013	100
 
+# ==== BREAKABLE BRICK =======
+624	80001	90	80002	90	80003	90	80004	90
+
 # ==== GOOMBA NORMAL =========
 # walk
 701	30001	100	30002	100
@@ -754,6 +756,8 @@ turn tail right 5
 #revive up
 2022	70054	100	70044	100
 
+# ==== BREAKABLE BRICK ====
+
 
 # RED MUSHROOM
 3001	90001	100
@@ -812,11 +816,12 @@ turn tail right 5
 # FIRE BULLET
 35	10327	10328
 
-# RED MUSHROOM, GREEN MUSHROOM 
+# RED MUSHROOM, GREEN MUSHROOM
 36	3001	3002
 # SUPER LEAF
 50	3003	3004
-
+# BREAKABLE BRICK
+51	624
 
 [OBJECTS]
 # -- BRICK--
@@ -826,7 +831,8 @@ turn tail right 5
 #type: 4 = goomba normal, 5 = goomba wings
 #type: 6 = green koopas walk, 7 = green koopas wings, 8 = red koopas
 #type: 9 = fire bullet, 10 = red mushroom, 11 = green mushroom, 12 = leaf
-#type: 13 = question brick mushroom, 14 = question brick mushroom leaf
+#type: 13 = question brick mushroom leaf, 14 = question brick mushroom
+#type: 15 = breakable brick
 # WOODEN BRICK
 1	2256	304	40
 1	2256	304	40
@@ -1158,10 +1164,11 @@ turn tail right 5
 2	1440	192	22
 2	1456	192	22
 
-#== MARIO ==
+# ==== MARIO ====
 #0	1272	292	1
 #0	477	302	1
-0	1393	380	1
+#0	1860	335	1
+0	2150	340	1
 # GOOMBA NORMAL
 4	832	384	33
 4	880	384	33
@@ -1188,12 +1195,6 @@ turn tail right 5
 9	1000	1000	35
 9	1000	1000	35
 9	1000	1000	35
-# LEAF 1
-12	240	304	50
-# LEAF 2
-12	656	384	50
-#LEAF 3
-12	1472	368	50
 
 # RED MUSHROOM 1
 10	240	304	36
@@ -1201,7 +1202,37 @@ turn tail right 5
 10	656	384	36
 # RED MUSHROOM 3
 10	1472	368	36
+# GREEN MUSHROOM
+11	1440	128	36
+# LEAF 1
+12	240	304	50
+# LEAF 2
+12	656	384	50
+#LEAF 3
+12	1472	368	50
+#BREAKABLE BRICK
+15	1952	400	51
+15	1968	400	51
+15	1984	400	51
+15	2000	400	51
+15	2016	400	51
+15	2032	400	51
+15	2048	400	51
 
+15	1968	384	51
+15	1984	384	51
+15	2000	384	51
+15	2016	384	51
+15	2032	384	51
+
+15	1984	368	51
+15	2000	368	51
+15	2016	368	51
+15	2032	368	51
+
+15	2096	384	51
+15	2096	400	51
+15	2112	400	51
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id

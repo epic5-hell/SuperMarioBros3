@@ -230,13 +230,11 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					koopas->SetState(KOOPAS_STATE_DIE);
 					koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
 					koopas->vx = 0.1f * (-nx);
-					//if (koopas->state != KOOPAS_STATE_SHELL)
-					//{
-					//	koopas->SetState(KOOPAS_STATE_DIE);
-					//	koopas->SetShellUp(true);
-					//	koopas->vy = -KOOPAS_SHELL_DEFLECT_SPEED;
-					//	koopas->vx = 0.1f * (-nx);
-					//}
+				}
+				else if (this->state == KOOPAS_STATE_WALKING && koopas->state == KOOPAS_STATE_WALKING)
+				{
+					vx = -vx;
+					koopas->vx = -koopas->vx;
 				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
