@@ -14,6 +14,7 @@
 #include "FireBullet.h"
 #include "MushRoom.h"
 #include "Leaf.h"
+#include "Alarm.h"
 
 class CPlayScene: public CScene
 {

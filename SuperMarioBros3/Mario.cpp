@@ -323,33 +323,37 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBrick*> (e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (e->ny > 0)
+				if (ny > 0)
 				{
 					if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL)
 					{
-						if (brick->GetIsAlive())
+						if (brick->GetAlive())
 						{
-							brick->SetIsAlive(false);
+							brick->SetAlive(false);
 
 						}
 					}
 					else if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM || brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
-						if (brick->GetIsAlive())
+						if (brick->GetAlive())
 						{
 							if (x > brick->x + BRICK_BBOX_WIDTH / 2)
 							{
 								SetQBrickCollision(true);
-								brick->SetIsAlive(false);
+								brick->SetAlive(false);
 							}
-							else // x <= brick->x + BRICK_BBOX_WIDTH / 2
+							else if (x <= brick->x + BRICK_BBOX_WIDTH / 2)
 							{
 								SetQBrickCollision(false);
-								brick->SetIsAlive(false);
+								brick->SetAlive(false);
 							}
-
+							else
+							{
+								brick->SetAlive(false);
+							}
 						}
 					}
+
 				}
 			}
 			else if (dynamic_cast<CMushRoom*>(e->obj))

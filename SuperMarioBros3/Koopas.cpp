@@ -245,9 +245,9 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 					if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
-						if (state == KOOPAS_STATE_SPINNING && brick->GetIsAlive())
+						if (state == KOOPAS_STATE_SPINNING && brick->GetAlive())
 						{
-							brick->SetIsAlive(false);
+							brick->SetAlive(false);
 							//brick->SetIsUp(true);
 						}
 						vx = -vx;

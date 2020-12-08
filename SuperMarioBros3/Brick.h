@@ -24,10 +24,10 @@
 
 class CBrick : public CGameObject
 {
-private: 
+private:
 	int type;
-	bool IsAlive = true;
-	bool IsUsed = false;
+	bool alive = true;
+	bool used = false;
 
 public:
 	CBrick(int brick_type);
@@ -39,23 +39,23 @@ public:
 
 	int GetType() { return type; }
 
-	bool GetIsAlive()
+	bool GetAlive()
 	{
-		return IsAlive;
+		return alive;
 	}
 
-	void SetIsAlive(bool _IsAlive)
+	void SetAlive(bool _alive)
 	{
-		this->IsAlive = _IsAlive;
+		this->alive = _alive;
 	}
 
-	bool GetIsUsed()
+	bool GetUsed()
 	{
-		return IsUsed;
+		return used;
 	}
 
-	void SetIsUsed(bool _IsUsed)
+	void SetUsed(bool _used)
 	{
-		this->IsUsed = _IsUsed;
+		this->used = _used;
 	}
 };

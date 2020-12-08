@@ -80,11 +80,13 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBrick::Render()
 {
 	int ani = -1;
-	if (IsAlive)
+	if (alive)
 	{
+		/*if(type==BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+			ani = BREAKABLE_BRICK_ANI_NORMAL;*/
 		ani = BRICK_QUESTION_ANI_ALIVE;
 	}
-	else 
+	else
 		ani = BRICK_QUESTION_ANI_DEAD;
 
 	animation_set->at(ani)->Render(x, y);
@@ -111,6 +113,5 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CBrick::SetState(int state)
 {
-	
-}
 
+}

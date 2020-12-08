@@ -53,6 +53,9 @@
     <ClCompile Include="Leaf.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Alarm.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -107,6 +110,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Alarm.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

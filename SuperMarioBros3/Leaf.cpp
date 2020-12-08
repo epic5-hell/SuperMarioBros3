@@ -98,7 +98,7 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
 			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 			{
-				if (!brick->GetIsAlive() && !brick->GetIsUsed())
+				if (!brick->GetAlive() && !brick->GetUsed())
 				{
 					if (mario->GetLevel() != MARIO_LEVEL_SMALL)
 					{
@@ -107,7 +107,7 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							SetState(LEAF_STATE_RISING);
 							SetAppear(true);
 							StartRising();
-							brick->SetIsUsed(true);
+							brick->SetUsed(true);
 						}
 					}
 				}
