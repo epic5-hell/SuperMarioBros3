@@ -39,7 +39,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define	OBJECT_TYPE_GREEN_MUSHROOM					11
 #define	OBJECT_TYPE_LEAF							12
 #define OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF	13
-#define OBJECT_TYPE_QUESTION_BRICK_GREEN_MUSHROOM	14 // BRICK_TYPE_BREAKABLE_ALARM
+#define OBJECT_TYPE_NEW_BRICK						14 // BRICK_TYPE_BREAKABLE_ALARM and BRICK_TYPE_QUESTION_MUSHROOM
 #define OBJECT_TYPE_BREAKABLE_BRICK					15
 #define OBJECT_TYPE_ALARM							16
 
@@ -189,7 +189,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_QUESTION_BRICK_NORMAL: obj = new CBrick(300); break;
 	case OBJECT_TYPE_QUESTION_BRICK_MUSHROOM_LEAF: obj = new CBrick(400); break;
-	case OBJECT_TYPE_QUESTION_BRICK_GREEN_MUSHROOM: obj = new CBrick(500); break;
+	case OBJECT_TYPE_NEW_BRICK: obj = new CBrick(500); break;
 	case OBJECT_TYPE_BREAKABLE_BRICK: obj = new CBrick(600); break;
 
 	case OBJECT_TYPE_NORMAL_GOOMBA: obj = new CGoomba(888); break;

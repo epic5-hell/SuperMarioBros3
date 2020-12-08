@@ -14,7 +14,7 @@
 #define BRICK_TYPE_BLOCK					200
 #define BRICK_TYPE_QUESTION_NORMAL			300
 #define BRICK_TYPE_QUESTION_MUSHROOM_LEAF	400 // red mushroom and leaf
-#define BRICK_TYPE_QUESTION_GREEN_MUSHROOM	500
+#define BRICK_TYPE_NEW						500
 #define BRICK_TYPE_BREAKABLE				600
 
 #define BRICK_QUESTION_ANI_ALIVE		0
@@ -29,6 +29,8 @@ private:
 	bool alive = true;
 	bool used = false;
 
+	bool show_brick = true;
+
 public:
 	CBrick(int brick_type);
 	virtual void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
@@ -36,26 +38,33 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void SetState(int state);
-
 	int GetType() { return type; }
 
+	// question brick
 	bool GetAlive()
 	{
 		return alive;
 	}
-
 	void SetAlive(bool _alive)
 	{
 		this->alive = _alive;
 	}
-
 	bool GetUsed()
 	{
 		return used;
 	}
-
 	void SetUsed(bool _used)
 	{
 		this->used = _used;
+	}
+
+	// breakable brick
+	bool GetShowBrick()
+	{
+		return show_brick;
+	}
+	void SetShowBrick(bool _show_brick)
+	{
+		this->show_brick = _show_brick;
 	}
 };

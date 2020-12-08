@@ -9,6 +9,7 @@
 #include "Brick.h"
 #include "MushRoom.h"
 #include "Leaf.h"
+#include "Alarm.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -82,6 +83,14 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 			if (brick->GetType() == BRICK_TYPE_BLOCK)
 			{
 				nx = 0;
+			}
+		}
+		if (dynamic_cast<CAlarm*>(c->obj))
+		{
+			CAlarm* alarm = dynamic_cast<CAlarm*>(c->obj);
+			if (alarm->GetActive())
+			{
+				ny = nx = 0;
 			}
 		}
 	}
@@ -333,7 +342,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 						}
 					}
-					else if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM || brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+					else if (brick->GetType() == BRICK_TYPE_NEW || brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 					{
 						if (brick->GetAlive())
 						{
@@ -388,6 +397,34 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else if (level == MARIO_LEVEL_RACCOON)
 				{
 					leaf->SetAppear(false);
+				}
+			}
+			else if (dynamic_cast<CAlarm*>(e->obj))
+			{
+				if (e->ny < 0)
+				{
+					CAlarm* alarm = dynamic_cast<CAlarm*>(e->obj);
+					if (!alarm->GetActive())
+					{
+						for (UINT i = 0; i < coObjects->size(); i++)
+						{
+							LPGAMEOBJECT obj = coObjects->at(i);
+							if (dynamic_cast<CBrick*>(obj))
+							{
+								CBrick* brick = dynamic_cast<CBrick*>(obj);
+								if (brick->GetType() == BRICK_TYPE_BREAKABLE)
+								{
+									if (brick->GetShowBrick())
+									{
+										brick->SetShowBrick(false);
+									}
+								}
+							}
+						}
+						alarm->SetActive(true);
+						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
+					}
+
 				}
 			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))

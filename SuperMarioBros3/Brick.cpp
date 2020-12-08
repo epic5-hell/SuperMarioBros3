@@ -13,7 +13,7 @@ void CBrick::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPC
 		if (dynamic_cast<CBrick*>(coObjects->at(i)))
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(coObjects->at(i));
-			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF || brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+			if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF || brick->GetType() == BRICK_TYPE_NEW)
 			{
 				continue;
 			}
@@ -97,7 +97,7 @@ void CBrick::Render()
 		else
 			ani = BRICK_QUESTION_ANI_DEAD;
 	}
-	else if (type == BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+	else if (type == BRICK_TYPE_NEW)
 	{
 		if (alive)
 		{
@@ -108,7 +108,14 @@ void CBrick::Render()
 	}
 	else if (type == BRICK_TYPE_BREAKABLE)
 	{
-		ani = BREAKABLE_BRICK_ANI_NORMAL;
+		if (show_brick)
+		{
+			ani = BREAKABLE_BRICK_ANI_NORMAL;
+		}
+		else
+		{
+			ani = BREAKABLE_BRICK_ANI_COIN;
+		}
 	}
 	else return;
 

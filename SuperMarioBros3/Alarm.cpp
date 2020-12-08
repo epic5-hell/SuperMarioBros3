@@ -2,7 +2,6 @@
 
 CAlarm::CAlarm()
 {
-	SetState(ALARM_STATE_UNSHOW);
 }
 
 void CAlarm::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
@@ -35,10 +34,10 @@ void CAlarm::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		{
 			left = x;
 			top = y + 9;
-			right = left + ALARM_BBOX_WIDTH_PRESSED;
-			bottom = top + ALARM_BBOX_HEIGHT_PRESSED;
+			right = left + ALARM_BBOX_WIDTH_ACTIVE;
+			bottom = top + ALARM_BBOX_HEIGHT_ACTIVE;
 		}
-		else
+		else // x = 2032 , y = 368
 		{
 			left = x;
 			top = y;
@@ -65,6 +64,28 @@ void CAlarm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		LPGAMEOBJECT obj = coObjects->at(i);
+
+		if (dynamic_cast<CBrick*>(obj))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(obj);
+			if (brick->GetType() == BRICK_TYPE_NEW)
+			{
+				if (!brick->GetAlive() && !brick->GetUsed())
+				{
+					if (!appear)
+					{
+						SetAppear(true);
+						brick->SetUsed(true);
+						DebugOut(L"mario touch alarm \n");
+					}
+				}
+			}
+		}
+	}
 
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
@@ -116,10 +137,10 @@ void CAlarm::Render()
 	{
 		ani = ALARM_ANI_SHOW;
 	}
-	else if (!appear && active)
+	else if (appear && active)
 	{
 		//return;
-		ani = ALARM_ANI_PRESSED;
+		ani = ALARM_ANI_ACTIVE;
 	}
 	else return;
 
@@ -129,14 +150,4 @@ void CAlarm::Render()
 
 void CAlarm::SetState(int state)
 {
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case ALARM_STATE_UNSHOW:
-		vx = vy = 0;
-		break;
-	case ALARM_STATE_SHOW:
-		vy = -0.1f;
-		break;
-	}
 }

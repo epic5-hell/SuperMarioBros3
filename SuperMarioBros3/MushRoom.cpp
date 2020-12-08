@@ -99,18 +99,16 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (dynamic_cast<CBrick*>(obj))
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
-			if (brick->GetType() == BRICK_TYPE_QUESTION_GREEN_MUSHROOM && this->type == MUSHROOM_GREEN)
+			if (brick->GetType() == BRICK_TYPE_NEW && this->type == MUSHROOM_GREEN)
 			{
 				if (!brick->GetAlive() && !brick->GetUsed())
 				{
 					if (!appear)
 					{
-
 						SetState(MUSHROOM_STATE_RISING);
 						SetAppear(true);
 						StartRising();
 						brick->SetUsed(true);
-						DebugOut(L"mario touch green mushroom\n");
 					}
 				}
 			}

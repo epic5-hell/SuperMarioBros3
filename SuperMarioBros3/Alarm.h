@@ -7,20 +7,20 @@
 #define ALARM_BBOX_WIDTH			16
 #define	ALARM_BBOX_HEIGHT			16
 
-#define ALARM_BBOX_WIDTH_PRESSED	16
-#define ALARM_BBOX_HEIGHT_PRESSED	7
+#define ALARM_BBOX_WIDTH_ACTIVE	16
+#define ALARM_BBOX_HEIGHT_ACTIVE	7
 
 #define ALARM_STATE_UNSHOW			100
 #define ALARM_STATE_SHOW			200
 #define ALARM_STATE_PRESSED			300
 
 #define ALARM_ANI_SHOW		0
-#define ALARM_ANI_PRESSED	1
+#define ALARM_ANI_ACTIVE	1
 
 class CAlarm : public CGameObject
 {
 private:
-	bool active = true;
+	bool active = false;
 	bool appear = false;
 public:
 	CAlarm();
