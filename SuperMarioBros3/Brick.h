@@ -22,6 +22,8 @@
 #define BREAKABLE_BRICK_ANI_NORMAL		2
 #define BREAKABLE_BRICK_ANI_COIN		3
 
+#define TIME_BREAKABLE_BRICK_REVIVE		5000
+
 class CBrick : public CGameObject
 {
 private:
@@ -30,13 +32,17 @@ private:
 	bool used = false;
 
 	bool show_brick = true;
+	bool revive = false;
+	bool break_brick = false;
+	DWORD reviving_start = 0;
+	
 
 public:
 	CBrick(int brick_type);
 	virtual void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void SetState(int state);
 	int GetType() { return type; }
 
@@ -66,5 +72,17 @@ public:
 	void SetShowBrick(bool _show_brick)
 	{
 		this->show_brick = _show_brick;
+	}
+	bool GetRevive()
+	{
+		return revive;
+	}
+	void SetRevive(bool _revive)
+	{
+		this->revive = _revive;
+	}
+	void StartRevive()
+	{
+		reviving_start = GetTickCount64();
 	}
 };

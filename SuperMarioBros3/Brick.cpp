@@ -30,6 +30,38 @@ void CBrick::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPC
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (type == BRICK_TYPE_BLOCK)
+	{
+		left = x;
+		top = y;
+		right = left + BRICK_BBOX_WIDTH;
+		bottom = top;
+	}
+	else if (type == BRICK_TYPE_BREAKABLE)
+	{
+		if (!break_brick)
+		{
+			left = x;
+			top = y;
+			right = left + BRICK_BBOX_WIDTH;
+			bottom = top + BRICK_BBOX_HEIGHT;
+		}
+		else
+		{
+			left = top = right = bottom = 0;
+		}
+	}
+	else // other brick
+	{
+		left = x;
+		top = y;
+		right = left + BRICK_BBOX_WIDTH;
+		bottom = top + BRICK_BBOX_HEIGHT;
+	}
+}
+
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
@@ -44,10 +76,23 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CMario* mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
+	if (revive && reviving_start == 0)
+	{
+		StartRevive();
+	}
+
+	if (!GetShowBrick())
+	{
+		if (GetTickCount64() - reviving_start >= TIME_BREAKABLE_BRICK_REVIVE)
+		{
+			SetShowBrick(true);
+		}
+	}
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{
+		x += dx;
 		y += dy;
 	}
 	else
@@ -121,25 +166,7 @@ void CBrick::Render()
 
 		
 	animation_set->at(ani)->Render(x, y);
-	//RenderBoundingBox();
-}
-
-void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	if (type == BRICK_TYPE_BLOCK)
-	{
-		l = x;
-		t = y;
-		r = x + BRICK_BBOX_WIDTH;
-		b = y;
-	}
-	else // other brick
-	{
-		l = x;
-		t = y;
-		r = x + BRICK_BBOX_WIDTH;
-		b = y + BRICK_BBOX_HEIGHT;
-	}
+	RenderBoundingBox();
 }
 
 void CBrick::SetState(int state)
