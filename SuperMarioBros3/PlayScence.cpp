@@ -42,6 +42,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):CScene(id, filePath)
 #define OBJECT_TYPE_NEW_BRICK						14 // BRICK_TYPE_BREAKABLE_ALARM and BRICK_TYPE_QUESTION_MUSHROOM
 #define OBJECT_TYPE_BREAKABLE_BRICK					15
 #define OBJECT_TYPE_ALARM							16
+#define OBJECT_TYPE_BIG_COIN						17
+#define	OBJECT_TYPE_SMALL_COIN						18
 
 #define OBJECT_TYPE_PORTAL				50
 
@@ -201,6 +203,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GREEN_MUSHROOM: obj = new CMushRoom(222); break;
 	case OBJECT_TYPE_LEAF: obj = new CLeaf(); break;
 	case OBJECT_TYPE_ALARM: obj = new CAlarm(); break;
+	case OBJECT_TYPE_BIG_COIN: obj = new CCoin(100); break;
+	//case OBJECT_TYPE_SMALL_COIN: obj = new CCoin(200); break;
 
 	/*case OBJECT_TYPE_PORTAL:
 		{	

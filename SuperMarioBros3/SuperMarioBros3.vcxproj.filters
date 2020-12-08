@@ -56,6 +56,9 @@
     <ClCompile Include="Alarm.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -113,6 +116,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Alarm.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

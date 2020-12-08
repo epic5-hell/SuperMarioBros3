@@ -419,6 +419,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 										brick->SetShowBrick(false);
 										brick->SetRevive(true);
 									}
+									else if (!brick->GetShowBrick())
+									{
+
+									}
 								}
 							}
 						}

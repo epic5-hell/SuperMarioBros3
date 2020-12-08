@@ -15,6 +15,7 @@
 #include "MushRoom.h"
 #include "Leaf.h"
 #include "Alarm.h"
+#include "Coin.h"
 
 class CPlayScene: public CScene
 {
