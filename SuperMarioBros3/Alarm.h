@@ -20,7 +20,7 @@
 class CAlarm : public CGameObject
 {
 private:
-	bool active = false;
+	bool active = true;
 	bool appear = false;
 public:
 	CAlarm();

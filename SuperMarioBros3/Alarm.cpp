@@ -34,7 +34,7 @@ void CAlarm::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		if (active)
 		{
 			left = x;
-			top = y;
+			top = y + 9;
 			right = left + ALARM_BBOX_WIDTH_PRESSED;
 			bottom = top + ALARM_BBOX_HEIGHT_PRESSED;
 		}
@@ -112,15 +112,16 @@ void CAlarm::Render()
 {
 	int ani = -1;
 
-	if (appear)
+	if (appear && !active)
 	{
 		ani = ALARM_ANI_SHOW;
 	}
-	else
+	else if (!appear && active)
 	{
-		return;
-		//ani = ALARM_ANI_PRESSED;
+		//return;
+		ani = ALARM_ANI_PRESSED;
 	}
+	else return;
 
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();

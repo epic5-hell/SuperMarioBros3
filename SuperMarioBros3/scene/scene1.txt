@@ -436,10 +436,16 @@ turn tail right 5
 90001	156	121	172	137	40
 # GREEN MUSHROOM 
 90002	286	121	302	137	40
-# super leaf right
+# SUPER LEAF RIGHT
 90003	233	122	249	136	50
-# super leaf left
+# SUPER LEAF LEFT
 90004	180	123	196	137	40
+# ALARM
+# alive
+90005	156	144	172	160	40
+90006	178	144	194	160	40
+# die
+90007	200	144	216	160	40
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -756,17 +762,20 @@ turn tail right 5
 #revive up
 2022	70054	100	70044	100
 
-# ==== BREAKABLE BRICK ====
-
-
 # RED MUSHROOM
 3001	90001	100
 # GREEN MUSHROOM 
 3002	90002	100
-# leaf right
+# LEAF RIGHT
 3003	90003	100
-# leaf left
+# LEAF LEFT
 3004	90004	100
+
+# ALARM
+# alive
+3005	90005	100	90006	100
+# die
+3006	90007	100
 
 # id	ani1	ani2	ani3
 #
@@ -819,8 +828,8 @@ turn tail right 5
 36	3001	3002
 # SUPER LEAF
 50	3003	3004
-# BREAKABLE BRICK
-51	624
+# ALARM
+51	3005	3006
 
 [OBJECTS]
 # -- BRICK--
@@ -831,7 +840,7 @@ turn tail right 5
 #type: 6 = green koopas walk, 7 = green koopas wings, 8 = red koopas
 #type: 9 = fire bullet, 10 = red mushroom, 11 = green mushroom, 12 = leaf
 #type: 13 = question brick mushroom leaf, 14 = question brick mushroom
-#type: 15 = breakable brick
+#type: 15 = breakable brick, 16 = alarm
 # WOODEN BRICK
 1	2256	304	40
 1	2256	304	40
@@ -1162,7 +1171,8 @@ turn tail right 5
 2	1424	192	22
 2	1440	192	22
 2	1456	192	22
-
+# ALARM
+16	2032	352	51
 # ==== MARIO ====
 #0	1272	292	1
 #0	477	302	1
@@ -1232,6 +1242,8 @@ turn tail right 5
 15	2096	384	4720
 15	2096	400	4720
 15	2112	400	4720
+
+
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
