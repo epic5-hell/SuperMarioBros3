@@ -80,15 +80,39 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBrick::Render()
 {
 	int ani = -1;
-	if (alive)
+	/*if (alive)
 	{
-		/*if(type==BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
-			ani = BREAKABLE_BRICK_ANI_NORMAL;*/
 		ani = BRICK_QUESTION_ANI_ALIVE;
 	}
 	else
-		ani = BRICK_QUESTION_ANI_DEAD;
+		ani = BRICK_QUESTION_ANI_DEAD;*/
 
+	// test
+	if (type == BRICK_TYPE_QUESTION_NORMAL || type == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
+	{
+		if (alive)
+		{
+			ani = BRICK_QUESTION_ANI_ALIVE;
+		}
+		else
+			ani = BRICK_QUESTION_ANI_DEAD;
+	}
+	else if (type == BRICK_TYPE_QUESTION_GREEN_MUSHROOM)
+	{
+		if (alive)
+		{
+			ani = BREAKABLE_BRICK_ANI_NORMAL;
+		}
+		else
+			ani = BRICK_QUESTION_ANI_DEAD;
+	}
+	else if (type == BRICK_TYPE_BREAKABLE)
+	{
+		ani = BREAKABLE_BRICK_ANI_NORMAL;
+	}
+	else return;
+
+		
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
