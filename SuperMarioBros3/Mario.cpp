@@ -85,14 +85,6 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 				nx = 0;
 			}
 		}
-		if (dynamic_cast<CAlarm*>(c->obj))
-		{
-			CAlarm* alarm = dynamic_cast<CAlarm*>(c->obj);
-			if (alarm->GetActive())
-			{
-				ny = nx = 0;
-			}
-		}
 	}
 
 	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);

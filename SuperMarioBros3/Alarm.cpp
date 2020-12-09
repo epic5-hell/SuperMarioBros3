@@ -32,10 +32,7 @@ void CAlarm::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	{
 		if (active)
 		{
-			left = x;
-			top = y + 9;
-			right = left + ALARM_BBOX_WIDTH_ACTIVE;
-			bottom = top + ALARM_BBOX_HEIGHT_ACTIVE;
+			left = top = right = bottom = 0;
 		}
 		else
 		{

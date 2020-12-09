@@ -104,10 +104,6 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// TODO: This is a very ugly designed function!!!!
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// block 
-		//x += min_tx * dx + nx * 0.5f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		//y += min_ty * dy + ny * 0.5f;
-
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
@@ -153,14 +149,18 @@ void CBrick::Render()
 	}
 	else if (type == BRICK_TYPE_BREAKABLE)
 	{
-		if (show_brick)
+		if (!break_brick)
 		{
-			ani = BREAKABLE_BRICK_ANI_NORMAL;
+			if (show_brick)
+			{
+				ani = BREAKABLE_BRICK_ANI_NORMAL;
+			}
+			else
+			{
+				ani = BREAKABLE_BRICK_ANI_COIN;
+			}
 		}
-		else
-		{
-			ani = BREAKABLE_BRICK_ANI_COIN;
-		}
+		else return;
 	}
 	else return;
 

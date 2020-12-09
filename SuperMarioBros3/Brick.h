@@ -85,4 +85,12 @@ public:
 	{
 		reviving_start = GetTickCount64();
 	}
+	bool GetBreakBrick()
+	{
+		return break_brick;
+	}
+	void SetBreakBrick(bool _break_brick)
+	{
+		this->break_brick = _break_brick;
+	}
 };

@@ -204,7 +204,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_LEAF: obj = new CLeaf(); break;
 	case OBJECT_TYPE_ALARM: obj = new CAlarm(); break;
 	case OBJECT_TYPE_BIG_COIN: obj = new CCoin(100); break;
-	//case OBJECT_TYPE_SMALL_COIN: obj = new CCoin(200); break;
+	case OBJECT_TYPE_SMALL_COIN: obj = new CCoin(200); break;
 
 	/*case OBJECT_TYPE_PORTAL:
 		{	

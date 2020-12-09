@@ -152,16 +152,7 @@ void CCoin::Render()
 	{
 		if (type == BIG_COIN)
 		{
-			if (turning)
-			{
-				//ani = BIG_COIN_ANI_TURNING;
-				ani = BIG_COIN_ANI_IDLE;
-			}
-			else
-			{
-				//ani = BIG_COIN_ANI_IDLE;
-				ani = BIG_COIN_ANI_TURNING;
-			}
+			ani = BIG_COIN_ANI;
 		}
 		else if (type == SMALL_COIN)
 		{
