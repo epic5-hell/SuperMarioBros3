@@ -72,7 +72,7 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 		if (c->t < min_ty && c->ny != 0) {
 			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
 		}
-		if (dynamic_cast<CMushRoom*>(c->obj) || dynamic_cast<CLeaf*>(c->obj) || dynamic_cast<CFireBullet*>(c->obj) || dynamic_cast<CKoopas*>(c->obj) || dynamic_cast<CGoomba*>(c->obj))
+		if (dynamic_cast<CMushRoom*>(c->obj) || dynamic_cast<CLeaf*>(c->obj) || dynamic_cast<CFireBullet*>(c->obj) || dynamic_cast<CGoomba*>(c->obj))
 		{
 			ny = -0.0001f;
 		}
@@ -83,6 +83,21 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 			if (brick->GetType() == BRICK_TYPE_BLOCK)
 			{
 				nx = 0;
+			}
+			else if (brick->GetType() == BRICK_TYPE_BREAKABLE)
+			{
+				if (!brick->GetShowBrick() && !brick->GetBreakBrick())
+				{
+					nx = ny = 0;
+				}
+			}
+		}
+		if (dynamic_cast<CKoopas*>(c->obj))
+		{
+			CKoopas* koopas = dynamic_cast<CKoopas*>(c->obj);
+			if (c->ny > 0)
+			{
+				nx = ny = 0;
 			}
 		}
 	}
@@ -184,6 +199,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//
 		// Collision logic with other objects
 		//
+
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -242,9 +259,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+			
 			else if (dynamic_cast<CKoopas*>(e->obj))
 			{
-				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
+				CKoopas *koopas = dynamic_cast<CKoopas*>(e->obj);
 				// jump on top >> Koopas turns into shell
 				if (e->ny < 0)
 				{
@@ -267,8 +285,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							koopas->SetState(KOOPAS_STATE_SPINNING);
 						}
 					}
+					delete koopas;
 				}
-				else if (nx != 0) //mario collisions with koopas
+				else if (e->nx != 0) //mario collisions with koopas
 				{
 					if (level == MARIO_LEVEL_RACCOON && turning)
 					{
@@ -313,18 +332,49 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 							else
 							{
-								
 								SetState(MARIO_STATE_DIE);
 							}
 
 						}
 					}
 				}
+				else if (e->ny > 0)
+				{
+					if (koopas->GetState() == KOOPAS_STATE_WALKING && untouchable == 0)
+					{
+						if (level > MARIO_LEVEL_SMALL)
+						{
+							if (level == MARIO_LEVEL_RACCOON)
+							{
+								level = MARIO_LEVEL_BIG;
+								shooting = false;
+								StartUntouchable();
+							}
+							else
+							{
+								level = MARIO_LEVEL_SMALL;
+								shooting = false;
+								StartUntouchable();
+							}
+						}
+						else
+						{
+							SetState(MARIO_STATE_DIE);
+						}
+					}
+					else if (koopas->GetState() == KOOPAS_STATE_SHELL)
+					{
+						StartKicking();
+						kicking = true;
+						koopas->nx = this->nx;
+						koopas->SetState(KOOPAS_STATE_SPINNING);
+					}
+				}
 			}
 			else if (dynamic_cast<CBrick*> (e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (ny > 0)
+				if (e->ny > 0)
 				{
 					if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL)
 					{
@@ -354,7 +404,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 						}
 					}
+					else if (brick->GetType() == BRICK_TYPE_BREAKABLE)
+					{
+						if (brick->GetShowBrick() == true)
+						{
+							return;
+						}
+					}
 
+				}
+				else if (e->nx != 0 || e->ny != 0)
+				{
+					if (brick->GetType() == BRICK_TYPE_BREAKABLE)
+					{
+						if (!brick->GetShowBrick() && !brick->GetBreakBrick())
+						{
+							brick->SetBreakBrick(true);
+						}
+					}
 				}
 			}
 			else if (dynamic_cast<CMushRoom*>(e->obj))
@@ -396,7 +463,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					CAlarm* alarm = dynamic_cast<CAlarm*>(e->obj);
-					if (!alarm->GetActive())
+					if (!alarm->Getactivate())
 					{
 						for (UINT i = 0; i < coObjects->size(); i++)
 						{
@@ -418,7 +485,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 								}
 							}
 						}
-						alarm->SetActive(true);
+						alarm->Setactivate(true);
 						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
 					}
 

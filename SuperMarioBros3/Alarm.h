@@ -7,9 +7,6 @@
 #define ALARM_BBOX_WIDTH			16
 #define	ALARM_BBOX_HEIGHT			16
 
-#define ALARM_BBOX_WIDTH_ACTIVE	16
-#define ALARM_BBOX_HEIGHT_ACTIVE	7
-
 #define ALARM_STATE_UNSHOW			100
 #define ALARM_STATE_SHOW			200
 #define ALARM_STATE_PRESSED			300
@@ -20,7 +17,7 @@
 class CAlarm : public CGameObject
 {
 private:
-	bool active = false;
+	bool activate = false;
 	bool appear = false;
 public:
 	CAlarm();
@@ -29,13 +26,13 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
-	void SetActive(bool _active)
+	void Setactivate(bool _activate)
 	{
-		this->active = _active;
+		this->activate = _activate;
 	}
-	bool GetActive()
+	bool Getactivate()
 	{
-		return active;
+		return activate;
 	}
 	void SetAppear(bool _appear)
 	{

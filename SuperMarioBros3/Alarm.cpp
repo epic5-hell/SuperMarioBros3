@@ -30,7 +30,7 @@ void CAlarm::GetBoundingBox(float& left, float& top, float& right, float& bottom
 {
 	if (appear)
 	{
-		if (active)
+		if (activate)
 		{
 			left = top = right = bottom = 0;
 		}
@@ -130,11 +130,11 @@ void CAlarm::Render()
 {
 	int ani = -1;
 
-	if (appear && !active)
+	if (appear && !activate)
 	{
 		ani = ALARM_ANI_SHOW;
 	}
-	else if (appear && active)
+	else if (appear && activate)
 	{
 		//return;
 		ani = ALARM_ANI_ACTIVE;

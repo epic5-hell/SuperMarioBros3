@@ -161,7 +161,7 @@ void CCoin::Render()
 	}
 
 	animation_set->at(ani)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CCoin::SetState(int state)

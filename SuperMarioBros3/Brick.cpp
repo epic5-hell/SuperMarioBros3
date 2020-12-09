@@ -45,8 +45,8 @@ void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		{
 			left = x;
 			top = y;
-			right = left + BRICK_BBOX_WIDTH;
-			bottom = top + BRICK_BBOX_HEIGHT;
+			right = left + BREAKABLE_BRICK_BBOX_WIDTH;
+			bottom = top + BREAKABLE_BRICK_BBOX_HEIGHT;
 		}
 		else
 		{
