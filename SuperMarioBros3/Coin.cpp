@@ -159,7 +159,7 @@ void CCoin::Render()
 			ani = SMALL_COIN_ANI;
 		}
 	}
-
+	else return;
 	animation_set->at(ani)->Render(x, y);
 	//RenderBoundingBox();
 }

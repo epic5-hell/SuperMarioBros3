@@ -10,6 +10,7 @@
 #include "MushRoom.h"
 #include "Leaf.h"
 #include "Alarm.h"
+#include "Coin.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -72,7 +73,11 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 		if (c->t < min_ty && c->ny != 0) {
 			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
 		}
-		if (dynamic_cast<CMushRoom*>(c->obj) || dynamic_cast<CLeaf*>(c->obj) || dynamic_cast<CFireBullet*>(c->obj) || dynamic_cast<CGoomba*>(c->obj))
+		if (dynamic_cast<CCoin*>(c->obj))
+		{
+			nx = ny = 0;
+		}
+		if (dynamic_cast<CMushRoom*>(c->obj) || dynamic_cast<CLeaf*>(c->obj) || dynamic_cast<CFireBullet*>(c->obj) || dynamic_cast<CGoomba*>(c->obj) || dynamic_cast<CKoopas*>(c->obj))
 		{
 			ny = -0.0001f;
 		}
@@ -88,16 +93,12 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 			{
 				if (!brick->GetShowBrick() && !brick->GetBreakBrick())
 				{
-					nx = ny = 0;
+					if (jumping)
+					{
+						DebugOut(L"mario touch coin /n");
+						nx = ny = 0;
+					}
 				}
-			}
-		}
-		if (dynamic_cast<CKoopas*>(c->obj))
-		{
-			CKoopas* koopas = dynamic_cast<CKoopas*>(c->obj);
-			if (c->ny > 0)
-			{
-				nx = ny = 0;
 			}
 		}
 	}
@@ -285,7 +286,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							koopas->SetState(KOOPAS_STATE_SPINNING);
 						}
 					}
-					delete koopas;
+
 				}
 				else if (e->nx != 0) //mario collisions with koopas
 				{
@@ -413,7 +414,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 
 				}
-				else if (e->nx != 0 || e->ny != 0)
+				if (e->nx != 0 || e->ny != 0)
 				{
 					if (brick->GetType() == BRICK_TYPE_BREAKABLE)
 					{
@@ -421,6 +422,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						{
 							brick->SetBreakBrick(true);
 						}
+					}
+				}
+				else if (e->nx != 0 && turning)
+				{
+					if (brick->GetType() == BRICK_TYPE_BREAKABLE)
+					{
+						if (brick->GetShowBrick() && !brick->GetBreakBrick() && brick->y >= this->y + 8/*MARIO_TURNING_BONUS_HEIGHT*/)
+						{
+							brick->SetBreakBrick(true);
+						}
+					}
+					else if (brick->GetType() == BRICK_TYPE_NEW)
+					{
+						brick->SetAlive(false);
 					}
 				}
 			}
@@ -489,6 +504,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
 					}
 
+				}
+			}
+			else if (dynamic_cast<CCoin*>(e->obj))
+			{
+				CCoin* coin = dynamic_cast<CCoin*>(e->obj);
+				if (coin->GetType() == BIG_COIN)
+				{
+					coin->SetAppear(false);
 				}
 			}
 			/*else if (dynamic_cast<CPortal *>(e->obj))

@@ -35,8 +35,10 @@ public:
 	virtual void Render();
 	virtual void SetState(int state);
 
-	
-
+	int GetType()
+	{
+		return type;
+	}
 	bool GetAppear()
 	{
 		return appear;

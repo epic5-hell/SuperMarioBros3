@@ -41,12 +41,19 @@ void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	}
 	else if (type == BRICK_TYPE_BREAKABLE)
 	{
-		if (!break_brick)
+		if (show_brick && !break_brick)
 		{
 			left = x;
 			top = y;
 			right = left + BREAKABLE_BRICK_BBOX_WIDTH;
 			bottom = top + BREAKABLE_BRICK_BBOX_HEIGHT;
+		}
+		else if (!show_brick && !break_brick)
+		{
+			left = x;
+			top = y;
+			right = left + BRICK_BIG_COIN_BBOX_WIDTH;
+			bottom = top + BRICK_BIG_COIN_BBOX_HEIGHT;
 		}
 		else
 		{
