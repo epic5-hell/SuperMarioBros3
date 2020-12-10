@@ -95,7 +95,6 @@ void CMario::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLIS
 				{
 					if (jumping)
 					{
-						DebugOut(L"mario touch coin /n");
 						nx = ny = 0;
 					}
 				}
@@ -424,8 +423,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						}
 					}
 				}
-				else if (e->nx != 0 && turning)
+				if (e->nx != 0 && turning)
 				{
+					DebugOut(L"mario touch coin /n");
 					if (brick->GetType() == BRICK_TYPE_BREAKABLE)
 					{
 						if (brick->GetShowBrick() && !brick->GetBreakBrick() && brick->y >= this->y + 8/*MARIO_TURNING_BONUS_HEIGHT*/)
@@ -435,7 +435,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 					else if (brick->GetType() == BRICK_TYPE_NEW)
 					{
-						brick->SetAlive(false);
+						if(brick->GetAlive())
+							brick->SetAlive(false);
 					}
 				}
 			}
@@ -478,7 +479,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					CAlarm* alarm = dynamic_cast<CAlarm*>(e->obj);
-					if (!alarm->Getactivate())
+					if (!alarm->GetActivate())
 					{
 						for (UINT i = 0; i < coObjects->size(); i++)
 						{
@@ -493,14 +494,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 										brick->SetShowBrick(false);
 										brick->SetRevive(true);
 									}
-									else if (!brick->GetShowBrick())
-									{
-
-									}
 								}
 							}
 						}
-						alarm->Setactivate(true);
+						alarm->SetActivate(true);
 						vy = -1.5f * MARIO_JUMP_DEFLECT_SPEED;
 					}
 

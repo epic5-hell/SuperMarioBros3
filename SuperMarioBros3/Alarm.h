@@ -26,11 +26,11 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
-	void Setactivate(bool _activate)
+	void SetActivate(bool _activate)
 	{
 		this->activate = _activate;
 	}
-	bool Getactivate()
+	bool GetActivate()
 	{
 		return activate;
 	}
