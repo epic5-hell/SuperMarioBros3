@@ -10,6 +10,9 @@ CCoin::CCoin(int coin_type)
 	else // type = SMALL COIN
 	{
 		appear = false;
+		coin_up = false;
+		coin_down = false;
+		vy = 0;
 	}
 }
 
@@ -66,47 +69,54 @@ void CCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		LPGAMEOBJECT obj = coObjects->at(i);
-		/*if (dynamic_cast<CQuestionBrick*>(obj))
+		if (dynamic_cast<CBrick*>(obj))
 		{
-			CQuestionBrick* question_brick = dynamic_cast<CQuestionBrick*>(obj);
-			if (!question_brick->GetIsAlive() && question_brick->GetType() == QUESTION_BRICK_HAVE_LEAF && !question_brick->GetIsUsed())
+			CBrick* brick = dynamic_cast<CBrick*>(obj);
+			if (brick->GetType() == BRICK_TYPE_QUESTION_NORMAL)
 			{
-				if (!isAppear && type == COIN_CAN_MOVE)
+				if (!brick->GetAlive() && !brick->GetUsed())
 				{
-					if ((this->x == question_brick->x) && (this->y == question_brick->y))
+					if (!appear && this->type == SMALL_COIN)
 					{
-						SetState(COIN_STATE_UP);
-						StartTiming();
-						isAppear = true;
-						question_brick->SetIsUsed(true);
-
+						if ((this->x == brick->x + 4) && (this->y == brick->y - 15))
+						{
+							appear = true;
+							vy = -SMALL_COIN_DEFLECT_SPEED;
+							brick->SetUsed(true);
+							SetCoinUp(true);
+							StartUpDown();
+						}
 					}
 
 				}
-
 			}
-		}*/
-	}
-
-
-
-	/*if (state == COIN_STATE_UP)
-	{
-		if (GetTickCount() - timing_start >= 300)
-		{
-			SetState(COIN_STATE_DOWN);
-			StartTiming();
+			
 		}
 	}
 
-	if (state == COIN_STATE_DOWN)
+
+
+	if (coin_up == true)
 	{
-		if (GetTickCount() - timing_start >= 300)
+		if (GetTickCount64() - up_down >= 250)
 		{
-			isAppear = false;
+			SetCoinUp(false);
+			SetCoinDown(true);
+			StartUpDown();
+			vy = SMALL_COIN_DEFLECT_SPEED;
+		}
+	}
+
+	if (coin_down == true)
+	{
+		if (GetTickCount64() - up_down >= 250)
+		{
+			appear = false;
+			SetCoinDown(false);
+			vy = 0;
 		}
 
-	}*/
+	}
 
 
 

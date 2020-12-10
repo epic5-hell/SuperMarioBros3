@@ -99,7 +99,7 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (dynamic_cast<CBrick*>(obj))
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(obj);
-			if (brick->GetType() == BRICK_TYPE_NEW && this->type == MUSHROOM_GREEN)
+			if (brick->GetType() == BRICK_TYPE_NEW)
 			{
 				if (!brick->GetAlive() && !brick->GetUsed())
 				{
@@ -112,7 +112,7 @@ void CMushRoom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
-			else if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF && this->type == MUSHROOM_RED)
+			else if (brick->GetType() == BRICK_TYPE_QUESTION_MUSHROOM_LEAF)
 			{
 				if (!brick->GetAlive() && !brick->GetUsed())
 				{

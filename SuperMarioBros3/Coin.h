@@ -4,6 +4,8 @@
 #include "Mario.h"
 #include "PlayScence.h"
 
+#define SMALL_COIN_DEFLECT_SPEED	0.2f
+
 #define BIG_COIN_BBOX_WIDTH		14
 #define	BIG_COIN_BBOX_HEIGHT	16
 
@@ -24,7 +26,9 @@ private:
 	int type;
 	bool appear;
 
-	DWORD time_disappear;
+	bool coin_up;
+	bool coin_down;
+	DWORD up_down = 0;;
 
 public:
 
@@ -34,6 +38,10 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
+	void StartUpDown()
+	{
+		up_down = GetTickCount64();
+	}
 
 	int GetType()
 	{
@@ -46,6 +54,22 @@ public:
 	void SetAppear(bool _appear)
 	{
 		this->appear = _appear;
+	}
+	bool GetCoinUp()
+	{
+		return coin_up;
+	}
+	void SetCoinUp(bool _coin_up)
+	{
+		this->coin_up = _coin_up;
+	}
+	bool GetCoinDown()
+	{
+		return coin_down;
+	}
+	void SetCoinDown(bool _coin_down)
+	{
+		this->coin_down = _coin_down;
 	}
 };
 
